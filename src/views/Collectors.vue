@@ -6,6 +6,7 @@
           {{ labels.draw }} 
         </button>
       </div>
+            
       <div class="my-cards">
         <CollectorsCard v-for="(card, index) in myCards" :card="card" :key="index"/>
       </div>
