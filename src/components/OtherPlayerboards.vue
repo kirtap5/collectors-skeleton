@@ -9,17 +9,27 @@
     <div v-on:click="playerClicked('C')" class="otherPlayerBoard C">
       <p>Player C</p>
     </div>
-    <div v-if = dispPlayerboard :class =playertag class="displayedBoard"> Player {{playertag}}'s playerboard!!! </div>
+    <div v-if = dispPlayerboard :class= playertag class="displayedBoard"> Player {{playertag}}'s playerboard!!! <PlayerBoard/> 
+        
+    </div>
   </div>
+
 </template>
 
 <script>
+
+import PlayerBoard from '@/components/PlayerBoard.vue'
+
 export default {
     name: "OtherPlayerboards",
+    components: {
+    PlayerBoard
+    },
     data: function () {
     return {
         dispPlayerboard: false,
-        playertag: ""
+        playertag: "",
+        skills: Array
     }},
     methods: {
         playerClicked: function (playertag) {
@@ -34,12 +44,13 @@ export default {
     },
 };
 </script>
+
+
 <style scoped>
     .otherPlayerBoard, .displayedBoard {
     margin: 5px;
     padding: 5px;
     border-radius: 3px;
-    width: 30%;
     text-align: center;
     color: black;
     }
