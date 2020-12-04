@@ -12,7 +12,7 @@ html {
 body {
     font-family: 'Gill Sans', Helvetica, Arial, sans-serif;
 	background: #ddd;
-	background: linear-gradient(white, rgb(100, 95, 95));
+	background:  rgb(100, 95, 95);
 	color: ivory;
 	font-size: 100%;
 	margin:0;
