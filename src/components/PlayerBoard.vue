@@ -47,6 +47,9 @@
 <script>
 export default {
   name: "PlayerBoard",
+  props:{
+    player: Object
+  },
   methods: {
     actionMade: function (id) {
       console.log(id);

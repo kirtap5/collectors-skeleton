@@ -28,8 +28,8 @@ export default {
     data: function () {
     return {
         dispPlayerboard: false,
-        playertag: "",
-        skills: Array
+        player: Object
+
     }},
     methods: {
         playerClicked: function (playertag) {

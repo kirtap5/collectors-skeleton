@@ -1,6 +1,8 @@
 <template>
   <div>
     <main>
+
+      <CircleComponent v-bind:value =2 /> 
       {{buyPlacement}} {{chosenPlacementCost}}
       <CollectorsBuyActions v-if="players[playerId]"
         :labels="labels"
@@ -21,8 +23,9 @@
           :card="card"
           :key="index"
         />
-              </div>
+      </div>
         <!--       ev inte. </div>-->
+
 
       Skills
       <div class="cardslots">
@@ -66,12 +69,14 @@
 
 import CollectorsCard from '@/components/CollectorsCard.vue'
 import CollectorsBuyActions from '@/components/CollectorsBuyActions.vue'
+import CircleComponent from '@/components/CircleComponent.vue'
 
 export default {
   name: "Collectors",
   components: {
     CollectorsCard,
     CollectorsBuyActions,
+    CircleComponent
   },
   data: function () {
     return {
