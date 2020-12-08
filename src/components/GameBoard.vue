@@ -10,7 +10,18 @@
           <div class="bottleCircle">$1</div>
         </div>
       </div>
-      <div class="section-card cardslots"></div>
+      <div class="section-card cardslots">
+         <CollectorsBuyActions
+          :labels="labels"
+          :player="player"
+          :itemsOnSale="itemsOnSale"
+          :marketValues="marketValues"
+          :placement="placement"
+          @buyCard="buyCard($event)"
+          @placeBottle="placeBottle('buy', $event)"
+        />
+
+      </div>
     </div>
 
     <div id="skill-section" class="board-section">
@@ -24,16 +35,16 @@
         </div>
       </div>
       <div class="section-card cardslots">
-                  <CollectorsCard
-              v-for="(card, index) in skillsOnSale"
-              :card="card"
-              :key="index"
-            />
+        <CollectorsCard
+          v-for="(card, index) in skillsOnSale"
+          :card="card"
+          :key="index"
+        />
       </div>
     </div>
     <div id="raise-value-section" class="board-section">
       <div class="section-slots">
-        <h2 class="category-title">Items</h2>
+        <h2 class="category-title">Raise value</h2>
         <div class="bottleCircles">
           <div class="bottleCircle">$1</div>
           <div class="bottleCircle">$1</div>
@@ -73,18 +84,23 @@
 
 
 <script>
-import CollectorsCard from '@/components/CollectorsCard.vue'
-
+import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
+import CollectorsCard from "@/components/CollectorsCard.vue";
 
 export default {
-  name: 'GameBoard',
+  name: "GameBoard",
   components: {
     CollectorsCard,
+    CollectorsBuyActions,
   },
   props: {
+    itemsOnSale: Array,
     skillsOnSale: Array,
     auctionCards: Array,
-
+    labels: Object,
+    player: Object,
+    marketValues: Object,
+    placement: Array,
   },
 };
 </script>

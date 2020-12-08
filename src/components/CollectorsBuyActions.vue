@@ -38,6 +38,7 @@ export default {
     labels: Object,
     player: Object,
     itemsOnSale: Array,
+    skillsOnSale: Array,
     marketValues: Object,
     placement: Array
   },
@@ -80,7 +81,8 @@ export default {
     },
     buyCard: function (card) {
       if (card.available) {
-        this.$emit('buyCard', card)
+        this.$parent.$emit('buyCard', card)
+        // this.$emit('buyCard', card)
         this.highlightAvailableCards()
       }
     }
