@@ -60,7 +60,7 @@ export default {
         return {
             round: 4,
             clicked: false,
-            color: "blue"
+            color: Blue
         }
     },
     methods: {

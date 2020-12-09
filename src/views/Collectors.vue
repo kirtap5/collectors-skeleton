@@ -102,7 +102,7 @@ export default {
     CollectorsBuyActions,
     GameBoard,
     PlayerBoard,
-    OtherPlayerboards
+    OtherPlayerboards,
   },
   data: function () {
     return {
