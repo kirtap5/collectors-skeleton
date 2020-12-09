@@ -27,7 +27,9 @@ function sockets(io, socket, data) {
       io.to(d.roomId).emit('collectorsCardBought', { 
           playerId: d.playerId,
           players: data.getPlayers(d.roomId),
-          itemsOnSale: data.getItemsOnSale(d.roomId) 
+          itemsOnSale: data.getItemsOnSale(d.roomId),
+          skillsOnSale: data.getSkillsOnSale(d.roomId) 
+
         }
       );
     });

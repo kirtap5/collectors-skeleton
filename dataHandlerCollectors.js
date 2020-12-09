@@ -147,6 +147,7 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     let c = null;
+    let d = null;
     /// check first if the card is among the items on sale
     for (let i = 0; i < room.itemsOnSale.length; i += 1) {
       // since card comes from the client, it is NOT the same object (reference)
@@ -154,6 +155,16 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
       if (room.itemsOnSale[i].x === card.x && 
           room.itemsOnSale[i].y === card.y) {
         c = room.itemsOnSale.splice(i,1, {});
+        break;
+      }
+    }
+
+    for (let i = 0; i < room.skillsOnSale.length; i += 1) {
+      // since card comes from the client, it is NOT the same object (reference)
+      // so we need to compare properties for determining equality      
+      if (room.skillsOnSale[i].x === card.x && 
+          room.skillsOnSale[i].y === card.y) {
+        d = room.skillsOnSale.splice(i,1, {});
         break;
       }
     }
@@ -167,7 +178,9 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
         break;
       }
     }
-    room.players[playerId].items.push(...c);
+    // room.players[playerId].items.push(...c);
+    room.players[playerId].skills.push(...d);
+
     room.players[playerId].money -= cost;
     
   }
