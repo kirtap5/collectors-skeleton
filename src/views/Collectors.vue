@@ -2,14 +2,26 @@
   <div>
     <main>
          
- <GameBoard 
-  :itemsOnSale="itemsOnSale"
+ <!-- <GameBoard 
+ :itemsOnSale="itemsOnSale"
  :skillsOnSale="skillsOnSale"
  :auctionCards="auctionCards"
-  />
+  /> -->
+
+  <CollectorsRaiseValue v-if="players[playerId]"
+        :labels="labels"
+        :player="players[playerId]"
+        :itemsOnSale="itemsOnSale"
+        :marketValues="marketValues"
+        :placement="marketPlacement"
+        @buyCard="buyCard($event)"
+        @placeBottle="placeBottle('buy', $event)"
+        />
 
       {{ buyPlacement }} {{ chosenPlacementCost }}
+
       <WorkArea/>
+
       <CollectorsBuyActions v-if="players[playerId]"
         :labels="labels"
         :player="players[playerId]"
@@ -87,7 +99,11 @@
 
 import CollectorsCard from "@/components/CollectorsCard.vue";
 import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
-import GameBoard from "@/components/GameBoard.vue";
+import CollectorsRaiseValue from "@/components/CollectorsRaiseValue.vue";
+
+
+
+// import GameBoard from "@/components/GameBoard.vue";
 import WorkArea from '@/components/WorkArea.vue'
 
 export default {
@@ -95,7 +111,8 @@ export default {
   components: {
     CollectorsCard,
     CollectorsBuyActions,
-    GameBoard,
+    CollectorsRaiseValue,
+    // GameBoard,
     WorkArea,
   },
   data: function () {

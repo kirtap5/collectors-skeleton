@@ -33,21 +33,58 @@
     </div>
     <div id="raise-value-section" class="board-section">
       <div class="section-slots">
-        <h2 class="category-title">Items</h2>
+        <h2 class="category-title">Raise value</h2>
         <div class="bottleCircles">
+          <div class="bottleCircle">$0</div>
+          <div class="bottleCircle">$0</div>
           <div class="bottleCircle">$1</div>
           <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
+          
         </div>
       </div>
+    
+    <div class="raise-value-temporary">
+
       <div class="raise-value-slot-container">
-        <div class="raise-value-slot"></div>
-        <div class="raise-value-slot"></div>
-        <div class="raise-value-slot"></div>
-        <div class="raise-value-slot"></div>
-        <div class="raise-value-slot"></div>
+        
+        <div>
+          <h5>Fastival</h5>
+          <div class="raise-value-slot"><img src="images/RAISEVAL-PINGVIN.png" id="fastival" width="100%"></div>
+          <p> 1 €</p> <!-- ska ändras i funktion -->
+        </div>
+
+        <div>
+          <h5>Figure</h5>
+          <div class="raise-value-slot"><img src="images/RAISEVAL-ROBOT.png" id="figure" width="100%"></div> 
+          <p> 1 €</p> <!-- ska ändras i funktion -->
+        </div>
+        
+        <div>
+          <h5>Music</h5>
+          <div class="raise-value-slot"><img src="images/RAISEVAL-MUSIC.png" id="music" width="100%"></div>
+          <p> 1 €</p> <!-- ska ändras i funktion -->
+        </div>
+        
+        <div>
+          <h5>Movie</h5>
+          <div class="raise-value-slot"><img src="images/RAISEVAL-FILM.png" id="movie" width="100%"></div>
+          <p> 1 €</p> <!-- ska ändras i funktion -->
+        </div>
+        
+        <div>
+          <h5>Technology</h5>
+          <div class="raise-value-slot"><img src="images/RAISEVAL-IT.png" id="technology" width="100%"></div>
+          <p> 1 €</p> <!-- ska ändras i funktion -->
+        </div>
+        
+        
+        
       </div>
+
+      <div class="raise-value-slot-container">hej</div>
+    </div>
+
+      
     </div>
 
     <div id="auction-section" class="board-section">
@@ -114,12 +151,22 @@ export default {
 }
 
 .raise-value-slot-container {
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: space-around;
+  border: solid green 0.5px;
+  height: 180px;
 }
+
+.raise-value-temporary {
+  display: grid;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 100%;
+  width: 100%;
+}
+
 .raise-value-slot {
-  background-color: #6d9eebff;
+  /*background-color: #6d9eebff;*/
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -138,6 +185,8 @@ export default {
 .section-card {
   width: 80%;
 }
+
+
 
 /* #C1E1C1 for skills (Green) */
 
