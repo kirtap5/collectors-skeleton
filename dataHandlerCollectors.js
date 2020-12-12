@@ -77,7 +77,7 @@ Data.prototype.createRoom = function (roomId, playerCount, lang = "en") {
   { cost: 0, playerId: null },
   { cost: 0, playerId: null }];
   room.marketPlacement = [{ cost: 0, playerId: null },
-  { cost: -2, playerId: null },
+  { cost: 2, playerId: null },
   { cost: 0, playerId: null }];
   this.rooms[roomId] = room;
 }

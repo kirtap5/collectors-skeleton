@@ -28,7 +28,8 @@
             v-if="players[playerId]"
             :labels="labels"
             :player="players[playerId]"
-            :itemsOnSale="itemsOnSale"
+            :skillsOnSale="skillsOnSale"
+            :auctionCards="auctionCards"
             :marketValues="marketValues"
             :placement="marketPlacement"
             @buyCard="buyCard($event)"
@@ -227,6 +228,15 @@ export default {
             this.$set(this.players[p].hand[c], "available", false);
         }
       }
+
+      for (let c = 0; c < this.skillsOnSale.length; c += 1) {
+        if (typeof this.skillsOnSale[c].item !== "undefined")
+          this.$set(this.skillsOnSale[c], "available", false);
+      }
+      for (let c = 0; c < this.auctionCards.length; c += 1) {
+        if (typeof this.auctionCards[c].item !== "undefined")
+          this.$set(this.auctionCards[c], "available", false);
+      }
     },
   },
   created: function () {
@@ -289,7 +299,6 @@ export default {
         this.skillsOnSale = d.rotatedCards.skillsOnSale;
         this.auctionCards = d.rotatedCards.auctionCards;
         this.marketValues = d.marketValues;
-
       }.bind(this)
     );
 

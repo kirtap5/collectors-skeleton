@@ -1,11 +1,11 @@
 <template>
   <div id="RaiseValueSection" class="board-section">
     <div class="raise-value-slot-container">
-      <div class="raise-value-slot">{{marketValues.fastaval}}</div>
-      <div class="raise-value-slot">{{marketValues.movie}}</div>
-      <div class="raise-value-slot">{{marketValues.technology}}</div>
-      <div class="raise-value-slot">{{marketValues.figures}}</div>
-      <div class="raise-value-slot">{{marketValues.music}}</div>
+      <div class="raise-value-slot">{{ marketValues.fastaval }}</div>
+      <div class="raise-value-slot">{{ marketValues.movie }}</div>
+      <div class="raise-value-slot">{{ marketValues.technology }}</div>
+      <div class="raise-value-slot">{{ marketValues.figures }}</div>
+      <div class="raise-value-slot">{{ marketValues.music }}</div>
     </div>
 
     <div class="button-section">
@@ -32,7 +32,8 @@ export default {
   props: {
     labels: Object,
     player: Object,
-    itemsOnSale: Array,
+    skillsOnSale: Array,
+    auctionCards: Array,
     marketValues: Object,
     placement: Array,
   },
@@ -52,21 +53,37 @@ export default {
       this.$emit("placeBottle", p.cost);
       this.highlightAvailableCards(p.cost);
     },
-    highlightAvailableCards: function (cost = 100) { //Vilka kort ska vara väljbara här? Skick in rätt props
-      for (let i = 0; i < this.itemsOnSale.length; i += 1) {
-        if (
-          this.marketValues[this.itemsOnSale[i].item] <=
-          this.player.money - cost
-        ) {
-          this.$set(this.itemsOnSale[i], "available", true);
-        } else {
-          this.$set(this.itemsOnSale[i], "available", false);
-        }
-        this.chosenPlacementCost = cost;
+    highlightAvailableCards: function (cost = 100) {
+      //Vilka kort ska vara väljbara här? Skick in rätt props
+      let lastSkill;
+      let lastAction;
+      //Ta fram sista kortet i skills
+      for (let card of this.skillsOnSale) {
+        card.item != undefined ? (lastSkill = card) : null;
       }
+      if (this.marketValues[lastSkill.item] <= this.player.money - cost) {
+        this.$set(lastSkill, "available", true);
+      } else {
+        this.$set(lastSkill, "available", false);
+      }
+      this.chosenPlacementCost = cost;
+      console.log(lastSkill);
+      console.log("INNTE I HIGHLIGTHT CARDS");
+
+      //Ta fram sista kortet i auctionSection
+      for (let card of this.auctionCards) {
+        card.item != undefined ? (lastAction = card) : null;
+      }
+      if (this.marketValues[lastAction.item] <= this.player.money - cost) {
+        this.$set(lastAction, "available", true);
+      }  else {
+        this.$set(lastAction, "available", false);
+      }
+      this.chosenPlacementCost = cost;
+
       for (let i = 0; i < this.player.hand.length; i += 1) {
         if (
-          this.marketValues[this.player.hand[i].item] <=
+          this.marketValues[this.player.hand[i].market] <=
           this.player.money - cost
         ) {
           this.$set(this.player.hand[i], "available", true);
@@ -77,9 +94,10 @@ export default {
         }
       }
     },
-    buyCard: function (card) { // Kortet ska hamna ner på raise-value-area, inte till item on hand. Ny funktion.
+    buyCard: function (card) {
+      // Kortet ska hamna ner på raise-value-area, inte till item on hand. Ny funktion.
       if (card.available) {
-        this.$emit("buyCard", card);
+        this.$emit("buyRaiseValue", card);
         this.highlightAvailableCards();
       }
     },
