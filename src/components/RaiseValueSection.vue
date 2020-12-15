@@ -76,7 +76,7 @@ export default {
       }
       if (this.marketValues[lastAction.item] <= this.player.money - cost) {
         this.$set(lastAction, "available", true);
-      }  else {
+      } else {
         this.$set(lastAction, "available", false);
       }
       this.chosenPlacementCost = cost;
@@ -94,7 +94,7 @@ export default {
         }
       }
     },
-    buyCard: function (card) {
+    buyRaiseValue: function (card) {
       // Kortet ska hamna ner på raise-value-area, inte till item on hand. Ny funktion.
       if (card.available) {
         this.$emit("buyRaiseValue", card);

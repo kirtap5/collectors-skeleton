@@ -32,7 +32,7 @@
             :auctionCards="auctionCards"
             :marketValues="marketValues"
             :placement="marketPlacement"
-            @buyCard="buyCard($event)"
+            @buyRaiseValue="buyRaiseValue($event)"
             @placeBottle="placeBottle('buy', $event)"
           />
           <AuctionSection
@@ -347,6 +347,10 @@ export default {
         card: card,
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
+    },
+    buyRaiseValue: function(card){
+      console.log("Valt raise value kort: ")
+      console.log(card);
     },
     buySkillCard: function (card) {
       this.$store.state.socket.emit("collectorsBuySkillCard", {
