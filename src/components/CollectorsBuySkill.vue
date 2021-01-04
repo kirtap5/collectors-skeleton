@@ -271,30 +271,4 @@ p {
   align-items: flex-start;
   color: black;
 }
-
-
-@media only screen and (max-width: 1050px) {
-    /* phones */
-  .buy-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 65px);
-    grid-template-rows: repeat(auto-fill, 90px);
-  }
-  .cardslots {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 65px);
-    grid-template-rows: repeat(auto-fill, 90px);
-    transform: scale(0.75) translate(-25%, -25%);
-    transition: 0.2s;
-    transition-timing-function: ease-out;
-  }
-
-   .cardslots div {
-    z-index: 0;
-  }
-  .cardslots div:hover {
-  transform: scale(1) translate(-25%, 0);
-  z-index: 1;
-}
-}
 </style>
