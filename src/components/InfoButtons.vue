@@ -254,4 +254,19 @@ p {
 .slide-leave-to {
   transform: translateY(-50%) translateX(100vw);
 }
+
+
+@media only screen and (max-width: 1050px) {
+.button{
+  padding: 5px 7px;
+  font-size: 80%;
+  font-weight: 700;
+}
+.smallButton {
+  padding: 3px 5px;
+  font-size: 70%;
+}
+
+}
+
 </style>

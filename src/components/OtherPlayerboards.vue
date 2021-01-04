@@ -55,12 +55,7 @@ export default {
 };
 </script>
 <style scoped>
-    /*#AllOtherPlayerboards
- 
-      display:flex;
-      justify-content: flex-end;
-      flex-direction: row;
-    }*/
+
 
     .otherPlayerBoard {
     margin: 5px;
@@ -88,8 +83,19 @@ export default {
       /*height: 600px;
       width: 1000px;*/
       height: 30vw; /*30vw;*/
-      width: 40vw; /*40vw;*/
-      border-bottom: 1px solid black;
+      width: 70vw; /*40vw;*/
+    }
+
+
+    @media screen and (max-width: 825px) {
+      h2 {
+        font-size: 70%;
+      }
+      #AllOtherPlayerboards{
+        display:flex;
+        justify-content: flex-end;
+        flex-direction: row;
+      }
     }
 
     /*.showPlayerBoard {

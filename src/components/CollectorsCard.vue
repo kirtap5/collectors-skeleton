@@ -1,5 +1,6 @@
 <template>
-    <div v-if="card.x>0" :class="['card', {'available-to-choose': availableAction}]" :style="{'background-position': (-(card.x-1)*160)+'px ' + (-(card.y-1)*224)+'px'}" @click="doAction">
+  <div v-if="card.x>0" :class="['card', {'available-to-choose': availableAction}]" :style="{'background-position': (-(card.x-1)*160)+'px ' + (-(card.y-1)*224)+'px'}" @click="doAction">
+
     <!-- Ändra här uppe också storleken innan det står px -->
     </div>
 </template>

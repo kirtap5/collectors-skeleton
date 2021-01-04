@@ -163,6 +163,7 @@ export default {
   grid-template-columns: repeat(auto-fill, 85px);
   grid-template-rows: repeat(auto-fill, 117px);
 }
+
 .cardslots div {
   transform: scale(0.5) translate(-50%, -50%);
   transition: 0.2s;
@@ -172,5 +173,41 @@ export default {
 .cardslots div:hover {
   transform: scale(1) translate(-25%, 0);
   z-index: 1;
+}
+
+
+/*@media only screen and (min-width: 768px) {
+
+}*/
+
+@media only screen and (max-width: 1050px) {
+    /* phones */
+  .buy-cards {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 65px);
+    grid-template-rows: repeat(auto-fill, 90px);
+  }
+  .cardslots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 65px);
+    grid-template-rows: repeat(auto-fill, 90px);
+    transform: scale(0.75) translate(-25%, -25%);
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+  }
+
+  .cardslots div {
+    z-index: 0;
+  }
+
+  .cardslots div:hover {
+    transform: scale(1) translate(-25%, 0);
+    z-index: 1;
+  }
+}
+
+@media only screen and (max-width: 767px) and (orientation: portrait) {
+    /* portrait phones */
 }
 </style>

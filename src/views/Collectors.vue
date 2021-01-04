@@ -120,8 +120,17 @@
               :player="player"
             >
               <h1 v-if="player.active">It's {{ index }}'s turn!</h1>
-            </div>
           </div>
+
+           {{labels.invite}}
+          <input
+            type="text"
+            :value="publicPath + $route.path"
+            @click="selectAll"
+            readonly="readonly"
+          />
+
+        </div>
 
           <OtherPlayerboards :Players="players" :playerId="playerId" />
         </div>
@@ -141,81 +150,13 @@
           />
         </div>
       </div>
-
-      <div class="buttons">
-        <button @click="drawCard">
-          {{ labels.draw }}
-        </button>
-      </div>
-      <div class="my-cards">
-        <CollectorsCard
-          v-for="(card, index) in myCards"
-          :card="card"
-          :key="index"
-        />
-      </div>
-
-      Skills
-      <div class="cardslots">
-        <CollectorsCard
-          v-for="(card, index) in skillsOnSale"
-          :card="card"
-          :key="index"
-        />
-      </div>
-      Auction
-      <div class="cardslots">
-        <CollectorsCard
-          v-for="(card, index) in auctionCards"
-          :card="card"
-          :key="index"
-        />
-      </div>
-
-      <div class="playerboard">
-        Items-on-hand
-        <div class="cardslots" v-if="players[playerId]">
-          <CollectorsCard
-            v-for="(card, index) in players[playerId].items"
-            :card="card"
-            :key="index"
-          />
-        </div>
-        <div>
-          Skills-on-hand
-          <div class="cardslots" v-if="players[playerId]">
-            <CollectorsCard
-              v-for="(card, index) in players[playerId].skills"
-              :card="card"
-              :key="index"
-            />
-          </div>
-        </div>
-      </div>
-    </main>
-    {{ players }}
-    <!-- <h1>MARKET VALUES: </h1>{{ marketValues }} -->
-    <button v-if="players[playerId]" @click="players[playerId].money += 1">
-      fake more money
-    </button>
-    <footer>
-      <p>
-        {{ labels.invite }}
-        <input
-          type="text"
-          :value="publicPath + $route.path"
-          @click="selectAll"
-          readonly="readonly"
-        />
-      </p>
-    </footer>
+  </main>
   </div>
 </template>
 
 <script>
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
 
-import CollectorsCard from "@/components/CollectorsCard.vue";
 import OtherPlayerboards from "@/components/OtherPlayerboards.vue";
 import CollectorsBuySkill from "@/components/CollectorsBuySkill.vue";
 import WorkArea from "@/components/WorkArea.vue";
@@ -230,7 +171,6 @@ import SecretCard from "@/components/SecretCard.vue";
 export default {
   name: "Collectors",
   components: {
-    CollectorsCard,
     CollectorsBuySkill,
     WorkArea,
     ItemSection,
@@ -639,9 +579,10 @@ main {
 
 .layout_wrapper {
   display: grid;
-  grid-template-columns: 50% 30% 20%;
+  grid-template-columns: 60% 25% 15%;
   grid-template-rows: auto 1fr;
   overflow: hidden;
+  margin: 10px;
 }
 
 .first-column {
@@ -676,6 +617,7 @@ main {
   display: grid;
   grid-template-columns: 60% 40%;
   grid-column: 1/4;
+  margin-top: 30px;
 }
 
 /*SECRET SECTION - TA BORT?*/
@@ -839,9 +781,28 @@ p {
   transform: translateY(-50%) translateX(100vw);
 }
 
-@media screen and (max-width: 800px) {
-  main {
-    width: 90vw;
+@media screen and (max-width: 825px) {
+  .layout_wrapper {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 1fr auto ;
+    overflow: hidden;
+    margin: 10px;
+  }
+
+  .first-column {
+    overflow: hidden;
+    grid-row: 2/3;
+  }
+
+  .second-column {
+    grid-column: 2/3;
+    grid-row: 2/3;
+  }
+
+  .third-column {
+    grid-row: 1/2;
+    grid-column: 1/3;
   }
 }
 </style>
