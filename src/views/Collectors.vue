@@ -43,7 +43,6 @@
             :skillsOnSale="skillsOnSale"
             :marketValues="marketValues"
             :placement="skillPlacement"
-            @buySkillCard="buySkillCard($event)"
             :allCardsChosen="allCardsChosen"
             :players="players"
             @selectAction="selectAction($event)"
@@ -66,38 +65,17 @@
             :labels="labels"
             :player="players[playerId]"
             :auctionCards="auctionCards"
-            :upForAuction="upForAuction"
             :marketValues="marketValues"
             :placement="auctionPlacement"
-            :highestBid="highestBid"
-            :highestBiddingPlayer="highestBiddingPlayer"
-            :numberOfPasses="numberOfPasses"
-            @buyAuctionCard="buyAuctionCard($event)"
-            @selectAction="selectAction($event)"
-            @placeBid="placeBid($event)"
-            @passed="passed($event)"
-            @auctionToHand="auctionToHand($event)"
-            @placeBottle="placeBottle('auctionType', 'skill', $event)"
-          />
-        
-
-          
-
-
-          <!-- glöm ej ändra från buy på de ovan-->
-          <div>
-      <PlayerBoard v-if="players[playerId]" :player="players[playerId]" />
-      <OtherPlayerboards :players="players" :playerId="playerId"
-            :placement="auctionPlacement"
             :allCardsChosen="allCardsChosen"
+            :players="players"
             @selectAction="selectAction($event)"
             @placeBottle="placeBottle('auctionType', 'auction', $event)"
           />
 
         </div>
-        </div>
 
-       <div class="second-column">
+        <div class="second-column">
           <WorkArea
             v-if="players[playerId]"
             :color="players[playerId].color"
@@ -125,10 +103,6 @@
 
           <OtherPlayerboards :Players="players" :playerId="playerId" />
         </div>
-
-
-          <OtherPlayerboards :Players="players" :playerId="playerId" />
-        
 
         <div id="hand_playerboard">
           <PlayerBoard v-if="players[playerId]" :player="players[playerId]" />
@@ -285,7 +259,6 @@ export default {
       itemsOnSale: [],
       skillsOnSale: [],
       auctionCards: [],
-      upForAuction: [],
       playerid: 0,
 
       buyItemProps: {
@@ -549,45 +522,6 @@ export default {
         cost: this.chosenPlacementCost,
       });
     },
-    buyAuctionCard: function (card) {
-      this.$store.state.socket.emit("collectorsBuyAuctionCard", {
-        roomId: this.$route.params.id,
-        playerId: this.playerId,
-        card: card,
-        cost: this.marketValues[card.market] + this.chosenPlacementCost,
-      });
-    },
-    auctionToHand: function (d) {
-      this.$store.state.socket.emit("collectorsAuctionToHand", {
-        roomId: this.$route.params.id,
-        playerId: this.playerId,
-        card: this.upForAuction[0],
-        cost: this.highestBid,
-        destination: d
-      });
-    },
-    placeBid: function (bid) {
-      console.log('collectors.vue ' + bid)
-      if(bid > this.highestBid){
-      this.$store.state.socket.emit("collectorsPlaceBid", {
-        roomId: this.$route.params.id,
-        playerId: this.playerId,
-        bid: bid,
-      });
-      this.highestBid = bid;
-      this.highestBiddingPlayer = this.playerId;
-      }
-    },
-    passed: function () {
-      this.$store.state.socket.emit("collectorsPassed", {
-        roomId: this.$route.params.id,
-        playerId: this.playerId,
-      });
-    },
-    rotateCards: function () {
-      this.$store.state.socket.emit("rotateCards", {});
-    },
-
     startNextRound: function () {
       this.$store.state.socket.emit("startNextRound", {
         roomId: this.$route.params.id,
