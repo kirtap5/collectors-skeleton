@@ -25,13 +25,6 @@
     <div class="dot" id="ITEX"></div>
     <div class="dot" id="MUSICEX"></div>
     <div class="dot" id="PINGVINEX"></div>
-
-    <!-- actions -->
-    <div class="dot" id="acFLASKA"></div>
-    <div class="dot" id="acFLASKA"></div>
-    <div class="dot" id="acKORT"></div>
-    <div class="dot" id="acENPENG"></div>
-    <div class="dot" id="acTWOPENG"></div>
   </div>
 </template>
 
@@ -152,26 +145,6 @@ export default {
 }
 #PINGVINEX {
   background: url("/images/SKILL-PINGVINEX.png");
-  background-size: 50px 50px;
-  background-repeat: no-repeat;
-}
-#acFLASKA {
-  background: url("/images/ACTION-FLASKA.png");
-  background-size: 50px 50px;
-  background-repeat: no-repeat;
-}
-#acKORT {
-  background: url("/images/ACTION-PLUSCARD.png");
-  background-size: 50px 50px;
-  background-repeat: no-repeat;
-}
-#acENPENG {
-  background: url("/images/ACTION-ENPENG.png");
-  background-size: 50px 50px;
-  background-repeat: no-repeat;
-}
-#acTWOPENG {
-  background: url("/images/ACTION-TWOPENG.png");
   background-size: 50px 50px;
   background-repeat: no-repeat;
 }

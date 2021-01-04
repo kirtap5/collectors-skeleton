@@ -66,43 +66,6 @@ Data.prototype.createRoom = function (roomId, playerCount, lang = "en") {
   room.skillsOnSale = room.deck.splice(0, 5);
   room.auctionCards = room.deck.splice(0, 4);
   room.market = [];
-  room.upForAuction = [];
-  room.highestBiddingPlayer = {};
-  room.highestBid = 0;
-  room.buyPlacement = [{ cost: 1, playerId: null },
-  { cost: 1, playerId: null },
-  { cost: 2, playerId: null },
-  { cost: 2, playerId: null },
-  { cost: 3, playerId: null }];
-  room.skillPlacement = [{ cost: 0, playerId: null },
-  { cost: 0, playerId: null },
-  { cost: 0, playerId: null },
-  { cost: 1, playerId: null },
-  { cost: 1, playerId: null }];
-  room.auctionPlacement = [{ cost: -2, playerId: null },
-  { cost: -1, playerId: null },
-  { cost: 0, playerId: null },
-  { cost: 0, playerId: null }];
-  room.marketPlacement = [{ cost: 0, playerId: null },
-  { cost: -2, playerId: null },
-  { cost: 0, playerId: null }];
-  room.buyPlacement = [{ cost: 1, playerId: null, type: "itemType" },
-  { cost: 1, playerId: null, type: "itemType" },
-  { cost: 2, playerId: null, type: "itemType" },
-  { cost: 2, playerId: null, type: "itemType" },
-  { cost: 3, playerId: null, type: "itemType" }];
-  room.skillPlacement = [{ cost: 0, playerId: null, type: "skillType" },
-  { cost: 0, playerId: null, type: "skillType" },
-  { cost: 0, playerId: null, type: "skillType" },
-  { cost: 1, playerId: null, type: "skillType" },
-  { cost: 1, playerId: null, type: "skillType" }];
-  room.auctionPlacement = [{ cost: -2, playerId: null, type: "auctionType" },
-  { cost: -1, playerId: null, type: "auctionType" },
-  { cost: 0, playerId: null, type: "auctionType" },
-  { cost: 0, playerId: null, type: "auctionType" }];
-  room.marketPlacement = [{ cost: 0, playerId: null, type: "marketType" },
-  { cost: -2, playerId: null, type: "marketType" },
-  { cost: 0, playerId: null, type: "marketType" }];
   room.readyForNextRound = new Set();
   room.buyPlacement = [{
       cost: 1,
@@ -214,17 +177,6 @@ Data.prototype.joinGame = function (roomId, playerId) {
       return true;
     } else if (Object.keys(room.players).length < room.playerCount) {
       console.log("Player", playerId, "joined for the first time");
-      room.players[playerId] = {
-        hand: [],
-        money: 1,
-        points: 0,
-        skills: [],
-        items: [],
-        income: [],
-        secret: [],
-        bid: 0,
-        color: colors[Object.keys(room.players).length]
-      };
       room.playerOrder[Object.keys(room.players).length] = playerId;
       room.players[playerId] = {
         hand: room.deck.splice(0, 3),
@@ -233,9 +185,6 @@ Data.prototype.joinGame = function (roomId, playerId) {
         skills: [],
         items: [],
         income: [],
-        secret: [],
-        bid: 0,
-        passed: this.setPassedPlayer(roomId),
         secret: [], 
         color: colors[Object.keys(room.players).length],
         bottles: 2, //ska vara 2!!
@@ -274,23 +223,6 @@ Data.prototype.setNextActivePlayer = function (roomId, activePlayerId) {
   return true;
 }
 
-Data.prototype.auctionOver = function (roomId) {
-  let room = this.rooms[roomId];
-  if (this.passedCheck(roomId)) {
-    this.auctionToHand(roomId, room.highestBiddingPlayer, room.upForAuction[0], room.highestBid)
-    return true;
-  }
-  else { return false; }
-}
-
-Data.prototype.startNextRound = function (roomId) {
-  let room = this.rooms[roomId];
-  room.round += 1;
-  this.rotateCards(roomId);
-  this.resetPlacements(roomId);
-  for (let i = 0; i < room.playerOrder.length; i++) {
-    room.players[room.playerOrder[i]].availableBottles = room.players[room.playerOrder[i]].bottles;
-    room.players[room.playerOrder[i]].money = room.players[room.playerOrder[i]].money + room.players[room.playerOrder[i]].income.length;
 Data.prototype.getBottleIncome = function(roomId, playerId, bottleIncome){
   let room = this.rooms[roomId];
   if(bottleIncome.gainOneCoin){
@@ -352,29 +284,6 @@ Data.prototype.setActivePlayer = function (roomId) {
     return true;
   } else return false;
 }
-Data.prototype.setPassedPlayer = function (roomId) {
-  let room = this.rooms[roomId];
-  if (Object.keys(room.players).length === 0) {
-    return true;
-  } else return false;
-}
-
-Data.prototype.passedCheck = function (roomId) {
-  let room = this.rooms[roomId];
-  let numberOfPass = 0;
-  for (let i = 1; i < room.playerOrder.length; i++) {
-    if (room.players[room.playerOrder[i]].passed) {
-      numberOfPass += 1;
-    }
-  }
-  if (numberOfPass == room.playerOrder.length - 2) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
 
 Data.prototype.getPlayers = function (id) {
   let room = this.rooms[id]
@@ -447,12 +356,6 @@ Data.prototype.rotateCards = function (roomId) {
 
     //fyller på auction från kortleken
     this.refillAuction(room);
-    return {
-      skillsOnSale: room.skillsOnSale,
-      itemsOnSale: room.itemsOnSale,
-      auctionCards: room.auctionCards,
-    }
-  } else return [];
 
   }
 }
@@ -560,8 +463,6 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
     room.players[playerId].active = false;
     room.players[playerId].availableBottles -= 1;
     if (this.setNextActivePlayer(roomId, playerId)) {
-      room.nextRound = true;
-
       for(let i=0; i <room.playerOrder.length; i++){
         room.players[room.playerOrder[i]].dispBottles = true;
       }
@@ -675,7 +576,6 @@ Data.prototype.buySkillCard = function (roomId, playerId, card, cost) {
     room.players[playerId].active = false;
     room.players[playerId].availableBottles -= 1;
     if (this.setNextActivePlayer(roomId, playerId)) {
-      room.nextRound = true;
       for(let i=0; i <room.playerOrder.length; i++){
         room.players[room.playerOrder[i]].dispBottles = true;
       }
@@ -683,88 +583,6 @@ Data.prototype.buySkillCard = function (roomId, playerId, card, cost) {
   }
 }
 
-Data.prototype.buyAuctionCard = function (roomId, playerId, card, cost) {
-  let room = this.rooms[roomId];
-  if (typeof room !== 'undefined') {
-    let d = null;
-    /// check first if the card is among the items on sale
-    for (let i = 0; i < room.auctionCards.length; i += 1) {
-      // since card comes from the client, it is NOT the same object (reference)
-      // so we need to compare properties for determining equality      
-      if (room.auctionCards[i].x === card.x &&
-        room.auctionCards[i].y === card.y) {
-        d = room.auctionCards.splice(i, 1, {});
-        break;
-      }
-    }
-    console.log(room.auctionCards.length)
-    // ...then check if it is in the hand. It cannot be in both so it's safe
-    for (let i = 0; i < room.players[playerId].hand.length; i += 1) {
-      // since card comes from the client, it is NOT the same object (reference)
-      // so we need to compare properties for determining equality      
-      if (room.players[playerId].hand[i].x === card.x &&
-        room.players[playerId].hand[i].y === card.y) {
-        d = room.players[playerId].hand.splice(i, 1);
-        break;
-      }
-    }
-    room.upForAuction.push(...d);
-    room.players[playerId].money -= cost;
-  }
-}
-
-Data.prototype.auctionToHand = function (roomId, playerId, card, cost, destination) {
-  let room = this.rooms[roomId];
-  if (typeof room !== 'undefined') {
-    if (destination == 'items' && this.passedCheck(roomId)){
-      room.players[playerId].items.push(card);
-      room.players[playerId].money -= cost;
-      room.highestBid = 0;
-      room.highestBiddingPlayer = {};
-      room.upForAuction = [];
-    }
-    if (destination == 'skills' && this.passedCheck(roomId)){
-      room.players[playerId].skills.push(card);
-      room.players[playerId].money -= cost;
-      room.highestBid = 0;
-      room.highestBiddingPlayer = {};
-      room.upForAuction = [];
-    }
-    if (destination == 'raiseval' && this.passedCheck(roomId)){
-      room.market.push(card);
-      room.players[playerId].money -= cost;
-      room.highestBid = 0;
-      room.highestBiddingPlayer = {};
-      room.upForAuction = [];
-    }
-  }
-}
-
-Data.prototype.placeBid = function (roomId, playerId, bid) {
-  let room = this.rooms[roomId];
-  if (typeof room !== 'undefined') {
-    room.players[playerId].bid += bid;
-    if (bid > room.highestBid) {
-      room.highestBid = bid;
-      room.highestBiddingPlayer = playerId;
-    }
-    if (this.auctionOver(roomId)) {
-      room.setNextActivePlayer = true;
-    }
-  }
-}
-
-Data.prototype.passed = function (roomId, playerId) {
-  let room = this.rooms[roomId];
-  if (typeof room !== 'undefined') {
-    room.players[playerId].passed = true;
-    if (this.auctionOver(roomId)) {
-      room.setNextActivePlayer = true;
-    }
-  }
-}
-
-Data.prototype.placeBottle = function (roomId, playerId, action, cost) {
 Data.prototype.placeBottle = function (roomId, playerId, action, cost, id) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
@@ -862,12 +680,6 @@ Data.prototype.getAuctionCards = function (roomId) {
   } else return [];
 }
 
-Data.prototype.getUpForAuctionCards = function (roomId) {
-  let room = this.rooms[roomId];
-  if (typeof room !== 'undefined') {
-    return room.upForAuction;
-  }
-}
 Data.prototype.setSecret = function (roomId, playerId, secretCard) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
