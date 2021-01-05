@@ -199,8 +199,8 @@ export default {
 
 .cardslots {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 105px);
-  grid-template-rows: repeat(auto-fill, 145px);
+  grid-template-columns: repeat(auto-fill, 130px);
+  grid-template-rows: repeat(auto-fill, 180px);
 }
 .cardslots div {
   transform: scale(0.5) translate(-50%, -50%);

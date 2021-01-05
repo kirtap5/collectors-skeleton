@@ -18,17 +18,13 @@
       <div class="buttons" v-for="(p, index) in placement" :key="index">
         <button
           v-if="p.playerId === null"
-          :disabled="buttonDisabled(p.cost)"
+          :disabled="cannotAfford(p.cost)"
           @click="placeBottle(p)"
         >
-          ${{ p.cost }}<span v-if="p.specialAction"> (2 cards)</span>
+          ${{ p.cost }}
         </button>
-        <div
-          class="clickedButton"
-          v-if="p.playerId !== null && typeof players !== 'undefined'"
-          :style="{ backgroundColor: players[p.playerId].color }"
-        >
-          {{ p.playerId }}
+        <div v-if="p.playerId !== null">
+          <!-- {{ p.playerId }} -->
         </div>
       </div>
     </div>
@@ -50,7 +46,6 @@ export default {
     auctionCards: Array,
     marketValues: Object,
     placement: Array,
-    players: Object,
   },
   data: function () {
     return {
@@ -64,15 +59,6 @@ export default {
     };
   },
   methods: {
-    buttonDisabled: function (cost) {
-      if (
-        this.cannotAfford(cost) ||
-        !this.player.active ||
-        this.player.availableBottles == 0
-      ) {
-        return true;
-      } else return false;
-    },
     cannotAfford: function (cost) {
       let minCost = 100;
       for (let key in this.marketValues) {
@@ -85,20 +71,19 @@ export default {
       return this.marketValues[card.market];
     },
     placeBottle: function (p) {
-      this.$emit("placeBottle", p);
+      this.$emit("placeBottle", p.cost);
       this.highlightAvailableCards(p.cost);
     },
     highlightAvailableCards: function (cost = 100) {
       let lastSkill;
-      let lastAuction;
+      let lastAction;
 
       //Ta fram sista kortet i skills
       for (let card of this.skillsOnSale) {
         card.item != undefined ? (lastSkill = card) : null;
       }
-      if (this.player.money - cost >= 0) {
+      if (this.marketValues[lastSkill.item] <= this.player.money - cost) {
         this.$set(lastSkill, "available", true);
-        console.log("skill har marketrats")
       } else {
         this.$set(lastSkill, "available", false);
       }
@@ -106,17 +91,20 @@ export default {
 
       //Ta fram sista kortet i auction
       for (let card of this.auctionCards) {
-        card.item != undefined ? (lastAuction = card) : null;
+        card.item != undefined ? (lastAction = card) : null;
       }
-      if (this.player.money - cost >= 0) {
-        this.$set(lastAuction, "available", true);
+      if (this.marketValues[lastAction.item] <= this.player.money - cost) {
+        this.$set(lastAction, "available", true);
       } else {
-        this.$set(lastAuction, "available", false);
+        this.$set(lastAction, "available", false);
       }
       this.chosenPlacementCost = cost;
 
       for (let i = 0; i < this.player.hand.length; i += 1) {
-        if (this.player.money - cost >= 0) {
+        if (
+          this.marketValues[this.player.hand[i].market] <=
+          this.player.money - cost
+        ) {
           this.$set(this.player.hand[i], "available", true);
           this.chosenPlacementCost = cost;
         } else {
@@ -132,42 +120,35 @@ export default {
 <style scoped>
 #RaiseValueSection {
   background-color: #b4a7d6ff;
-  border-radius: 10px;
-  margin: 2px;
 }
-
-/*.button-section {
+.buy-cards {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 130px);
+  grid-template-rows: repeat(auto-fill, 180px);
+}
+.button-section {
   width: 20%;
-}*/
+}
 
 .buttons {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 50px);
-}
-
-.clickedButton {
-  border: 1px solid rgb(118, 118, 118);
-  border-radius: 2px;
-  text-align: center;
-  align-items: flex-start;
-  color: black;
+  grid-template-columns: repeat(auto-fill, 130px);
 }
 
 .raise-value-slot-container {
   width: 80%;
-  height: fit-content;
   display: grid;
+  grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   text-align: center;
   color: black;
-  font-size: 80%;
   font-weight: bold;
-
 }
 .raise-value-slot {
   background-color: #6d9eebff;
-  width: 3vw;
-  height: 3vw;
+  width: 6vw;
+  height: 6vw;
   border-radius: 50%;
   border: 1px solid #19181850;
   display: flex;
@@ -175,26 +156,25 @@ export default {
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-
 }
 #rvMovie {
   background: url("/images/RAISEVAL-FILM.png");
-  background-size: 3vw 3vw;
+  background-size: 6vw 6vw;
 }
 #rvFigures {
   background: url("/images/RAISEVAL-ROBOT.png");
-  background-size: 3vw 3vw;
+  background-size: 6vw 6vw;
 }
 #rvTechnology {
   background: url("/images/RAISEVAL-IT.png");
-  background-size: 3vw 3vw;
+  background-size: 6vw 6vw;
 }
 #rvMusic {
   background: url("/images/RAISEVAL-MUSIC.png");
-  background-size: 3vw 3vw;
+  background-size: 6vw 6vw;
 }
 #rvFastaval {
   background: url("/images/RAISEVAL-PINGVIN.png");
-  background-size: 3vw 3vw;
+  background-size: 6vw 6vw;
 }
 </style>

@@ -30,7 +30,7 @@ export default new Vuex.Store({
         {
           playerCount: d.playerCount, 
           roomId: state.roomId,
-          lang: d.lang });
+          lang: state.lang });
     },
     SET_PLAYER_COUNT(state, d) {
       state.playerCount = d;

@@ -1,285 +1,56 @@
 <template>
-  <div class="handPlayer" :style="{ backgroundColor: player.color }">
-    <div class="buttonArea">
-      <div id="infoButton">
-        <InfoButtons :modalProps="handProps" />
-      </div>
-      <!--  <div>{{ player.secret }}</div>-->
-      <!--<div v-if="player.color===DarkSeaGreen"></div>-->
+    <div id = "handSlot">
 
-      <button
-        class="button clickable"
-        :style="{ backgroundColor: player.color }"
-        :class="player.color"
-        @click="secretCard()"
-      >
-        My secret card
-        <div v-if="clicked" id="showSecretCard">
-          <transition name="fade slide" appear>
-            <div class="background">
-              <h1>Secret card</h1>
-              <p>Your secret card is:</p>
-              <CollectorsCard
-                v-for="(card, index) in player.secret"
-                :card="card"
-                :availableAction="card.available"
-                :key="'secret' + index"
-                class="theSecretCard"
-              />
-              <button class="button red" @click="notShow()">Close</button>
-            </div>
-          </transition>
+        <CollectorsCard v-for="(card, index) in player.hand"
+            :card="card"
+            :availableAction="card.available"
+            :key="index"/>
+        <div id="secretCard">
+            <p>Secret</p>
+            <CollectorsCard :card="player.secret" />
         </div>
-      </button>
 
-      <!--bygger en sträng, secret 1 secret 2. Tar bort multiple keys, varningen.-->
-      <!--TA IN SECRET CARD som :card=secret på något sätt från SecretCard component-->
     </div>
-    <div class="handSlot" :style="{ backgroundColor: player.color }">
-      <CollectorsCard
-        v-for="(card, index) in player.hand"
-        :card="card"
-        :availableAction="card.available"
-        :key="index"
-        @doAction="selectAction(card)"
-      />
-    </div>
-  </div>
 </template>
 
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
-import InfoButtons from "@/components/InfoButtons.vue";
 
 export default {
   name: "Hand",
   components: {
-    CollectorsCard,
-    InfoButtons,
+    CollectorsCard
   },
   props: {
     player: Object,
-    allCardsChosen: Boolean,
-  },
-
-  data: function () {
-    return {
-      clicked: false,
-      handProps: {
-        value: "Hand",
-        text: "Information about hand",
-        title: "Hand",
-        classes: `${this.player.color} button`,
-      } 
-    };
-  },
-  methods: {
-    selectAction: function (card) {
-      if (card.available) {
-        this.$emit("selectAction", card);
-        this.allCardsChosen
-          ? this.highlightAvailableCards()
-          : this.$set(card, "available", false);
-      }
-    },
-
-    secretCard: function () {
-      if (!this.clicked) {
-        this.clicked = true;
-      } else {
-        this.clicked = false;
-      }
-    },
-
-    notShow: function () {
-      if (!this.clicked) {
-        this.clicked = false;
-      }
-    },
-
   },
 };
 </script>
 
 <style scoped>
-.handPlayer {
-  /*width: 100%;
-  height: 100%;*/
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
-  border-right: 2px solid black;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  padding: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-div.handPlayer {
-  overflow-y: scroll;
-  white-space: nowrap;
-}
-
-.handSlot {
+#handSlot {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 85px);
-  grid-template-rows: repeat(auto-fill, 115px);
+  grid-template-columns: repeat(auto-fill, 130px);
+  grid-template-rows: repeat(auto-fill, 180px);
   background-color: white;
-  margin-top: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 3px;
 }
-.handSlot div {
+#handSlot div{
   transform: scale(0.5) translate(-50%, -50%);
   transition: 0.2s;
   transition-timing-function: ease-out;
   z-index: 0;
 }
-.handSlot div:hover {
-  transform: scale(0.65) translate(-25%, 0);
+#handSlot div:hover {
+  transform: scale(1) translate(-25%, 0);
   z-index: 1;
 }
-
-.buttonArea {
-  margin-top: 5px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+#secretCard{
+    background-color: coral;
+    border-radius: 3px;
+    padding: 10px;
+    text-align:center;
 }
-
-#infoButton {
-  grid-column: 1;
-}
-
-.clickable {
-  grid-column: 2;
-  margin-right: 0.5vw;
-}
-
-.button:hover {
-  box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
-}
-
-#showSecretCard {
-  position: absolute;
-  height: 6050px; /* ändra så att den bara är hela sidan!! */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 98;
-  background-color: rgba(0, 0, 0, 0.9);
-  text-align: center;
-  justify-content: center;
-}
-
-#showSecretCard h1 {
-  color: #222;
-  font-size: 32px;
-  font-weight: 900;
-  margin-bottom: 15px;
-}
-
-#showSecretCard p {
-  color: #666;
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 15px;
-}
-
-/*INGEN AV DESSA GÖR ATT KORTET LÄGGER SIG I MITTEN..*/ 
-.theSecretCard {
-  display: flex;
-  justify-content: center;
-  vertical-align: middle;
-}
-
-.background {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 99;
-  width: 100%;
-  max-width: 400px;
-  background-color: #fff;
-  padding: 25px;
-  border-radius: 8px;
-}
-
-.button {
-  appearance: none;
-  outline: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-  display: inline-block;
-  padding: 15px 25px;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: 700;
-  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
-  transition: 0.3s ease-out;
-}
-
-.red {
-  background-image: linear-gradient(
-    143.3deg,
-    rgba(216, 27, 96, 1) 33.1%,
-    rgba(237, 107, 154, 1) 74.9%
-  );
-}
-
-.fade-enter-active,
-.fade-leave.active {
-  transition: opacity 1.5s;
-  /* opacity: 0.9; */
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.slide-enter-active,
-.slide-leave.active {
-  transition: transform 0.5s;
-}
-
-.slide-enter,
-.slide-leave-to {
-  transform: translateY(-50%) translateX(100vw);
-}
-
-.CornflowerBlue {
-  background-image: radial-gradient(
-    circle farthest-corner at 10% 20%,
-    rgba(145, 192, 241, 1) 33.1%,
-    CornflowerBlue 74.9%
-  );
-}
-
-.DarkSeaGreen {
-  background-image: radial-gradient(
-    circle farthest-corner at 10% 20%,
-    rgba(172, 192, 205, 1) 0%,
-    DarkSeaGreen 90%
-  );
-}
-
-.Hotpink {
-  background-image: linear-gradient(
-    143.3deg,
-    rgba(216, 27, 96, 1) 33.1%,
-    rgba(237, 107, 154, 1) 74.9%
-  );
-}
-
-.Lavender {
-  background-image: radial-gradient(
-    circle farthest-corner at 10% 20%,
-    rgba(147, 230, 241, 1) 0%,
-    Lavender 90%
-  );
-}
-
 </style>

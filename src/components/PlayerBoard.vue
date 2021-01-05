@@ -1,10 +1,11 @@
 <template>
   <div id="PlayerBoard">
-    <div id="mainBoard" :style="{ backgroundColor: player.color }">  
-       <div class="button firstCoulum">
+    <div id="mainBoard" :style="{ backgroundColor: player.color }">
+      <div id="itemSection">
+        <!-- <h2>Items</h2> -->
+        <div class="button">
           <InfoButtons :modalProps="myItemsProps" />
         </div>
-      <div id="itemSection">
         <div id="itemGrid">
           <!--countItems = [fastaval, movie, technology, figures, music]-->
           <div class="dot fastaval">
@@ -39,10 +40,13 @@
           <p>{{ countItems[4] }}</p>
         </div>
       </div>
-        <div class="button firstColumn">
+
+      <div id="skillSection">
+        <!-- <h2>Skills</h2> -->
+        <div class="button">
           <InfoButtons :modalProps="mySkillsProps" />
         </div>
-      <div id="skillSection">
+
         <div id="skillGrid">
           <!--countSkills = [bottle, workerIncome, workerCard, auctionIncome, VP-all,
                 VP-fastaval, VP-movie, VP-technology, VP-figures, VP-music]-->
@@ -71,6 +75,11 @@
               <InfoButtons :modalProps="skill5Props" />
             </div>
           </div>
+          <p>{{ countSkills[0] }}</p>
+          <p>{{ countSkills[1] }}</p>
+          <p>{{ countSkills[2] }}</p>
+          <p>{{ countSkills[3] }}</p>
+          <p>{{ countSkills[4] }}</p>
           <div class="dot VP-fastavalSkill">
               <div class="smallButton">
               <InfoButtons :modalProps="skill6Props" />
@@ -96,11 +105,6 @@
               <InfoButtons :modalProps="skill10Props" />
             </div>
           </div>
-          <p>{{ countSkills[0] }}</p>
-          <p>{{ countSkills[1] }}</p>
-          <p>{{ countSkills[2] }}</p>
-          <p>{{ countSkills[3] }}</p>
-          <p>{{ countSkills[4] }}</p>
           <p>{{ countSkills[5] }}</p>
           <p>{{ countSkills[6] }}</p>
           <p>{{ countSkills[7] }}</p>
@@ -108,7 +112,10 @@
           <p>{{ countSkills[9] }}</p>
         </div>
       </div>
+
+      <div id="infoSection">
         <div id="incomeSection">
+          <!-- <h2>Income</h2> -->
           <div class="button">
             <InfoButtons :modalProps="myIncomeProps" />
           </div>
@@ -117,8 +124,8 @@
             <p>&#36;{{ countIncome }}</p>
           </div>
         </div>
-
         <div id="moneySection">
+          <!-- <h2>Money</h2> -->
           <div class="button">
             <InfoButtons :modalProps="myMoneyProps" />
           </div>
@@ -126,6 +133,16 @@
             <p>&#36;{{ player.money }}</p>
           </div>
         </div>
+        <div id="secretSection">
+          <div id="secretCard">
+            <!-- <h2>Secret card</h2> -->
+            <div class="button">
+              <InfoButtons :modalProps="mySecretCardProps" />
+            </div>
+            <div>{{ player.secret }}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -345,25 +362,29 @@ export default {
       return this.player.income.length;
     },
   },
+  methods: {
+    actionMade: function (id) {
+      console.log(id);
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #mainBoard {
-  width: 100%;
+  width: 50%;
+  height: fit-content;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1.5fr;
+  grid-gap: 10px;
   text-align: center;
   color: black;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
-  border-left: 2px solid black;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  padding: 10px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border: 1px solid black;
+  /*margin: 5px;*/
+  padding: 5px;
+  /*border-radius: 3px;*/
 }
 #mainBoard h2 {
   font-size: 90%;
@@ -374,42 +395,30 @@ export default {
 }
 #itemSection {
   grid-row: 1/2;
-  grid-column: 2/3;
+  grid-column: 1/2;
 }
 #skillSection {
   grid-row: 2/3;
-  grid-column: 2/3;
+  grid-column: 1/2;
 }
-/* #infoSection {
+#infoSection {
   grid-row: 1/3;
-  grid-column: 3/4;
-  /*display: grid;
-  grid-template-columns: fit-content;
-  grid-template-rows: fit-content fit-content fit-content;
-}*/
-
+  grid-column: 2/3;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+#secretSection {
+  grid-column: 1/2;
+  grid-row: 3/4;
+}
 #itemGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 #skillGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 2px;
-}
-
-#incomeSection {
-  grid-row: 1/2;
-  grid-column: 3/4;
-}
-
-#moneySection {
-  grid-row: 2/3;
-  grid-column: 3/4;
-
-}
-.firstColumn{
-  grid-column: 1/2;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 .dot {
   width: 3vw;
@@ -421,10 +430,11 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-.income, .money {
+.income,
+.money {
   background-color: #ffe599ff;
-  height: 3vw;
-  width: 3vw;
+  height: 5vw;
+  width: 5vw;
 }
 
 .music {
@@ -490,6 +500,7 @@ export default {
 
 .button {
   margin: 5px;
+  margin-bottom: 10px;
 }
 
 .smallButton {
