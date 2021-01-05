@@ -51,7 +51,6 @@
             :highestBid="highestBid"
             :highestBiddingPlayer="highestBiddingPlayer"
             :numberOfPasses="numberOfPasses"
-            @buyAuctionCard="buyAuctionCard($event)"
             @selectAction="selectAction($event)"
             @placeBid="placeBid($event)"
             @passed="passed($event)"
@@ -446,7 +445,7 @@ export default {
       this.currentAction == "itemType" ? this.buyCard(card) : null;
       this.currentAction == "skillType" ? this.buySkillCard(card) : null;
       this.currentAction == "marketType" ? this.buyRaiseValue(card) : null;
-      this.currentAction == "auctionType" ? this.startAuction(card) : null; //Funktionen existerar inte än
+      this.currentAction == "auctionType" ? this.buyAuctionCard(card) : null;
     },
     placeBottle: function (type, action, cost) {
       this.currentAction = type;

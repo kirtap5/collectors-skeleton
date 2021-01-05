@@ -519,6 +519,11 @@ Data.prototype.auctionToHand = function (roomId, playerId, card, cost, destinati
       room.highestBid = 0;
       room.highestBiddingPlayer = {};
       room.upForAuction = [];
+      room.players[playerId].active = false;
+      room.players[playerId].availableBottles -= 1;
+      if (this.setNextActivePlayer(roomId, playerId)) {
+        room.nextRound = true;
+      }
     }
     if (destination == 'skills' && this.passedCheck(roomId)){
       room.players[playerId].skills.push(card);
@@ -526,6 +531,11 @@ Data.prototype.auctionToHand = function (roomId, playerId, card, cost, destinati
       room.highestBid = 0;
       room.highestBiddingPlayer = {};
       room.upForAuction = [];
+      room.players[playerId].active = false;
+      room.players[playerId].availableBottles -= 1;
+      if (this.setNextActivePlayer(roomId, playerId)) {
+        room.nextRound = true;
+      }
     }
     if (destination == 'raiseval' && this.passedCheck(roomId)){
       room.market.push(card);
@@ -533,6 +543,11 @@ Data.prototype.auctionToHand = function (roomId, playerId, card, cost, destinati
       room.highestBid = 0;
       room.highestBiddingPlayer = {};
       room.upForAuction = [];
+      room.players[playerId].active = false;
+      room.players[playerId].availableBottles -= 1;
+      if (this.setNextActivePlayer(roomId, playerId)) {
+        room.nextRound = true;
+      }
     }
   }
 }

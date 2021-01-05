@@ -10,7 +10,7 @@
           <CollectorsCard
             :card="card"
             :availableAction="card.available"
-            @doAction="buyAuctionCard(card)"
+            @doAction="selectAction(card)"
           />
         </div>
       </div>
@@ -127,9 +127,9 @@ export default {
         }
       }
     },
-    buyAuctionCard: function (card) {
+    selectAction: function (card) {
       if (card.available) {
-        this.$emit("buyAuctionCard", card);
+        this.$emit("selectAction", card);
         this.highlightAvailableCards();
       }
     },
