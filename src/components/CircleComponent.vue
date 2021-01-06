@@ -1,7 +1,7 @@
 
 <template>
     <div class = "circle"> 
-        <p>{{value}} &#36;</p>
+        <p>&#36; {{value}}</p>
     </div>
 </template>
 
@@ -20,8 +20,10 @@ export default {
     color: black;
     border: solid 2px;
     border-radius: 50%;
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
+    min-height: fit-content;
+    min-width: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -2,5 +2,11 @@
 	"draw": "Draw card",
 	"invite": "Invite other players with this link:",
 	"endTurn": "End turn",
-	"buyCard": "Buy a card"
+	"buyCard": "Buy a card",
+	"income": "Income",
+	"incomeGain1": "You will gain ",
+	"incomeGain2": "$ from your income cards!",
+	"remainingPlacements": "Remaining placements to choose: ",
+	"round": "Round: "
+	
 }

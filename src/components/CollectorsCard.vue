@@ -1,9 +1,7 @@
 <template>
-    <div v-if="card.x>0" :class="['card', {'available-to-choose': availableAction}]" :style="{'background-position': (-(card.x-1)*250)+'px ' + (-(card.y-1)*350)+'px'}" @click="doAction">
+  <div v-if="card.x>0" :class="['card', {'available-to-choose': availableAction}]" :style="{'background-position': (-(card.x-1)*160)+'px ' + (-(card.y-1)*224)+'px'}" @click="doAction">
 
-      {{card.item}} 
-      {{card.skill}}
-      {{card.market}}
+    <!-- Ändra här uppe också storleken innan det står px -->
     </div>
 </template>
 
@@ -12,25 +10,29 @@ export default {
   name: 'CollectorsCard',
   props: {
     card: Object,
-    availableAction: Boolean
+    availableAction: Boolean,
+    actionType: String,
   },
   methods: {
     doAction: function() {
       this.$emit('doAction');
-    }
+    },
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .card {
     color:red;
     user-select: none;
-    width:250px;
-    height:350px;
+    width: 160px;
+    height: 224px;
     background-image: url('/images/collectors-cards.png');
-    border-radius: 10px;
+    border-radius: 5px;
+    background-size: 3000%; /* Om halvera storlek: 30 kort 125px, ursprungsbilden är 7502px, vi vill ha hälften så bred = 3751px. 
+    Bilden måste vara 30 ggr så stor som bredden på fönstret vet ej vad som menas??? men de e 30 kort i bredd, 
+    alltså måste den vara 30 ggr så stor?? KONTENTAN: ha kvar detta med 3000% = 30 * 100 % och ändra exakt bara hur man vill med width och heigth!!
+     Ändra också på rad 2*/
   }
 
   .available-to-choose {

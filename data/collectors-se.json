@@ -2,5 +2,10 @@
 	"draw": "Dra kort",
 	"invite": "Bjud in andra spelare med den här länken:",
 	"endTurn": "Avsluta runda",
-	"buyCard": "Köp ett kort"
+	"buyCard": "Köp ett kort",
+	"income" : "Inkomst",
+	"incomeGain1" : "Du kommer att få ",
+	"incomeGain2" : "$ från dina inkomstkort!",
+	"remainingPlacements": "Antal placeringar kvar att välja: ",
+	"round": "Runda: "
 }

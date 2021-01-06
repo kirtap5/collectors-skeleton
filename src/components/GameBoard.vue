@@ -4,41 +4,39 @@
       <div class="section-slots">
         <h2 class="category-title">Items</h2>
         <div class="bottleCircles">
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
         </div>
       </div>
       <div class="section-card cardslots"></div>
     </div>
 
-    <div id="skill-section" class="board-section">
-      <div class="section-slots">
-        <h2 class="category-title">Skills</h2>
-        <div class="bottleCircles">
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-        </div>
-      </div>
-      <div class="section-card cardslots">
-                  <CollectorsCard
-              v-for="(card, index) in skillsOnSale"
-              :card="card"
-              :key="index"
-            />
-      </div>
-    </div>
     <div id="raise-value-section" class="board-section">
       <div class="section-slots">
         <h2 class="category-title">Items</h2>
         <div class="bottleCircles">
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
         </div>
       </div>
       <div class="raise-value-slot-container">
@@ -54,10 +52,18 @@
       <div class="section-slots">
         <h2 class="category-title">Auction</h2>
         <div class="bottleCircles">
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
-          <div class="bottleCircle">$1</div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
+          <div class="circleComponent">
+                    <CircleComponent v-bind:value=1 />
+          </div>
         </div>
       </div>
       <div class="section-card cardslots">
@@ -73,13 +79,15 @@
 
 
 <script>
-import CollectorsCard from '@/components/CollectorsCard.vue'
+import CollectorsCard from '@/components/CollectorsCard.vue';
+import CircleComponent from '@/components/CircleComponent.vue';
 
 
 export default {
   name: 'GameBoard',
   components: {
     CollectorsCard,
+    CircleComponent
   },
   props: {
     skillsOnSale: Array,
@@ -92,7 +100,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #game-board {
-  width: 60%;
+  width: 100%;
   background-color: #eeeeeeff;
   border: 1px solid #19181850;
   color: black;
@@ -169,7 +177,8 @@ export default {
   grid-column: 1/3;
 }
 
-.bottleCircle {
+/*Kan tas bort eftersom circleComponent är
+/*.bottleCircle {
   margin: auto;
   display: flex;
   justify-content: center;
@@ -179,12 +188,19 @@ export default {
   color: black;
   background-color: white;
   border-radius: 50%;
+}*/
+
+.circleComponent {
+   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardslots {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 130px);
-  grid-template-rows: repeat(auto-fill, 180px);
+  grid-template-columns: repeat(auto-fill, 105px);
+  grid-template-rows: repeat(auto-fill, 145px);
 }
 .cardslots div {
   transform: scale(0.5) translate(-50%, -50%);

@@ -16,8 +16,8 @@ export default {
     padding: 2px;
     border: solid 1px;
     border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    height: 3vw;
+    width: 3vw;
     display: flex;
     justify-content: center;
     align-items: center;
