@@ -4,9 +4,11 @@
       <div id="infoButton">
         <InfoButtons :modalProps="handProps" />
       </div>
+      <!--  <div>{{ player.secret }}</div>-->
+      <!--<div v-if="player.color===DarkSeaGreen"></div>-->
 
       <button
-        class="buttonSecret clickable"
+        class="button clickable"
         :style="{ backgroundColor: player.color }"
         :class="player.color"
         @click="secretCard()"
@@ -16,7 +18,7 @@
           <transition name="fade slide" appear>
             <div class="background">
               <h1>Secret card</h1>
-              <p>Your secret card is</p>
+              <p>Your secret card is:</p>
               <CollectorsCard
                 v-for="(card, index) in player.secret"
                 :card="card"
@@ -24,7 +26,7 @@
                 :key="'secret' + index"
                 class="theSecretCard"
               />
-              <button class="buttonSecret red" @click="notShow()">Close</button>
+              <button class="button red" @click="notShow()">Close</button>
             </div>
           </transition>
         </div>
@@ -33,16 +35,14 @@
       <!--bygger en sträng, secret 1 secret 2. Tar bort multiple keys, varningen.-->
       <!--TA IN SECRET CARD som :card=secret på något sätt från SecretCard component-->
     </div>
-    <div class="scrollHand">
-      <div class="handSlot" :style="{ backgroundColor: player.color }">
-        <CollectorsCard
-          v-for="(card, index) in player.hand"
-          :card="card"
-          :availableAction="card.available"
-          :key="index"
-          @doAction="selectAction(card)"
-        />
-      </div>
+    <div class="handSlot" :style="{ backgroundColor: player.color }">
+      <CollectorsCard
+        v-for="(card, index) in player.hand"
+        :card="card"
+        :availableAction="card.available"
+        :key="index"
+        @doAction="selectAction(card)"
+      />
     </div>
   </div>
 </template>
@@ -67,7 +67,7 @@ export default {
       clicked: false,
       handProps: {
         value: "Hand",
-        text: "You can use your card(s)",
+        text: "Information about hand",
         title: "Hand",
         classes: `${this.player.color} button`,
       } 
@@ -103,35 +103,31 @@ export default {
 
 <style scoped>
 .handPlayer {
-  height: 100%;
-  /*width: 100%; */
-
-  border-top: 2px solid black;
+  /*width: 100%;
+  height: 100%;*/
+  /*border-top: 2px solid black;
   border-bottom: 2px solid black;
   border-right: 2px solid black;
   margin-top: 2px;
-  margin-bottom: 2px;
+  margin-bottom: 2px;*/
   padding: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  /*border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;*/
 }
 
-.scrollHand{
-  overflow-x: scroll;
-  /*white-space: nowrap;*/
+div.handPlayer {
+  overflow-y: scroll;
+  white-space: nowrap;
 }
 
 .handSlot {
   display: grid;
-  grid-template-columns: repeat(40, 85px);
-  grid-template-rows: 115px;
+  grid-template-columns: repeat(auto-fill, 85px);
+  grid-template-rows: repeat(auto-fill, 115px);
   background-color: white;
   margin-top: 10px;
   margin-left: 5px;
   margin-right: 5px;
-  overflow-x: scroll;
-
-
 }
 .handSlot div {
   transform: scale(0.5) translate(-50%, -50%);
@@ -139,12 +135,15 @@ export default {
   transition-timing-function: ease-out;
   z-index: 0;
 }
+.handSlot div:hover {
+  transform: scale(0.65) translate(-25%, 0);
+  z-index: 1;
+}
 
 .buttonArea {
   margin-top: 5px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  white-space: normal;
 }
 
 #infoButton {
@@ -156,7 +155,7 @@ export default {
   margin-right: 0.5vw;
 }
 
-.buttonSecret:hover {
+.button:hover {
   box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
 }
 
@@ -204,7 +203,7 @@ export default {
   border-radius: 8px;
 }
 
-.buttonSecret {
+.button {
   appearance: none;
   outline: none;
   border: none;
@@ -280,16 +279,4 @@ export default {
   );
 }
 
-@media only screen and (max-width: 1050px) {
-.buttonSecret{
-  padding: 5px 7px;
-  font-size: 80%;
-}
-}
-
-@media only screen and (max-width: 850px) {
-  .buttonSecret{
-    font-size: 50%;
-  }
-}
 </style>

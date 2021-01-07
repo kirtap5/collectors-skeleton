@@ -1,24 +1,21 @@
 <template>
   <div class="secretSection">
     <!-- <h2>Choose your secret card</h2>-->
-   
-    <div class = "designWrapper">
-      <div id="buttonArea">
-        <InfoButtons :modalProps="secretProps" />
-      </div>
-      <div id="textArea">
-        <h1>Choose your secret card</h1>
-      </div>
+    <div id="buttonArea">
+      <InfoButtons :modalProps="secretProps" />
+    </div>
+
+    <div id="textArea">
+      <h1>Choose your secret card</h1>
+    </div>
+
     <!--CHOSE YOUR SECRET CARD-->
-      <div class = "card">
-        <div class="cardslots" v-for="(card, index) in player.hand" :key="index">
-            <CollectorsCard
-              :card="card"
-              :key="index"
-              @doAction="selectAction(card)"
-            />
-        </div>
-      </div>
+    <div class="cardslots" v-for="(card, index) in player.hand" :key="index">
+      <CollectorsCard
+        :card="card"
+        :key="index"
+        @doAction="selectAction(card)"
+      />
     </div>
   </div>
 </template>
@@ -52,7 +49,14 @@ export default {
   methods: {
     
     selectAction: function (card) {
+        /*let secretCard = this.card;*/
         this.$emit("selectAction", card);
+
+       /* this.$store.state.socket.emit("collectorsSetSecret", {
+          roomId: this.$route.params.id,
+          playerId: this.playerId,
+          secret: card,
+        });*/
     },
   },
 };
@@ -69,26 +73,16 @@ export default {
   bottom: 0;
   z-index: 98;
   background-color: rgba(0, 0, 0, 0.9);
-  /*display: grid;
+
+  display: grid;
+  /*grid-template-columns: 1fr 1fr 1fr;*/
   grid-template-columns: repeat(auto-fill, 170px);
-  grid-template-rows: repeat(auto-fill, 224px);*/
+  grid-template-rows: repeat(auto-fill, 224px);
 }
 
-.designWrapper{
-  align-content: center;
-  margin-left: 15vw;
-  margin-top: 5vw;
-  display: grid;
-  grid-template-columns: 5% 95%;
-}
-.card {
-  grid-column: 2/3;
-  display: grid;
-  grid-template-columns: repeat(3, 170px);
-  /*grid-template-rows: repeat(3, 224px);*/
-}
 .cardslots {
-  margin: auto;
+  margin: 40px;
+
   display: grid;
   width: 160px;
   height: 224px;
@@ -97,6 +91,9 @@ export default {
   animation-iteration-count: infinite;
   box-shadow: 0 0 10px yellow;
 
+  /*grid-column: 3;
+  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-rows: repeat(auto-fill, 145px);*/
 }
 
 @keyframes jiggle {
@@ -112,19 +109,41 @@ export default {
 }
 
 #buttonArea {
-  grid-column: 1/2;
-  margin: auto;
-  }
+  margin-top: 7vh;
+  margin-left: 2vw;
+  /*grid-column: 1;*/
+}
 
 #textArea {
-  grid-column: 2/3;
-  display: inline;
-  margin: none;
-
+  /*grid-column: 2;*/
+  /*margin-left: 5vw;*/
+  margin-top: 5vh;
 }
 @media only screen and (max-width: 1050px) {
-  .designWrapper{
-      margin-left: 5vw;
+    /* phones */
+  .secretSection {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 85px);
+    grid-template-rows: repeat(auto-fill, 117px);
+  }
+  .cardslots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 85px);
+    grid-template-rows: repeat(auto-fill, 117px);
+    transform: scale(0.5) translate(-50%, -50%);
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+
+  }
+
+  .cardslots div {
+    z-index: 0;
+  }
+
+  .cardslots div:hover {
+    transform: scale(1) translate(-25%, 0);
+    z-index: 1;
   }
 
 }

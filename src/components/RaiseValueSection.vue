@@ -21,14 +21,14 @@
           :disabled="buttonDisabled(p.cost)"
           @click="placeBottle(p)"
         >
-          <p>${{ p.cost }}</p><span v-if="p.specialAction"> (2 cards)</span>
+          ${{ p.cost }}<span v-if="p.specialAction"> (2 cards)</span>
         </button>
         <div
           class="clickedButton"
           v-if="p.playerId !== null && typeof players !== 'undefined'"
           :style="{ backgroundColor: players[p.playerId].color }"
         >
-          <p>{{ p.playerId }}</p>
+          {{ p.playerId }}
         </div>
       </div>
     </div>
@@ -98,6 +98,7 @@ export default {
       }
       if (this.player.money - cost >= 0) {
         this.$set(lastSkill, "available", true);
+        console.log("skill har marketrats")
       } else {
         this.$set(lastSkill, "available", false);
       }
@@ -144,10 +145,6 @@ export default {
   grid-template-columns: repeat(auto-fill, 50px);
 }
 
-.buttons p {
-  margin: 0;
-}
-
 .clickedButton {
   border: 1px solid rgb(118, 118, 118);
   border-radius: 2px;
@@ -165,6 +162,7 @@ export default {
   color: black;
   font-size: 80%;
   font-weight: bold;
+
 }
 .raise-value-slot {
   background-color: #6d9eebff;
@@ -177,6 +175,7 @@ export default {
   align-items: center;
   margin-left: auto;
   margin-right: auto;
+
 }
 #rvMovie {
   background: url("/images/RAISEVAL-FILM.png");
@@ -197,15 +196,5 @@ export default {
 #rvFastaval {
   background: url("/images/RAISEVAL-PINGVIN.png");
   background-size: 3vw 3vw;
-
-}
-@media only screen and (max-width: 850px) {
-  .buttons {
-    grid-template-columns: repeat(auto-fill, 30px);
-    margin-right: 10px;
-  }
-  .buttons p{
-     font-size: 70%;
-  }
 }
 </style>

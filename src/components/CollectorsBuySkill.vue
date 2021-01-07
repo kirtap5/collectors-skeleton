@@ -22,15 +22,15 @@
             :disabled="buttonDisabled(p.cost)"
             @click="placeBottle(p)"
           >
-            <p>${{ p.cost }}</p>
+            ${{ p.cost }}
           </button>
           <div
             class="clickedButton"
             v-if="p.playerId !== null && typeof players !== 'undefined'"
             :style="{ backgroundColor: players[p.playerId].color }"
           >
-            <p>{{ p.playerId }}</p>
-        </div>
+            {{ p.playerId }}
+          </div>
         </div>
       </div>
     </div>
@@ -137,12 +137,9 @@ export default {
 .buttons {
   display: grid;
   grid-template-columns: repeat(auto-fill, 50px);
-  margin-right: 10px;
+  margin-right:10px;
 }
 
-.buttons p{
-  margin: 0;
-}
 .board-section {
   padding: 10px;
   align-items: center;
@@ -236,6 +233,13 @@ h1 {
   margin-bottom: 15px;
 }
 
+p {
+  color: #666;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
 .fade-enter-active,
 .fade-leave.active {
   transition: opacity 1.5s;
@@ -265,8 +269,9 @@ h1 {
   color: black;
 }
 
+
 @media only screen and (max-width: 1050px) {
-  /* phones */
+    /* phones */
   .buy-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, 65px);
@@ -281,25 +286,12 @@ h1 {
     transition-timing-function: ease-out;
   }
 
-  .cardslots div {
+   .cardslots div {
     z-index: 0;
-  }
-  .cardslots:hover {
-    z-index: 2;
   }
   .cardslots div:hover {
   transform: scale(1) translate(-25%, 0);
   z-index: 1;
-}
-
-@media only screen and (max-width: 850px) {
-  .buttons {
-    grid-template-columns: repeat(auto-fill, 30px);
-    margin-right: 10px;
-  }
-  .buttons p{
-     font-size: 70%;
-  }
 }
 }
 </style>

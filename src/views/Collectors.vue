@@ -113,7 +113,6 @@
             @click="selectAll"
             readonly="readonly"
           />
-          <button @click="drawCard"> {{labels.draw}} </button>
 
         </div>
 
@@ -605,7 +604,7 @@ main {
 .layout_wrapper {
   display: grid;
   grid-template-columns: 60% 25% 15%;
-  grid-template-rows: auto;
+  grid-template-rows: auto 1fr;
   overflow: hidden;
   margin: 10px;
 }
@@ -638,14 +637,11 @@ main {
 }*/
 
 #hand_playerboard {
-  width: 100%;
-  height: 80%;
+  height: 60vh;
   display: grid;
   grid-template-columns: 60% 40%;
   grid-column: 1/4;
-  margin-top: 10px;
-  border-bottom: 2px solid black;
-
+  margin-top: 30px;
 }
 
 /*SECRET SECTION - TA BORT?
@@ -814,10 +810,12 @@ p {
     display: grid;
     grid-template-columns: 70% 30%;
     grid-template-rows: 1fr auto ;
+    overflow: hidden;
     margin: 10px;
   }
 
   .first-column {
+    overflow: hidden;
     grid-row: 2/3;
   }
 
@@ -829,9 +827,6 @@ p {
   .third-column {
     grid-row: 1/2;
     grid-column: 1/3;
-  }
-  #hand_playerboard {
-  grid-column: 1/3;
   }
 }
 </style>
