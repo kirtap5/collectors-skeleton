@@ -304,7 +304,7 @@ Data.prototype.countPoints = function (roomId){
     for(let i=0; i < room.playerOrder.length; i ++){
       let player = room.players[room.playerOrder[i]];
       let secret = player.secret.pop();
-      players.items.push(secret);
+      player.items.push(secret);
       //Poäng för varje item utifrån marketvalue!!
       for(let j = 0; j < player.items.length; j++){
         if (player.items[j].item === "fastaval") {

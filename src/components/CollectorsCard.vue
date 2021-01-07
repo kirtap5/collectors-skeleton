@@ -42,9 +42,9 @@ export default {
   }
 
   @keyframes jiggle {
-    0% {transform:rotate(0.5deg);}
-    50% {transform:rotate(-0.5deg);}
-    100% {transform:rotate(0.5deg);}
+    0% {transform: scale(0.5) rotate(0.5deg) translate(-50%,-50%);}
+    50% {transform: scale(0.5) rotate(-0.5deg) translate(-50%,-50%);}
+    100% {transform: scale(0.5) rotate(0.5deg) translate(-50%,-50%);}
   }
 
 

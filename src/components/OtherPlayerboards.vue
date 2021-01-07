@@ -80,10 +80,10 @@ export default {
     }
 
     .showPlayerBoard {
-      /*height: 600px;
-      width: 1000px;*/
       height: 30vw; /*30vw;*/
       width: 70vw; /*40vw;*/
+      border-bottom: solid black;
+
     }
 
 
@@ -97,27 +97,4 @@ export default {
         flex-direction: row;
       }
     }
-
-    /*.showPlayerBoard {
-      transform: translate(200px,150px)
-    }
-    /*Syntaxen för transition
-    .element {
-          transition: property duration ease delay}*/ 
-    /*.expand-transition {
-      transition: opacity 300ms ease-in-out 1s;
-      
-      overflow: hidden;
-    }*/
-
-
-    /*.slide-leave-actve {
-      
-    }*/
-
-
-
-   /* .clickOnOtherPlayer {
-      overflow: hidden;
-    }*/
 </style>

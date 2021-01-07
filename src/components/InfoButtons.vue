@@ -260,13 +260,18 @@ p {
 .button{
   padding: 5px 7px;
   font-size: 80%;
-  font-weight: 700;
 }
 .smallButton {
   padding: 3px 5px;
   font-size: 70%;
 }
 
+}
+
+@media only screen and (max-width: 850px) {
+  .button{
+    font-size: 50%;
+  }
 }
 
 </style>

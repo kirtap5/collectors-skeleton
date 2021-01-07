@@ -107,8 +107,8 @@ button {
   background: none;
   cursor: pointer;
   display: inline-block;
-  height: 5vw;
-  width: 5vw;
+  height: 7vw;
+  width: 7vw;
   background-image: linear-gradient(to right, coral, #ff5858);
   border-radius: 50%;
   color: #fff;

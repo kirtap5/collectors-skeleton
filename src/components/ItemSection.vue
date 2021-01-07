@@ -19,11 +19,11 @@
           :disabled="buttonDisabled(p.cost)"
           @click="placeBottle(p)"
         >
-          ${{ p.cost }}
+          <p>${{ p.cost }}</p>
         </button>
         <div class="clickedButton" v-if="p.playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[p.playerId].color}">
           
-            {{ p.playerId }}
+            <p>{{ p.playerId }}</p>
           
         </div>
       </div>
@@ -136,6 +136,10 @@ export default {
   margin-right: 10px;
 }
 
+.buttons p {
+  margin: 0;
+}
+
 .clickedButton {
   border: 1px solid rgb(118, 118, 118);
   border-radius: 2px;
@@ -207,7 +211,15 @@ export default {
   }
 }
 
-@media only screen and (max-width: 767px) and (orientation: portrait) {
-    /* portrait phones */
+@media only screen and (max-width: 850px) {
+  .buttons {
+    grid-template-columns: repeat(auto-fill, 30px);
+    margin-right: 10px;
+  }
+  
+   .buttons p{
+     font-size: 70%;
+   }
 }
+
 </style>
