@@ -21,7 +21,7 @@
           :disabled="buttonDisabled(p.cost)"
           @click="placeBottle(p)"
         >
-          <p>${{ p.cost }}</p><span v-if="p.chooseTwoCards"> (select two)</span>
+          <p>${{ p.cost }} <span v-if="p.chooseTwoCards"> (select two)</span> </p>
         </button>
         <div
           class="clickedButton"
@@ -198,7 +198,9 @@ export default {
 #rvFastaval {
   background: url("/images/RAISEVAL-PINGVIN.png");
   background-size: 3vw 3vw;
-
+}
+span{
+  font-size: 70%;
 }
 @media only screen and (max-width: 850px) {
   .buttons {
