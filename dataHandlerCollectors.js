@@ -935,12 +935,15 @@ Data.prototype.auctionOver = function (roomId) {
 Data.prototype.passedCheck = function (roomId) {
   let room = this.rooms[roomId];
   let numberOfPass = 0;
-  for (let i = 1; i < room.playerOrder.length; i++) {
+  for (let i = 0; i < room.playerOrder.length; i++) {
     if (room.players[room.playerOrder[i]].passed) {
       numberOfPass += 1;
     }
   }
-  if (numberOfPass > 0 && room.playerOrder.length - 1 || room.playerOrder.length - 2 || room.playerOrder.length - 3) {
+  // console.log(numberOfPass)
+  // console.log(room.playerOrder.length)
+  if (numberOfPass > 0 && numberOfPass == room.playerOrder.length - 1) {
+    numberOfPass = 0;
     return true;
   } else {
     return false;
