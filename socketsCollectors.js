@@ -81,22 +81,11 @@ function sockets(io, socket, data) {
     console.log(d.id);
     data.placeBottle(d.roomId, d.playerId, d.action, d.cost, d.id); 
     io.to(d.roomId).emit('collectorsBottlePlaced', 
-   { players: data.getPlayers(d.roomId),
+   {  players: data.getPlayers(d.roomId),
       placements: data.getPlacements(d.roomId), }
     );
   });
 
-  
-  /*socket.on('collectorsPlaceBottle', function(d) {
-    data.placeBottle(d.roomId, d.playerId, d.action, d.id);
-    io.to(d.roomId).emit('collectorsBottlePlaced', {
-      players: data.getPlayers(d.roomId),
-      placements: data.getPlacements(d.roomId),
-      /*playOrder: data.getPlayOrder(d.roomId),
-      actingPlayer: data.getActingPlayer(d.roomId)
-    }
-    );
-  });*/
 
   socket.on('collectorsAddMoney', function(d) {
     io.to(d.roomId).emit('collectorsUpdatePlayers', 
@@ -112,6 +101,13 @@ function sockets(io, socket, data) {
     });
   });
 
+  socket.on('workAction', function (d){
+    data.workAction(d.roomId, d.placement, d.playerId);
+    io.to(d.roomId).emit('workActionDone', {
+      players: data.getPlayers(d.roomId)
+    })
+  });
+
   socket.on('countPoints', function (d){
     data.countPoints(d.roomId);
     io.to(d.roomId).emit('pointsCounted', {
@@ -124,6 +120,7 @@ function sockets(io, socket, data) {
       players: data.setSecret(d.roomId, d.playerId, d.secret)
     })
   })
+
 
 
 

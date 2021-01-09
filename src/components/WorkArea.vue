@@ -160,7 +160,7 @@
         <button
         class = "button"
           v-if="placement[7] && placement[7].playerId === null"
-          :disabled="buttonDisabled(placement[7])"
+          :disabled="buttonDisabled(placement[7]) || player.hand.length <1"
           @click="placeBottle(placement[7])"
         >
           $0</button
@@ -173,22 +173,12 @@
         <!--Draw one card and put one card from hand as future income-->
         <div class="first" id="getCard"></div>
         <div class="second" id="upsideDown"></div>
-        <!--<div class="second figures">&#9203;</div>-->
       </div>
     </div>
-    <!--GAMMAL CIRCKEL SOM JAG SPARAR
-            <div class="workArea_circle" v-on:click = "circleClicked"></div>
-            BOBS COMPONENT PENG
-            <<div class="workArea_component">
-          <CircleComponent v-bind:value="-1" />
-        </div>
-        RECYCLED PREFIX
-        <div class="first figures">&#x267B;</div>-->
   </div>
 </template>
 
 <script>
-/*import CircleComponent from "@/components/CircleComponent.vue";*/
 import FirstPlayerToken from "@/components/FirstPlayerToken.vue";
 import InfoButtons from "@/components/InfoButtons.vue";
 
@@ -205,7 +195,7 @@ export default {
     color: String /*KOMMER TAS BORT efter circle clicked*/,
     player: Object,
     placement: Array,
-    round: String,
+    round: Number,
     players: Object,
   },
 
@@ -287,13 +277,13 @@ export default {
     },
     /*stod id i placebottle istället för p*/ 
     placeBottle: function (p) {
-      console.log("in i work");
-      console.log(p);
-      if (p.id<4 || p.id===7) {
+      this.$emit("placeBottle", p);
+      if (p.id<3 || p.id===7) {
         this.hightlightAvailableCards(p.cost);
+      }else{
+        this.$emit("workAction", p);
       }
 
-      this.$emit("placeBottle", p); 
     },
     hightlightAvailableCards: function(cost) {
       for (let i = 0; i < this.player.hand.length; i += 1) {
@@ -310,23 +300,7 @@ export default {
     cannotAfford: function (cost) {
       return this.player.money < cost;
     },
-    /*}, 
     
-    när circle clicked tas bort lägg tilll måsvinge*/
-    /*CIRCLECLICKED SKA BORT*/
-    circleClicked: function (e) {
-      if (!this.clicked) {
-        let clickedEl = e.target;
-        clickedEl.setAttribute("style", "background-color:" + this.color);
-        this.clicked = true;
-        /*DENNA EMIT KOMMER INTE BEHÖVAS TROR JAG NÄR VI FÅR KOD AV MIKAEL, MEN HAR KVAR SÅLÄNGE */
-        /*this.$emit("circleClicked", clickedEl);*/
-      } else {
-        let clickedEl = e.target;
-        clickedEl.setAttribute("style", "background-color:white");
-        this.clicked = false;
-      }
-    },
   },
 };
 </script>
@@ -387,51 +361,12 @@ export default {
   margin-bottom: 50%;
 }
 
-/*BUTTONTREST SKA BORT*/
-/*.buttonTest {
-  color: black;
-  grid-column: 2;
-  width: 100%;
-  height: 20%;
-  text-align: center;
-  font-size: 50px;
-  border: 1px solid black;
-  margin-top: 25px;
-}*/
 
 .firstArea {
   border: 3px dotted grey;
 }
 
-/*.firstArea p {
-  color: black;
-  font-size: 60%;
-  font-weight: bold;
-  text-align: right;
-  grid-column: 5;
-  margin-top: 10px;
-  margin-right: 10px;
-}*/
 
-/*HÖR TILL CIRCKELN SOM LIGGER LÄNGST NER I HTML-KODEN, HAR KVAR SÅLÄNGE MEN KAN SEN TAS BORT*/
-/*.workArea_circle {
-        text-align: center;
-        font-size: 50px;
-        width: 100px;
-        height: 100px;s
-        color: black;
-        background-color: white;
-        border-radius: 50%;
-        border: 1px solid black;
-        margin-top: 8px;
-        margin-left: 10px;
-        grid-column: 1;
-    }*/
-
-/*.workArea_component {
-  grid-column: 3;
-  margin-top: 5px;
-}*/
 
 .infoB {
   grid-column: 1;

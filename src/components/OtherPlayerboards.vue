@@ -4,6 +4,9 @@
         <div v-if="player!= Players[playerId]">
           <!--<transition name="slide">-->
           <div v-on:click="playerboardClicked(index)" :style="{backgroundColor: player.color}" class="otherPlayerBoard"> 
+            <div id="dispFirstPlayerToken" v-if="player.firstPlayer">
+              <FirstPlayerToken/>
+            </div>
             <h2> Player {{index}} </h2>
             <PlayerBoard :class="['playerBoard', {'showPlayerBoard': dispPlayerboard===index}]" :player="player" />
             <!--<PlayerBoard v-if="dispPlayerboard === index" :player="player" class="showPlayerBoard" />-->
@@ -18,11 +21,13 @@
 
 <script>
 import PlayerBoard from './PlayerBoard.vue';
+import FirstPlayerToken from './FirstPlayerToken.vue';
 
 export default {
     name: "OtherPlayerboards",
     components: {
-        PlayerBoard
+        PlayerBoard,
+        FirstPlayerToken
     },
     props:{
       Players: Object,
@@ -61,12 +66,19 @@ export default {
     margin: 5px;
     padding: 5px;
     border-radius: 3px;
-    text-align: center;
     color: black;
+    display: flex;
+    flex-direction: row;
+    grid-gap: 10px;
     }
     
     .otherPlayerBoard:hover{
     cursor: pointer;
+    }
+
+    #dispFirstPlayerToken {
+      display: flex; align-items: center;
+      
     }
 
     .playerBoard {

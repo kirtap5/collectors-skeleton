@@ -30,6 +30,9 @@
         </div>
       </button>
 
+      <div v-if="player.firstPlayer" >
+        <FirstPlayerToken />
+      </div>
       <!--bygger en sträng, secret 1 secret 2. Tar bort multiple keys, varningen.-->
       <!--TA IN SECRET CARD som :card=secret på något sätt från SecretCard component-->
     </div>
@@ -50,12 +53,14 @@
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
 import InfoButtons from "@/components/InfoButtons.vue";
+import FirstPlayerToken from '@/components/FirstPlayerToken.vue';
 
 export default {
   name: "Hand",
   components: {
     CollectorsCard,
     InfoButtons,
+    FirstPlayerToken
   },
   props: {
     player: Object,
@@ -140,9 +145,9 @@ export default {
 .buttonArea {
   margin-top: 5px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  /*white-space: normal;*/
-}
+  grid-template-columns: 1fr 2fr 1fr;
+  align-content: center;
+  }
 
 #infoButton {
   grid-column: 1;
@@ -203,6 +208,7 @@ export default {
 }
 
 .buttonSecret {
+  width: 70%;
   appearance: none;
   outline: none;
   border: none;
