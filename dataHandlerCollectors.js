@@ -679,8 +679,11 @@ Data.prototype.placeBottle = function (roomId, playerId, action, cost, id) {
 }
 
 Data.prototype.workAction = function(roomId, placement, playerId){
+  console.log("KLICKAT PÅ WORK")
   let room = this.rooms[roomId];
   let player = room.players[playerId];
+  this.workerIncome(player);
+  this.workerCard(room, playerId);
   if (placement.id <= 2) {
   //funktionalitet i cardsForIncome
 }
@@ -888,6 +891,7 @@ Data.prototype.VPallSkill = function (player) {
 
 Data.prototype.bottleSkill = function (player, card) {
   // Get another bottle to use same quarter.
+
   if (card.skill == 'bottle') {
     player.bottles += 1;
     player.availableBottles += 1;
@@ -895,31 +899,33 @@ Data.prototype.bottleSkill = function (player, card) {
 }
 
 Data.prototype.auctionIncome = function (player) {
-  // auctionIncome
   // Få 1$ när en auktion startas
+
   for (let card of player.skills) {
     card.skill == 'auctionIncome' ? player.money += 1 : null;
   }
 }
 
-// Work
-Data.prototype.workerCard = function (room) { //INTE TESTAD
+Data.prototype.workerCard = function (room, playerId) { //INTE TESTAD
   // Få 1 kort när du lägger bottle i work area
 
   for (let card of room.players[playerId].skills) {
     if (card == 'workerCard') {
+      console.log("Lägg till kort:")
       let card = room.deck.pop();
+      console.log(card);
       room.players[playerId].hand.push(card);
     }
   }
 }
-// Work
 Data.prototype.workerIncome = function (player) { //INTE TESTAD
-
+  console.log(" workerIncome Pengar före: " + player.money);
   // Få 2$ när du lägger bottle i work area.
   for (let card of player.skills) {
     card.skill == 'workerIncome' ? player.money += 2 : null;
   }
+  console.log(" workerIncome Pengar efter: " + player.money);
+
 }
 
 
