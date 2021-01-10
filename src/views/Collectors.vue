@@ -294,7 +294,7 @@ export default {
     },*/
     nextRound: function() {
       if (this.nextRound) {
-        if (this.round < 1) {
+        if (this.round < 4) {
           this.startNextRound();
         } else {
           this.countPoints();
