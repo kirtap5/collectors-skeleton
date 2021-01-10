@@ -60,6 +60,7 @@
             v-if="players[playerId]"
             :labels="labels"
             :player="players[playerId]"
+            :playerId ="playerId"
             :auctionCards="auctionCards"
             :upForAuction="upForAuction"
             :marketValues="marketValues"

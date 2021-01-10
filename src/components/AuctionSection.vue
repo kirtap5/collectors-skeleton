@@ -21,7 +21,7 @@
         </div>
         <div class='auctionBtnsSection'>
         <div class="placeBid-section">
-          <button v-on:click="currentBid++" class='auctionBtns'>Raise bid</button>
+          <button v-on:click="currentBid++" :disabled="currentBid >= player.money" class='auctionBtns'>Raise bid</button>
           <div id='currentBid'>Your current bid: {{ currentBid }}</div>
           <button v-on:click="placeBid()" class='auctionBtns'>Place bid</button>
           <button v-on:click="passed()" class='auctionBtns'>Pass</button>
@@ -89,6 +89,7 @@ export default {
   props: {
     labels: Object,
     player: Object,
+    playerId: String,
     auctionCards: Array,
     upForAuction: Array,
     marketValues: Object,
@@ -328,6 +329,11 @@ export default {
   /*text-align: center;
   margin: auto;
   display: flex;*/ 
+}
+.auctionBtns:disabled{
+  background-image: none;
+  background-color: darkgray;
+  box-shadow:none;
 }
 
 .auctionBtns:hover {
