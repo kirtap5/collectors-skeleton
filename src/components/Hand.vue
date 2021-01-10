@@ -208,7 +208,6 @@ export default {
 }
 
 .buttonSecret {
-  width: 70%;
   appearance: none;
   outline: none;
   border: none;
@@ -221,6 +220,8 @@ export default {
   font-weight: 700;
   box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
   transition: 0.3s ease-out;
+  margin: auto;
+  text-align: center;
 }
 
 .red {

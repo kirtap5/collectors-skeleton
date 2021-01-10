@@ -63,11 +63,11 @@
             :disabled="buttonDisabled(p.cost)"
             @click="placeBottle(p)"
           >
-            ${{ p.cost }}
+            <p>${{ p.cost }}</p>
           </button>
         <div class="clickedButton" v-if="p.playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[p.playerId].color}">
           
-            {{ p.playerId }}          
+            <p>{{ p.playerId }}</p>       
         </div>
         </div>
       </div>
@@ -121,12 +121,7 @@ export default {
       } else return false;
     },
     cannotAfford: function (cost) {
-      let minCost = 100;
-      for (let key in this.marketValues) {
-        if (cost + this.marketValues[key] < minCost)
-          minCost = cost + this.marketValues[key];
-      }
-      return this.player.money < minCost;
+      return this.player.money < cost;
     },
     cardCost: function (card) {
       return this.marketValues[card.market];
@@ -374,7 +369,7 @@ export default {
 
 .button:hover {
     box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
-    } 
+} 
   .green {
     background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(50,172,109,1) 0%, rgba(209,251,155,1) 100.2% );
   }
@@ -419,13 +414,6 @@ export default {
        font-weight: 900;
        margin-bottom: 15px;
      }
-     
-  p {
-    color: #666;
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 15px;
-  }
 
 .fade-enter-active,
 .fade-leave.active {
@@ -520,8 +508,10 @@ export default {
     margin-right: 10px;
   }
   .buttons p{
-     font-size: 50%;
-   }
+     font-size: 70%;
+  }
+
+
 }
 
 
