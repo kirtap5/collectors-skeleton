@@ -256,6 +256,10 @@ export default {
   margin-right: 10px;
 }
 
+.buttons p {
+  margin: 0;
+}
+
 .clickedButton {
   border: 1px solid rgb(118, 118, 118);
   border-radius: 2px;
