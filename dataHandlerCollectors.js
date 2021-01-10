@@ -221,25 +221,40 @@ Data.prototype.joinGame = function (roomId, playerId) {
 
 Data.prototype.setNextActivePlayer = function (roomId, activePlayerId) {
   let room = this.rooms[roomId];
-  for (let i = 0; i < room.playerOrder.length; i++) {
-    if (room.playerOrder[i] == activePlayerId) {
-      if (i != room.playerOrder.length - 1) {
-        let nextActivePlayer = room.playerOrder[i + 1];
-        if (room.players[nextActivePlayer].availableBottles != 0) {
-          room.players[nextActivePlayer].active = true;
-          return false;
+  let someoneHasBottles = false;
+  //Kollar om någon har flaskor kvar
+  for (let player in room.players) {
+    if(room.players[player].availableBottles > 0){
+      someoneHasBottles = true;
+    }
+  }
+  //Om ingen har flaskor returneras true --> nästa runda startas
+  if(!someoneHasBottles){
+    return true;
+  }
+  //Annars hitta nästa spelare
+  else{
+    let nextActivePlayerId;
+    for (let i = 0; i < room.playerOrder.length; i++) {
+      if (room.playerOrder[i] == activePlayerId) {
+        if(i === room.playerOrder.length-1){ //Om sista spelaren
+          nextActivePlayerId = room.playerOrder[0];
+        }else{ //om inte sista spelaren
+          nextActivePlayerId = room.playerOrder[i+1];
         }
-      } else if (i == room.playerOrder.length - 1) {
-        let nextActivePlayer = room.playerOrder[0];
-        if (room.players[nextActivePlayer].availableBottles != 0) {
-          room.players[nextActivePlayer].active = true;
+        //Kollar om spelaren har flaska annars starta om funktion o hitta spelaren efter
+        if(room.players[nextActivePlayerId].availableBottles > 0){
+          room.players[nextActivePlayerId].active = true;
           return false;
+        } else {
+          this.setNextActivePlayer(roomId, nextActivePlayerId);
         }
       }
     }
   }
-  return true;
 }
+
+
 
 Data.prototype.getBottleIncome = function (roomId, playerId, bottleIncome) {
   let room = this.rooms[roomId];
@@ -381,6 +396,7 @@ Data.prototype.rotateCards = function (roomId) {
   if (typeof room !== 'undefined') {
     //skickar ett kort från skills respektive auction till market
     this.rotateSkills(room);
+
     this.rotateAuction(room);
     //tar bort tomma platser i items (så de fylls på rätt sen)
     this.clearItems(room);
@@ -398,30 +414,42 @@ Data.prototype.rotateCards = function (roomId) {
 }
 
 Data.prototype.rotateSkills = function (room) {
-  for (let i in room.skillsOnSale) {
+  let i = 0;
+  while(i < room.skillsOnSale.length){
     if (room.skillsOnSale[i].item == undefined) {
       room.skillsOnSale.splice(i, 1);
+    } else{
+      i++;
     }
   }
-  let card = room.skillsOnSale.pop();
-  room.market.push(card);
+  if(room.skillsOnSale.length != 0){
+    let card = room.skillsOnSale.pop();
+    room.market.push(card);
+  }
 }
 
 Data.prototype.rotateAuction = function (room) {
-  for (let i in room.auctionCards) {
+  let i = 0;
+  while(i < room.auctionCards.length){
     if (room.auctionCards[i].item == undefined) {
       room.auctionCards.splice(i, 1);
+    } else{
+      i++;
     }
   }
-  let card = room.auctionCards.pop();
-  room.market.push(card);
-
+  if(room.auctionCards.length != 0){
+    let card = room.auctionCards.pop();
+    room.market.push(card);
+  }
 }
 
 Data.prototype.clearItems = function (room) {
-  for (let i in room.itemsOnSale) {
+  let i =0;
+  while(i < room.itemsOnSale.length){
     if (room.itemsOnSale[i].item == undefined) {
       room.itemsOnSale.splice(i, 1);
+    } else{
+      i++;
     }
   }
 }
@@ -435,9 +463,12 @@ Data.prototype.refillItems = function (room) {
 }
 
 Data.prototype.refillSkills = function (room) {
-  for (let i in room.skillsOnSale) {
+  let i =0;
+  while(i < room.skillsOnSale.length){
     if (room.skillsOnSale[i].item == undefined) {
       room.skillsOnSale.splice(i, 1);
+    } else{
+      i++;
     }
   }
   while (room.skillsOnSale.length < 5) {
@@ -453,9 +484,12 @@ Data.prototype.refillSkills = function (room) {
 }
 
 Data.prototype.refillAuction = function (room) {
-  for (let i in room.auctionCards) {
+  let i = 0;
+  while(i < room.auctionCards.length){
     if (room.auctionCards[i].item == undefined) {
       room.auctionCards.splice(i, 1);
+    } else{
+      i++;
     }
   }
   while (room.auctionCards.length < 4) {
@@ -861,10 +895,7 @@ Data.prototype.VPallSkill = function (player) {
 
 Data.prototype.bottleSkill = function (player, card) {
   // Get another bottle to use same quarter.
-  console.log(card);
-  console.log(card.skill)
   if (card.skill == 'bottle') {
-    console.log("INNE wo")
     player.bottles += 1;
     player.availableBottles += 1;
   }
@@ -964,7 +995,6 @@ Data.prototype.buyAuctionCard = function (roomId, playerId, card, cost) {
         break;
       }
     }
-    console.log(room.auctionCards.length)
     // ...then check if it is in the hand. It cannot be in both so it's safe
     for (let i = 0; i < room.players[playerId].hand.length; i += 1) {
       // since card comes from the client, it is NOT the same object (reference)
