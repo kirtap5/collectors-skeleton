@@ -113,7 +113,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('countPoints', function (d){
-    data.countPoints(d.roomId);
+    data.countPoints(d.roomId, d.playerId);
     io.to(d.roomId).emit('pointsCounted', {
       players: data.getPlayers(d.roomId)
     })
