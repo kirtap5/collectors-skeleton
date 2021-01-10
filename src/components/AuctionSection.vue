@@ -3,10 +3,12 @@
     <InfoButtons
       :modalProps='auctionProps'
     /> 
-    <div class='upForAuctionWrap'>
-        <div class="buy-cards">
+    <div v-if="upForAuction.length != 0" class='upForAuctionWrap'>
+          <transition name="fade slide" appear>
+          <div class='upForAuctionModal'>
+          <div class="buy-cards">´
           <div
-            class="cardslots"
+            class="cardslotsUpForAuction"
             v-for="(card, index) in upForAuction"
             :key="index"
           >
@@ -17,24 +19,30 @@
             />
           </div>
         </div>
+        <div class='auctionBtnsSection'>
         <div class="placeBid-section">
-          <button v-on:click="currentBid++" class='auctionBtns'>Your bid: {{ currentBid }}</button>
+          <button v-on:click="currentBid++" :disabled="currentBid >= player.money" class='auctionBtns'>Raise bid</button>
+          <div id='currentBid'>Your current bid: {{ currentBid }}</div>
           <button v-on:click="placeBid()" class='auctionBtns'>Place bid</button>
           <button v-on:click="passed()" class='auctionBtns'>Pass</button>
         </div>
-        <div>
+        </div>
+        <div id='currentHighestBid'>
         Current highest bid:
         {{ highestBid }}
         placed by: 
         {{ highestBiddingPlayer }}
         </div>
         <div>
-          <div>Send to</div>
+          <div id="sendToSection">Send to</div>
           <input type="button" class='sendToBtn' id='toItems' value="Items" @click="auctionToHand('items')" />
           <input type="button" class='sendToBtn' id='toSkills' value="Skills" @click="auctionToHand('skills')" />
           <input type="button" class='sendToBtn' id='toRaiseval' value="Raise value" @click="auctionToHand('raiseval')" />
+        </div> 
         </div>
+      </transition>
       </div>
+
     <div class="buy-cards">
         <div
           class="cardslots"
@@ -81,6 +89,7 @@ export default {
   props: {
     labels: Object,
     player: Object,
+    playerId: String,
     auctionCards: Array,
     upForAuction: Array,
     marketValues: Object,
@@ -183,9 +192,56 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .upForAuctionWrap {
+  position: absolute;
+  height: 6050px; /* ändra så att den bara är hela sidan!! */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 98;
+  background-color: rgba(0, 0, 0, 0.9);
+  text-align: center;
+  justify-content: center;
+
+}
+
+.auctionBtnsSection{
+  justify-content: center;
+  display:block;
+}
+
+.cardslotsUpForAuction{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 50%;
-display: grid;
-grid-template-columns: 70% 30%;
+}
+
+#currentHighestBid{
+  color: #222;
+  text-align:center;
+}
+
+#currentBid{
+  color: #222;
+  text-align:center;
+}
+
+.upForAuctionModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  width: 100%;
+  max-width: 400px;
+  height: 50%;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-rows: 60% 20% 10% 10%;
+
 }
 
 .buy-cards {
@@ -201,6 +257,10 @@ grid-template-columns: 70% 30%;
   margin-right: 10px;
 }
 
+.buttons p {
+  margin: 0;
+}
+
 .clickedButton {
   border: 1px solid rgb(118, 118, 118);
   border-radius: 2px;
@@ -210,25 +270,75 @@ grid-template-columns: 70% 30%;
 }
 
 #toItems{
-  background-color: #ea9999ff;  
+  text-align: center;
+  background-image: linear-gradient(to right, rgb(255, 170, 170), #ea9999ff);  
 }
 
 #toSkills{
-  background-color: #93c47dff;
+  text-align: center;
+  background-image: linear-gradient(to right, rgb(192, 253, 163), #93c47dff);
 }
 
 #toRaiseval{
-  background-color: #b4a7d6ff;
+  text-align: center;
+  background-image: linear-gradient(to right, rgb(216, 200, 255), #b4a7d6ff);
 }
 .sendToBtn{
-  width: 100%;
-  display:block;
+  width: 25%;
+  height: 75%;
+  appearance: none;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+  transition: 0.3s ease-out;
+  margin: auto;
+  text-align: center;
+  /*text-align: center;
+  margin: auto;
+  display: flex;*/
 }
 
+.sendToBtn:hover {
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
+} 
+
 .auctionBtns{
-  width: 100%;
-  display:block;  
+  width: 25%;
+  height: 75%;
+  display:block;
+  appearance: none;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 8px;
+  background-image: linear-gradient(to right, rgb(236, 179, 93), rgb(224, 159, 61));
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+  transition: 0.3s ease-out;
+  margin: auto;
+  text-align: center;
+  /*text-align: center;
+  margin: auto;
+  display: flex;*/ 
 }
+.auctionBtns:disabled{
+  background-image: none;
+  background-color: darkgray;
+  box-shadow:none;
+}
+
+.auctionBtns:hover {
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
+} 
 
 .board-section {
   padding: 10px;
@@ -241,7 +351,7 @@ grid-template-columns: 70% 30%;
 }
 
 #auction-section {
-  background-color: #ea9999ff;
+  background-color: rgb(241, 199, 134);
 }
 
 .cardslots {
@@ -259,6 +369,7 @@ grid-template-columns: 70% 30%;
 .cardslots div:hover {
   transform: scale(1) translate(-25%, 0);
   z-index: 1;
+  position:absolute;
 }
 
 .button:hover {
@@ -340,6 +451,39 @@ grid-template-columns: 70% 30%;
 
 
 @media only screen and (max-width: 1050px) {
+  .cardslotsUpForAuction {
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 65px);
+    grid-template-rows: repeat(auto-fill, 90px);
+    transform: scale(0.5) translate(435%, -25%);
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+  }
+
+  .auctionBtnsSection{
+    transform: scale(0.5);
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+
+  }
+
+  #currentHighestBid{
+    transform: scale(0.5);
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+
+  }
+
+  #sendToSection{    
+    transform: scale(0.5);
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+
+  }
+  
     /* phones */
   .buy-cards {
     width: 80%;
@@ -354,7 +498,10 @@ grid-template-columns: 70% 30%;
     transform: scale(0.75) translate(-25%, -25%);
     transition: 0.2s;
     transition-timing-function: ease-out;
-
+  }
+  
+  .upForAuctionWrap {
+    size: 80%;
   }
 
   .cardslots div {

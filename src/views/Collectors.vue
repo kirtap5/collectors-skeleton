@@ -10,7 +10,7 @@
         />
       </div>
 
-      <div v-if="players[playerId].dispBottles">
+      <div v-if="players[playerId] && players[playerId].dispBottles">
         <BottlesPlayerboard
           v-if="players[playerId]"
           :player="players[playerId]"
@@ -60,6 +60,7 @@
             v-if="players[playerId]"
             :labels="labels"
             :player="players[playerId]"
+            :playerId ="playerId"
             :auctionCards="auctionCards"
             :upForAuction="upForAuction"
             :marketValues="marketValues"
@@ -77,24 +78,16 @@
         </div>
 
         <div class="second-column">
-          <!-- <WorkArea
-            v-if="players[playerId]"
-            :color="players[playerId].color"
-            :labels="labels"
-            :player="players[playerId]"
-            :placement="buyPlacement"
-            @circleClicked="circleClicked($event)"
-            id="work_area"
-          />-->
           <WorkArea
             v-if="players[playerId]"
             :color="players[playerId].color"
             :labels="labels"
-            :round="round"
-            :placement="workPlacement"
-            :player="players[playerId]"
-            :players="players"
-            @placeBottle="placeBottle('workType', 'work', $event)"
+            :round="round" 
+            :placement="workPlacement" 
+            :player="players[playerId]" 
+            :players="players"         
+            @placeBottle="placeBottle('workType', 'work',$event)"
+            @workAction="workAction($event)"
             id="work_area"
           />
         </div>
@@ -434,6 +427,13 @@ export default {
       }.bind(this)
     );
 
+    this.$store.state.socket.on(
+      "workActionDone",
+      function (d) {
+        this.players = d.players;
+      }.bind(this)
+    );
+
     //Auction-grejer kommer här
 
     this.$store.state.socket.on(
@@ -489,7 +489,17 @@ export default {
       this.currentAction == "marketType" ? this.manageMarketAction(card) : null;
       this.currentAction == "workType" ? this.getCardToIncome(card) : null;
     },
-    manageMarketAction: function(card) {
+
+    workAction: function(p){
+      this.$store.state.socket.emit("workAction", {
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        placement: p
+      });
+    },
+
+
+    manageMarketAction: function (card) {
       this.selectedCards.push(card);
 
       if (this.allCardsChosen) {
@@ -507,8 +517,6 @@ export default {
       p.chooseTwoCards
         ? (this.allCardsChosen = false)
         : (this.allCardsChosen = true);
-      console.log("p.id i placeBottle" + p.id);
-      console.log(p);
       this.chosenPlacementCost = p.cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -525,9 +533,7 @@ export default {
       });
     },
 
-    buyRaiseValue: function() {
-      console.log("Detta skickas alltså till server: ");
-      console.log(this.selectedCards);
+    buyRaiseValue: function () {
       this.$store.state.socket.emit("buyRaiseValue", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -536,10 +542,7 @@ export default {
       });
     },
 
-    getCardToIncome: function(card) {
-      console.log("Detta skickas alltså till server: ");
-      console.log(this.selectedCards);
-
+    getCardToIncome: function (card) {
       this.selectedCards.push(card);
 
       if (this.allCardsChosen) {

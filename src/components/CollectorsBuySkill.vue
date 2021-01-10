@@ -30,7 +30,7 @@
             :style="{ backgroundColor: players[p.playerId].color }"
           >
             <p>{{ p.playerId }}</p>
-        </div>
+          </div>
         </div>
       </div>
     </div>

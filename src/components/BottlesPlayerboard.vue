@@ -7,15 +7,23 @@
         <div class="modal">
               <h1>{{labels.income}}</h1>
               <p> {{labels.incomeGain1}}{{player.income.length}}{{labels.incomeGain2}}</p>
-              <p>{{labels.remainingPlacements}}{{this.bottlesToPlace}}</p>
-                <div class = "slotGrid">
+              <div v-if="this.bottlesToPlace<= 3 && this.bottlesToPlace>0"> 
+                <p>{{labels.remainingPlacements}}{{this.bottlesToPlace}}</p>
+              </div>
+              <div v-if="this.bottlesToPlace > 3"> 
+                <p>{{labels.remainingPlacements}} 3 </p>
+              </div>
+              <div v-if="this.bottlesToPlace != 0" class = "slotGrid">
                   <button :disabled="this.bottleIncome.gainOneCoin || this.bottlesToPlace <= 0"
                       @click="gainOneCoin()"> +$1 </button>
                   <button :disabled="this.bottleIncome.gainTwoCoins || this.bottlesToPlace <= 0"
                       @click="gainTwoCoins()"> +$2 </button>
                   <button :disabled="this.bottleIncome.gainCard || this.bottlesToPlace <= 0"
                       @click="gainCard()"> {{labels.draw}} </button>
-                </div>
+              </div>
+              <div v-if="this.bottlesToPlace == 0">
+                <button id="nextRoundButton" @click="nextRound()"> Start next round! </button> <!-- Label -->
+              </div>
         </div>
     </transition>
 
@@ -55,11 +63,13 @@ export default {
         this.bottleIncome.gainCard = true;
         this.bottlesToPlace -= 1;
     },
+    nextRound: function(){
+      this.$emit("getBottleIncome", this.bottleIncome)
+    }
   },
   watch:{
     bottlesToPlace: function() {
-      if(this.bottlesToPlace == 0){
-        console.log(this.bottleIncome)
+      if(this.bottlesToPlace === 0 || (this.bottleIncome.gainCard && this.bottleIncome.gainOneCoin && this.bottleIncome.gainTwoCoins)){
         this.$emit("getBottleIncome", this.bottleIncome)
       }
     }
@@ -69,7 +79,6 @@ export default {
 
 
 <style scoped>
-
 .slotGrid{
     display: flex;
     justify-content: center;
@@ -98,6 +107,7 @@ export default {
   color: black;
   padding: 25px;
   border-radius: 8px;
+  text-align: center;
 }
 
 button {
@@ -119,5 +129,12 @@ button {
 button:disabled{
     background-image: none;
     background-color: darkgray;
+}
+
+#nextRoundButton{
+  border-radius: 10px;
+  height: 7vw;
+  width: auto;
+
 }
 </style>
