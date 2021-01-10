@@ -177,7 +177,7 @@ export default {
     Scoreboard,
     MenuButton,
   },
-  data: function () {
+  data: function() {
     return {
       publicPath: "localhost:8080/#", //"collectors-groupxx.herokuapp.com/#",
       touchScreen: false,
@@ -269,12 +269,12 @@ export default {
     };
   },
   computed: {
-    playerId: function () {
+    playerId: function() {
       return this.$store.state.playerId;
     },
   },
   watch: {
-   /* players: function (newP, oldP) {
+    /* players: function (newP, oldP) {
       console.log(newP, oldP);
       for (let p in this.players) {
         for (let c = 0; c < this.players[p].hand.length; c += 1) {
@@ -292,7 +292,7 @@ export default {
         }
       }
     },*/
-    nextRound: function () {
+    nextRound: function() {
       if (this.nextRound) {
         if (this.round < 4) {
           this.startNextRound();
@@ -303,7 +303,7 @@ export default {
       }
     },
   },
-  created: function () {
+  created: function() {
     this.$store.commit("SET_PLAYER_ID", this.$route.query.id);
     //TODO! Fix this ugly hack
     //background: https://github.com/quasarframework/quasar/issues/5672
@@ -318,7 +318,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsInitialize",
-      function (d) {
+      function(d) {
         this.labels = d.labels;
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
@@ -335,7 +335,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsBottlePlaced",
-      function (d) {
+      function(d) {
         this.buyPlacement = d.placements.buyPlacement;
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
@@ -352,7 +352,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsCardDrawn",
-      function (d) {
+      function(d) {
         //this has been refactored to not single out one player's cards
         //better to update the state of all cards
         this.players = d;
@@ -361,7 +361,7 @@ export default {
 
     this.$store.state.socket.on(
       "nextRoundStarted",
-      function (d) {
+      function(d) {
         this.itemsOnSale = d.itemsOnSale;
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
@@ -379,7 +379,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsCardBought",
-      function (d) {
+      function(d) {
         console.log(d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
@@ -387,7 +387,7 @@ export default {
     );
     this.$store.state.socket.on(
       "raiseValueBought",
-      function (d) {
+      function(d) {
         console.log(d.playerId, "bought a Raise Value");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
@@ -398,7 +398,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsSkillCardBought",
-      function (d) {
+      function(d) {
         console.log(d.playerId, "bought a skill card");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
@@ -407,7 +407,7 @@ export default {
 
     this.$store.state.socket.on(
       "bottleIncomeGained",
-      function (d) {
+      function(d) {
         this.players = d.players;
         this.nextRound = d.nextRound;
       }.bind(this)
@@ -415,14 +415,14 @@ export default {
 
     this.$store.state.socket.on(
       "pointsCounted",
-      function (d) {
+      function(d) {
         this.players = d.players;
       }.bind(this)
     );
 
     this.$store.state.socket.on(
       "cardsForIncome",
-      function (d) {
+      function(d) {
         this.players = d.players;
       }.bind(this)
     );
@@ -438,7 +438,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsAuctionCardBought",
-      function (d) {
+      function(d) {
         console.log(d.playerId, "Started an Auction");
         this.players = d.players;
         this.auctionCards = d.auctionCards;
@@ -447,7 +447,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsAuctionSentToHand",
-      function (d) {
+      function(d) {
         this.players = d.players;
         this.auctionCards = d.auctionCards;
         this.upForAuction = d.upForAuction;
@@ -459,7 +459,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsPlacedBid",
-      function (d) {
+      function(d) {
         console.log(d.playerId, "Placed a bid");
         this.players = d.players;
         this.highestBid = d.bid;
@@ -468,7 +468,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsPassedBid",
-      function (d) {
+      function(d) {
         console.log(d.playerId, "Passed a bid");
         this.players = d.players;
         this.upForAuction = d.upForAuction;
@@ -476,17 +476,17 @@ export default {
     );
   },
   methods: {
-    selectAll: function (n) {
+    selectAll: function(n) {
       n.target.select();
     },
-    resetGame: function () {
+    resetGame: function() {
       this.gameFinished = false;
     },
-    selectAction: function (card) {
+    selectAction: function(card) {
       this.currentAction == "itemType" ? this.buyCard(card) : null;
       this.currentAction == "skillType" ? this.buySkillCard(card) : null;
       this.currentAction == "auctionType" ? this.buyAuctionCard(card) : null; //Funktionen existerar inte än
-      this.currentAction == "marketType" ? this.manageMarketAction(card) : null; 
+      this.currentAction == "marketType" ? this.manageMarketAction(card) : null;
       this.currentAction == "workType" ? this.getCardToIncome(card) : null;
     },
 
@@ -512,7 +512,7 @@ export default {
         this.selectedCards.splice(0, 2);
       }
     },
-    placeBottle: function (type, action, p) {
+    placeBottle: function(type, action, p) {
       this.currentAction = type;
       p.chooseTwoCards
         ? (this.allCardsChosen = false)
@@ -526,7 +526,7 @@ export default {
         id: p.id,
       });
     },
-    drawCard: function () {
+    drawCard: function() {
       this.$store.state.socket.emit("collectorsDrawCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -546,32 +546,31 @@ export default {
       this.selectedCards.push(card);
 
       if (this.allCardsChosen) {
-         this.$store.state.socket.emit("getCardToIncome", {
-        roomId: this.$route.params.id,
-        playerId: this.playerId,
-        cards: this.selectedCards,
-        cost: this.chosenPlacementCost,
-      });
+        this.$store.state.socket.emit("getCardToIncome", {
+          roomId: this.$route.params.id,
+          playerId: this.playerId,
+          cards: this.selectedCards,
+          cost: this.chosenPlacementCost,
+        });
 
         this.selectedCards.splice(0, 1);
       } else if (this.selectedCards.length == 2) {
         this.allCardsChosen = true;
 
-         this.$store.state.socket.emit("getCardToIncome", {
-        roomId: this.$route.params.id,
-        playerId: this.playerId,
-        cards: this.selectedCards,
-        cost: this.chosenPlacementCost,
-      });
-        
+        this.$store.state.socket.emit("getCardToIncome", {
+          roomId: this.$route.params.id,
+          playerId: this.playerId,
+          cards: this.selectedCards,
+          cost: this.chosenPlacementCost,
+        });
+
         this.selectedCards.splice(0, 2);
       } else {
         console.log("Please choose another card: ");
       }
-      
     },
 
-    buyCard: function (card) {
+    buyCard: function(card) {
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -579,7 +578,7 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
-    buySkillCard: function (card) {
+    buySkillCard: function(card) {
       this.$store.state.socket.emit("collectorsBuySkillCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -587,25 +586,26 @@ export default {
         cost: this.chosenPlacementCost,
       });
     },
-    startNextRound: function () {
+    startNextRound: function() {
       this.$store.state.socket.emit("startNextRound", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
       });
     },
-    getBottleIncome: function (bottleIncome) {
+    getBottleIncome: function(bottleIncome) {
       this.$store.state.socket.emit("getBottleIncome", {
         playerId: this.playerId,
         roomId: this.$route.params.id,
         bottleIncome,
       });
     },
-    countPoints: function () {
+    countPoints: function() {
       this.$store.state.socket.emit("countPoints", {
         roomId: this.$route.params.id,
+        playerId: this.playerId,
       });
     },
-    setSecret: function (card) {
+    setSecret: function(card) {
       this.$store.state.socket.emit("collectorsSetSecret", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -614,7 +614,7 @@ export default {
     },
 
     //Här kommer auction
-    buyAuctionCard: function (card) {
+    buyAuctionCard: function(card) {
       this.$store.state.socket.emit("collectorsBuyAuctionCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -622,7 +622,7 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
-    auctionToHand: function (d) {
+    auctionToHand: function(d) {
       this.$store.state.socket.emit("collectorsAuctionToHand", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -631,7 +631,7 @@ export default {
         destination: d,
       });
     },
-    placeBid: function (bid) {
+    placeBid: function(bid) {
       console.log("collectors.vue " + bid);
       if (bid > this.highestBid) {
         this.$store.state.socket.emit("collectorsPlaceBid", {
@@ -643,7 +643,7 @@ export default {
         this.highestBiddingPlayer = this.playerId;
       }
     },
-    passed: function () {
+    passed: function() {
       this.$store.state.socket.emit("collectorsPassed", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
