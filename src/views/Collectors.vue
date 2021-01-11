@@ -7,7 +7,6 @@
           :player="players[playerId]"
           :allCardsChosen="allCardsChosen"
           @selectAction="setSecret($event)"
-          :labels="labels"
         />
       </div>
 
@@ -93,59 +92,46 @@
           />
         </div>
 
-        <div class="third-column">
+        <div v-if="players[playerId]" class="third-column">
           <div id="game-info">
-            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
+            <h1>{{ labels.myPlayer }} {{ playerId }}</h1>
+            <h1>{{ labels.round }} {{ round }}</h1>
 
-            <!-- PÅBÖRJAT -->
-            <div id="player-info">
-              <div class="playerSection">
-                <div>{{ labels.players }}</div>
-                <div
-                  v-for="(player, index) in players"
-                  :key="index"
-                  :player="player"
-                >
-                  {{ index }}
-
-                  <span v-if="player.active" class="playerTurn">{{
-                    labels.turn
-                  }}</span>
-
-                  <span v-if="index == playerId" class="me">{{
-                    labels.me
-                  }}</span>
-                </div>
-              </div>
+            <div
+              v-for="(player, index) in players"
+              :key="index"
+              :player="player"
+            >
+              <h1 v-if="player.active">
+                {{ labels.turn1 }}{{ index }}{{ labels.turn2 }}
+              </h1>
             </div>
 
-            <MenuButton :labels="labels" :path="publicPath + $route.path" />
+            {{ labels.invite }}
+            <input
+              type="text"
+              :value="publicPath + $route.path"
+              @click="selectAll"
+              readonly="readonly"
+            />
+
+            <MenuButton />
 
             <!-- DRAW CARD -->
             <!-- <button @click="drawCard"> {{labels.draw}} </button> -->
           </div>
 
-          <div class="smallDevMenu">
-            <MenuButton :labels="labels" :path="publicPath + $route.path" />
-            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
-          </div>
-
-          <OtherPlayerboards
-            :Players="players"
-            :playerId="playerId"
-            :labels="labels"
-          />
+          <OtherPlayerboards :Players="players" :playerId="playerId" />
         </div>
 
         <div id="hand_playerboard">
-          <PlayerBoard v-if="players[playerId]" :player="players[playerId]" :labels="labels" />
+          <PlayerBoard v-if="players[playerId]" :player="players[playerId]" />
 
           <Hand
             v-if="players[playerId]"
             :player="players[playerId]"
             :allCardsChosen="allCardsChosen"
             @selectAction="selectAction($event)"
-            :labels="labels"
           />
         </div>
       </div>
@@ -191,7 +177,7 @@ export default {
     Scoreboard,
     MenuButton,
   },
-  data: function() {
+  data: function () {
     return {
       publicPath: "localhost:8080/#", //"collectors-groupxx.herokuapp.com/#",
       touchScreen: false,
@@ -283,12 +269,12 @@ export default {
     };
   },
   computed: {
-    playerId: function() {
+    playerId: function () {
       return this.$store.state.playerId;
     },
   },
   watch: {
-    /* players: function (newP, oldP) {
+   /* players: function (newP, oldP) {
       console.log(newP, oldP);
       for (let p in this.players) {
         for (let c = 0; c < this.players[p].hand.length; c += 1) {
@@ -306,7 +292,7 @@ export default {
         }
       }
     },*/
-    nextRound: function() {
+    nextRound: function () {
       if (this.nextRound) {
         if (this.round < 4) {
           this.startNextRound();
@@ -317,7 +303,7 @@ export default {
       }
     },
   },
-  created: function() {
+  created: function () {
     this.$store.commit("SET_PLAYER_ID", this.$route.query.id);
     //TODO! Fix this ugly hack
     //background: https://github.com/quasarframework/quasar/issues/5672
@@ -332,7 +318,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsInitialize",
-      function(d) {
+      function (d) {
         this.labels = d.labels;
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
@@ -349,7 +335,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsBottlePlaced",
-      function(d) {
+      function (d) {
         this.buyPlacement = d.placements.buyPlacement;
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
@@ -366,7 +352,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsCardDrawn",
-      function(d) {
+      function (d) {
         //this has been refactored to not single out one player's cards
         //better to update the state of all cards
         this.players = d;
@@ -375,7 +361,7 @@ export default {
 
     this.$store.state.socket.on(
       "nextRoundStarted",
-      function(d) {
+      function (d) {
         this.itemsOnSale = d.itemsOnSale;
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
@@ -393,7 +379,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsCardBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
@@ -401,7 +387,7 @@ export default {
     );
     this.$store.state.socket.on(
       "raiseValueBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "bought a Raise Value");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
@@ -412,7 +398,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsSkillCardBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "bought a skill card");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
@@ -421,7 +407,7 @@ export default {
 
     this.$store.state.socket.on(
       "bottleIncomeGained",
-      function(d) {
+      function (d) {
         this.players = d.players;
         this.nextRound = d.nextRound;
       }.bind(this)
@@ -429,14 +415,14 @@ export default {
 
     this.$store.state.socket.on(
       "pointsCounted",
-      function(d) {
+      function (d) {
         this.players = d.players;
       }.bind(this)
     );
 
     this.$store.state.socket.on(
       "cardsForIncome",
-      function(d) {
+      function (d) {
         this.players = d.players;
       }.bind(this)
     );
@@ -452,7 +438,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsAuctionCardBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "Started an Auction");
         this.players = d.players;
         this.auctionCards = d.auctionCards;
@@ -461,7 +447,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsAuctionSentToHand",
-      function(d) {
+      function (d) {
         this.players = d.players;
         this.auctionCards = d.auctionCards;
         this.upForAuction = d.upForAuction;
@@ -473,7 +459,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsPlacedBid",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "Placed a bid");
         this.players = d.players;
         this.highestBid = d.bid;
@@ -482,7 +468,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsPassedBid",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "Passed a bid");
         this.players = d.players;
         this.upForAuction = d.upForAuction;
@@ -490,17 +476,17 @@ export default {
     );
   },
   methods: {
-    selectAll: function(n) {
+    selectAll: function (n) {
       n.target.select();
     },
-    resetGame: function() {
+    resetGame: function () {
       this.gameFinished = false;
     },
-    selectAction: function(card) {
+    selectAction: function (card) {
       this.currentAction == "itemType" ? this.buyCard(card) : null;
       this.currentAction == "skillType" ? this.buySkillCard(card) : null;
       this.currentAction == "auctionType" ? this.buyAuctionCard(card) : null; //Funktionen existerar inte än
-      this.currentAction == "marketType" ? this.manageMarketAction(card) : null;
+      this.currentAction == "marketType" ? this.manageMarketAction(card) : null; 
       this.currentAction == "workType" ? this.getCardToIncome(card) : null;
     },
 
@@ -525,7 +511,8 @@ export default {
         this.selectedCards.splice(0, 2);
       }
     },
-    placeBottle: function(type, action, p) {
+
+    placeBottle: function (type, action, p) {
       this.currentAction = type;
       p.chooseTwoCards
         ? (this.allCardsChosen = false)
@@ -539,7 +526,7 @@ export default {
         id: p.id,
       });
     },
-    drawCard: function() {
+    drawCard: function () {
       this.$store.state.socket.emit("collectorsDrawCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -560,30 +547,31 @@ export default {
 
       if (this.allCardsChosen) {
         this.$store.state.socket.emit("getCardToIncome", {
-          roomId: this.$route.params.id,
-          playerId: this.playerId,
-          cards: this.selectedCards,
-          cost: this.chosenPlacementCost,
-        });
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        cards: this.selectedCards,
+        cost: this.chosenPlacementCost,
+      });
 
         this.selectedCards.splice(0, 1);
       } else if (this.selectedCards.length == 2) {
         this.allCardsChosen = true;
 
         this.$store.state.socket.emit("getCardToIncome", {
-          roomId: this.$route.params.id,
-          playerId: this.playerId,
-          cards: this.selectedCards,
-          cost: this.chosenPlacementCost,
-        });
-
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        cards: this.selectedCards,
+        cost: this.chosenPlacementCost,
+      });
+        
         this.selectedCards.splice(0, 2);
       } else {
         console.log("Please choose another card: ");
       }
+      
     },
 
-    buyCard: function(card) {
+    buyCard: function (card) {
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -591,7 +579,7 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
-    buySkillCard: function(card) {
+    buySkillCard: function (card) {
       this.$store.state.socket.emit("collectorsBuySkillCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -599,26 +587,25 @@ export default {
         cost: this.chosenPlacementCost,
       });
     },
-    startNextRound: function() {
+    startNextRound: function () {
       this.$store.state.socket.emit("startNextRound", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
       });
     },
-    getBottleIncome: function(bottleIncome) {
+    getBottleIncome: function (bottleIncome) {
       this.$store.state.socket.emit("getBottleIncome", {
         playerId: this.playerId,
         roomId: this.$route.params.id,
         bottleIncome,
       });
     },
-    countPoints: function() {
+    countPoints: function () {
       this.$store.state.socket.emit("countPoints", {
         roomId: this.$route.params.id,
-        playerId: this.playerId,
       });
     },
-    setSecret: function(card) {
+    setSecret: function (card) {
       this.$store.state.socket.emit("collectorsSetSecret", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -627,7 +614,7 @@ export default {
     },
 
     //Här kommer auction
-    buyAuctionCard: function(card) {
+    buyAuctionCard: function (card) {
       this.$store.state.socket.emit("collectorsBuyAuctionCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -635,7 +622,7 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
-    auctionToHand: function(d) {
+    auctionToHand: function (d) {
       this.$store.state.socket.emit("collectorsAuctionToHand", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -655,7 +642,7 @@ export default {
         this.highestBiddingPlayer = this.playerId;
       }
     },
-    passed: function() {
+    passed: function () {
       this.$store.state.socket.emit("collectorsPassed", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -710,11 +697,7 @@ main {
 
 #game-info {
   grid-row: 1;
-  margin: 5px;
-  background: lavender;
-  padding: 10px;
-  border-radius: 5px;
-
+  margin-left: 1vw;
 }
 #game-info h1 {
   font-size: 80%;
@@ -895,49 +878,6 @@ p {
   transform: translateY(-50%) translateX(100vw);
 }
 
-/* Här kommer Rebeccas CSS */
-
-#player-info {
-  padding: 3px;
-  margin: 5px;
-  border-radius: 5px;
-  border: 2px dashed white;
-  color: darkgray;
-}
-
-.smallDevMenu{
-  visibility: hidden;
-}
-
-#roundInfo {
-  display: inline-block;
-  padding: 10px 15px;
-  border: 1px solid rgb(43, 42, 42);
-  background: whitesmoke;
-  background-image: linear-gradient(to right, white, whitesmoke);
-  border-radius: 8px;
-  color: rgb(43, 42, 42);
-  font-weight: 700;
-  box-shadow: 1px 1px rgba(0, 0, 0, 0.4);
-}
-
-.playerTurn {
-  background: blue;
-  font-size: 10px;
-  margin: 2px;
-  padding: 3px;
-  border-radius: 5px;
-}
-
-.me {
-  background: red;
-  font-size: 10px;
-  margin: 2px;
-  padding: 3px;
-  border-radius: 5px;
-}
-
-
 @media screen and (max-width: 825px) {
   .layout_wrapper {
     display: grid;
@@ -962,15 +902,5 @@ p {
   #hand_playerboard {
     grid-column: 1/3;
   }
-
-  /* Rebeccas media queries */
-  .smallDevMenu {
-    visibility: visible;
-  }
-
-  #game-info {
-    display: none;
-  }
-
 }
 </style>
