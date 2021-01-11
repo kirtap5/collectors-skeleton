@@ -498,7 +498,6 @@ export default {
       });
     },
 
-
     manageMarketAction: function (card) {
       this.selectedCards.push(card);
 
@@ -512,6 +511,7 @@ export default {
         this.selectedCards.splice(0, 2);
       }
     },
+
     placeBottle: function (type, action, p) {
       this.currentAction = type;
       p.chooseTwoCards
@@ -546,7 +546,7 @@ export default {
       this.selectedCards.push(card);
 
       if (this.allCardsChosen) {
-         this.$store.state.socket.emit("getCardToIncome", {
+        this.$store.state.socket.emit("getCardToIncome", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         cards: this.selectedCards,
@@ -557,7 +557,7 @@ export default {
       } else if (this.selectedCards.length == 2) {
         this.allCardsChosen = true;
 
-         this.$store.state.socket.emit("getCardToIncome", {
+        this.$store.state.socket.emit("getCardToIncome", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         cards: this.selectedCards,
@@ -632,7 +632,6 @@ export default {
       });
     },
     placeBid: function (bid) {
-      console.log("collectors.vue " + bid);
       if (bid > this.highestBid) {
         this.$store.state.socket.emit("collectorsPlaceBid", {
           roomId: this.$route.params.id,
