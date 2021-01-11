@@ -153,4 +153,17 @@ a:hover {
 .button:hover {
   box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
 }
+
+@media screen and (max-width: 825px) {
+  h1, h2, h3 {
+    font-size: 90%;
+  }
+
+  #welcomeMessage{
+    width: 70%;
+    overflow: scroll;
+    max-height: 65vh;
+  }
+  
+}
 </style>

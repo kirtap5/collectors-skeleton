@@ -7,7 +7,7 @@
             <div id="dispFirstPlayerToken" v-if="player.firstPlayer">
               <FirstPlayerToken/>
             </div>
-            <h2> Player {{index}} </h2>
+            <h2> {{ labels.player }} {{index}} </h2>
             <PlayerBoard :class="['playerBoard', {'showPlayerBoard': dispPlayerboard===index}]" :player="player" />
             <!--<PlayerBoard v-if="dispPlayerboard === index" :player="player" class="showPlayerBoard" />-->
           </div>
@@ -31,7 +31,8 @@ export default {
     },
     props:{
       Players: Object,
-      playerId: String
+      playerId: String,
+      labels: Object
     },
     data: function () {
     return {

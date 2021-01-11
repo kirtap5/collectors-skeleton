@@ -262,6 +262,22 @@ computed: {
         title: "",
         classes: "smallButton yellow",
       };
+    },
+        work7Props: function () {
+      return {
+        value: "i",
+        text: this.labels.work7,
+        title: "",
+        classes: "smallButton yellow",
+      };
+    },
+        work8Props: function () {
+      return {
+        value: "i",
+        text: this.labels.work8,
+        title: "",
+        classes: "smallButton yellow",
+      };
     }
 },
   methods: {
