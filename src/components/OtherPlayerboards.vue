@@ -60,7 +60,12 @@ export default {
 };
 </script>
 <style scoped>
-
+    /*#AllOtherPlayerboards
+ 
+      display:flex;
+      justify-content: flex-end;
+      flex-direction: row;
+    }*/
 
     .otherPlayerBoard {
     margin: 5px;
@@ -93,6 +98,7 @@ export default {
 
     .showPlayerBoard {
       height: 30vw; /*30vw;*/
+<<<<<<< HEAD
       width: 70vw; /*40vw;*/
       border-bottom: solid black;
 
@@ -108,5 +114,9 @@ export default {
         justify-content: flex-end;
         flex-direction: row;
       }
+=======
+      width: 40vw; /*40vw;*/
+      border-bottom: 1px solid black;
+>>>>>>> developer
     }
 </style>

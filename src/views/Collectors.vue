@@ -101,6 +101,7 @@
               :key="index"
               :player="player"
             >
+<<<<<<< HEAD
               <h1 v-if="player.active">
                 {{ labels.turn1 }}{{ index }}{{ labels.turn2 }}
               </h1>
@@ -118,6 +119,10 @@
 
             <!-- DRAW CARD -->
             <!-- <button @click="drawCard"> {{labels.draw}} </button> -->
+=======
+              <h1 v-if="player.active">It's {{ index }}'s turn!</h1>
+            </div>
+>>>>>>> developer
           </div>
 
           <OtherPlayerboards :Players="players" :playerId="playerId" />
@@ -134,6 +139,7 @@
           />
         </div>
       </div>
+<<<<<<< HEAD
       <Scoreboard
         v-if="gameFinished"
         :players="players"
@@ -141,12 +147,83 @@
         @resetGame="resetGame($event)"
       />
     </main>
+=======
+
+      <div class="buttons">
+        <button @click="drawCard">
+          {{ labels.draw }}
+        </button>
+      </div>
+      <div class="my-cards">
+        <CollectorsCard
+          v-for="(card, index) in myCards"
+          :card="card"
+          :key="index"
+        />
+      </div>
+
+      Skills
+      <div class="cardslots">
+        <CollectorsCard
+          v-for="(card, index) in skillsOnSale"
+          :card="card"
+          :key="index"
+        />
+      </div>
+      Auction
+      <div class="cardslots">
+        <CollectorsCard
+          v-for="(card, index) in auctionCards"
+          :card="card"
+          :key="index"
+        />
+      </div>
+
+      <div class="playerboard">
+        Items-on-hand
+        <div class="cardslots" v-if="players[playerId]">
+          <CollectorsCard
+            v-for="(card, index) in players[playerId].items"
+            :card="card"
+            :key="index"
+          />
+        </div>
+        <div>
+          Skills-on-hand
+          <div class="cardslots" v-if="players[playerId]">
+            <CollectorsCard
+              v-for="(card, index) in players[playerId].skills"
+              :card="card"
+              :key="index"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+    {{ players }}
+    <!-- <h1>MARKET VALUES: </h1>{{ marketValues }} -->
+    <button v-if="players[playerId]" @click="players[playerId].money += 1">
+      fake more money
+    </button>
+    <footer>
+      <p>
+        {{ labels.invite }}
+        <input
+          type="text"
+          :value="publicPath + $route.path"
+          @click="selectAll"
+          readonly="readonly"
+        />
+      </p>
+    </footer>
+>>>>>>> developer
   </div>
 </template>
 
 <script>
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
 
+import CollectorsCard from "@/components/CollectorsCard.vue";
 import OtherPlayerboards from "@/components/OtherPlayerboards.vue";
 import CollectorsBuySkill from "@/components/CollectorsBuySkill.vue";
 import WorkArea from "@/components/WorkArea.vue";
@@ -163,6 +240,7 @@ import MenuButton from "@/components/MenuButton.vue";
 export default {
   name: "Collectors",
   components: {
+    CollectorsCard,
     CollectorsBuySkill,
     WorkArea,
     ItemSection,
@@ -674,10 +752,14 @@ main {
 
 .layout_wrapper {
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: 60% 20% 20%;
   grid-template-rows: auto;
+=======
+  grid-template-columns: 50% 30% 20%;
+  grid-template-rows: auto 1fr;
+>>>>>>> developer
   overflow: hidden;
-  margin: 10px;
 }
 
 .first-column {
@@ -713,8 +795,11 @@ main {
   display: grid;
   grid-template-columns: 60% 40%;
   grid-column: 1/4;
+<<<<<<< HEAD
   margin-top: 10px;
   border-bottom: 2px solid black;
+=======
+>>>>>>> developer
 }
 
 /*SECRET SECTION - TA BORT?
@@ -878,6 +963,7 @@ p {
   transform: translateY(-50%) translateX(100vw);
 }
 
+<<<<<<< HEAD
 @media screen and (max-width: 825px) {
   .layout_wrapper {
     display: grid;
@@ -898,6 +984,11 @@ p {
   .third-column {
     grid-row: 1/2;
     grid-column: 1/3;
+=======
+@media screen and (max-width: 800px) {
+  main {
+    width: 90vw;
+>>>>>>> developer
   }
   #hand_playerboard {
     grid-column: 1/3;

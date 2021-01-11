@@ -266,6 +266,7 @@ p {
 .slide-leave-to {
   transform: translateY(-50%) translateX(100vw);
 }
+<<<<<<< HEAD
 
 
 @media only screen and (max-width: 1050px) {
@@ -286,4 +287,6 @@ p {
   }
 }
 
+=======
+>>>>>>> developer
 </style>

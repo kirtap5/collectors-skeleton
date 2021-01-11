@@ -264,6 +264,7 @@ h1 {
   align-items: flex-start;
   color: black;
 }
+<<<<<<< HEAD
 
 @media only screen and (max-width: 1050px) {
   /* phones */
@@ -302,4 +303,6 @@ h1 {
   }
 }
 }
+=======
+>>>>>>> developer
 </style>

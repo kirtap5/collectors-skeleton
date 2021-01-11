@@ -167,7 +167,6 @@ export default {
   grid-template-columns: repeat(auto-fill, 85px);
   grid-template-rows: repeat(auto-fill, 117px);
 }
-
 .cardslots div {
   transform: scale(0.5) translate(-50%, -50%);
   transition: 0.2s;
@@ -178,6 +177,7 @@ export default {
   transform: scale(1) translate(-25%, 0);
   z-index: 1;
 }
+<<<<<<< HEAD
 
 
 /*@media only screen and (min-width: 768px) {
@@ -222,4 +222,6 @@ export default {
    }
 }
 
+=======
+>>>>>>> developer
 </style>

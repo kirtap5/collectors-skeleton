@@ -122,10 +122,32 @@ export default {
   margin: none;
 
 }
+<<<<<<< HEAD
 @media only screen and (max-width: 1050px) {
   .designWrapper{
       margin-left: 5vw;
   }
+=======
+/*.available-to-choose {
+    animation: jiggle 1s ease-in-out;
+    animation-iteration-count:infinite;
+    box-shadow: 0 0 10px yellow;
+  }*/
+>>>>>>> developer
 
+/*.cardslots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 105px);
+  grid-template-rows: repeat(auto-fill, 145px);
 }
+.cardslots div {
+  transform: scale(0.5) translate(-50%, -50%);
+  transition: 0.2s;
+  transition-timing-function: ease-out;
+  z-index: 0;
+}
+.cardslots div:hover {
+  transform: scale(1) translate(-25%, 0);
+  z-index: 1;
+}*/
 </style>
