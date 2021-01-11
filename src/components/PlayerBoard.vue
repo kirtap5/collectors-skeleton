@@ -45,8 +45,8 @@
           <InfoButtons :modalProps="mySkillsProps" :labels="labels"/>
         </div>
         <div class="bottles">
-          <p>Bottles: {{player.bottles}}</p>
-          <p>Available bottles: {{player.availableBottles}}</p>
+          <p>{{ labels.playerBoard28 }} {{player.bottles}}</p>
+          <p>{{ labels.playerBoard29 }} {{player.availableBottles}}</p>
           </div>
         </div>
       <div id="skillSection">
@@ -117,7 +117,7 @@
       </div>
         <div id="incomeSection">
           <div class="button">
-            <InfoButtons :modalProps="myIncomeProps" />
+            <InfoButtons :modalProps="myIncomeProps" :labels="labels"/>
           </div>
 
           <div class="income dot">
@@ -127,7 +127,7 @@
 
         <div id="moneySection">
           <div class="button">
-            <InfoButtons :modalProps="myMoneyProps" />
+            <InfoButtons :modalProps="myMoneyProps" :labels="labels" />
           </div>
           <div class="money dot">
             <p>&#36;{{ player.money }}</p>

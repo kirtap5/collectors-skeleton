@@ -82,7 +82,7 @@
                   card if the card is in the Skill section.
                 </li>
                 <li>
-                  the pink area is the category in whos price is raised buy €1
+                  the pink area is the category in whos price is raised buy $1
                   if you buy the card if it is in the Raise Value section.
                 </li>
               </ul>
@@ -163,7 +163,7 @@
             <li>
               <b>Raise value</b> - the blue symbol represents the category in
               which will increase if you buy this action. If you do this action,
-              all the future prices of this category will increase with €1
+              all the future prices of this category will increase with $1
             </li>
             <li>
               <b>Start an auction</b> - choose one of the cards in auction area
@@ -185,8 +185,8 @@
             <div class="conC">
                  <p>To perform an action at your turn, press one of the buttons on the side of the differant parts of the gameboard. The cost of the action is given on the button. </p>
                  <ul>
-                   <li>€1 represent the cost of €1</li>
-                   <li>-€1 represent that you gain €1</li>
+                   <li>$1 represent the cost of $1</li>
+                   <li>-$1 represent that you gain $1</li>
                    <li>if the button is gray, the cost is larger than the total amount of money you have</li>
                    <li>you can choose which ever button you want</li>
                    <li>when you have pressed a button you can chose which of the cards in this area you would like to perform the action on</li>
@@ -457,5 +457,19 @@ ul {
 .slide-enter,
 .slide-leave-to {
   transform: translateY(70%) translateX(100vw);
+}
+
+@media screen and (max-width: 825px) {
+  h1, h2, h3, p, ul {
+    font-size: 90%;
+  }
+
+  .modal-d{
+    width: 70%;
+    overflow: scroll;
+    max-height: 65vh;
+    
+  }
+  
 }
 </style>

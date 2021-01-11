@@ -61,7 +61,7 @@
             v-if="players[playerId]"
             :labels="labels"
             :player="players[playerId]"
-            :playerId ="playerId"
+            :playerId="playerId"
             :auctionCards="auctionCards"
             :upForAuction="upForAuction"
             :marketValues="marketValues"
@@ -83,11 +83,11 @@
             v-if="players[playerId]"
             :color="players[playerId].color"
             :labels="labels"
-            :round="round" 
-            :placement="workPlacement" 
-            :player="players[playerId]" 
-            :players="players"         
-            @placeBottle="placeBottle('workType', 'work',$event)"
+            :round="round"
+            :placement="workPlacement"
+            :player="players[playerId]"
+            :players="players"
+            @placeBottle="placeBottle('workType', 'work', $event)"
             @workAction="workAction($event)"
             id="work_area"
           />
@@ -95,7 +95,7 @@
 
         <div class="third-column">
           <div id="game-info">
-            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
+            <div class="roundInfo" id="roundInfoBig">{{ labels.round }} {{ round }}</div>
 
             <!-- PÅBÖRJAT -->
             <div id="player-info">
@@ -120,25 +120,33 @@
             </div>
 
             <MenuButton :labels="labels" :path="publicPath + $route.path" />
-
             <!-- DRAW CARD -->
             <!-- <button @click="drawCard"> {{labels.draw}} </button> -->
           </div>
 
-          <div class="smallDevMenu">
-            <MenuButton :labels="labels" :path="publicPath + $route.path" />
-            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
-          </div>
+          <div class="upperSmallDev">
+            <div class="smallDevMenu">
+              <MenuButton :labels="labels" :path="publicPath + $route.path" />
+            </div>
 
-          <OtherPlayerboards
-            :Players="players"
-            :playerId="playerId"
-            :labels="labels"
-          />
+            <div id="roundInfoSmall" class="roundInfo">
+              {{ labels.round }} {{ round }}
+            </div>
+
+            <OtherPlayerboards
+              :Players="players"
+              :playerId="playerId"
+              :labels="labels"
+            />
+          </div>
         </div>
 
         <div id="hand_playerboard">
-          <PlayerBoard v-if="players[playerId]" :player="players[playerId]" :labels="labels" />
+          <PlayerBoard
+            v-if="players[playerId]"
+            :player="players[playerId]"
+            :labels="labels"
+          />
 
           <Hand
             v-if="players[playerId]"
@@ -191,7 +199,7 @@ export default {
     Scoreboard,
     MenuButton,
   },
-  data: function() {
+  data: function () {
     return {
       publicPath: "localhost:8080/#", //"collectors-groupxx.herokuapp.com/#",
       touchScreen: false,
@@ -283,7 +291,7 @@ export default {
     };
   },
   computed: {
-    playerId: function() {
+    playerId: function () {
       return this.$store.state.playerId;
     },
   },
@@ -306,7 +314,7 @@ export default {
         }
       }
     },*/
-    nextRound: function() {
+    nextRound: function () {
       if (this.nextRound) {
         if (this.round < 4) {
           this.startNextRound();
@@ -317,7 +325,7 @@ export default {
       }
     },
   },
-  created: function() {
+  created: function () {
     this.$store.commit("SET_PLAYER_ID", this.$route.query.id);
     //TODO! Fix this ugly hack
     //background: https://github.com/quasarframework/quasar/issues/5672
@@ -332,7 +340,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsInitialize",
-      function(d) {
+      function (d) {
         this.labels = d.labels;
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
@@ -349,7 +357,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsBottlePlaced",
-      function(d) {
+      function (d) {
         this.buyPlacement = d.placements.buyPlacement;
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
@@ -366,7 +374,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsCardDrawn",
-      function(d) {
+      function (d) {
         //this has been refactored to not single out one player's cards
         //better to update the state of all cards
         this.players = d;
@@ -375,7 +383,7 @@ export default {
 
     this.$store.state.socket.on(
       "nextRoundStarted",
-      function(d) {
+      function (d) {
         this.itemsOnSale = d.itemsOnSale;
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
@@ -393,7 +401,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsCardBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
@@ -401,7 +409,7 @@ export default {
     );
     this.$store.state.socket.on(
       "raiseValueBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "bought a Raise Value");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
@@ -412,7 +420,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsSkillCardBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "bought a skill card");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
@@ -421,7 +429,7 @@ export default {
 
     this.$store.state.socket.on(
       "bottleIncomeGained",
-      function(d) {
+      function (d) {
         this.players = d.players;
         this.nextRound = d.nextRound;
       }.bind(this)
@@ -429,14 +437,14 @@ export default {
 
     this.$store.state.socket.on(
       "pointsCounted",
-      function(d) {
+      function (d) {
         this.players = d.players;
       }.bind(this)
     );
 
     this.$store.state.socket.on(
       "cardsForIncome",
-      function(d) {
+      function (d) {
         this.players = d.players;
       }.bind(this)
     );
@@ -452,7 +460,7 @@ export default {
 
     this.$store.state.socket.on(
       "collectorsAuctionCardBought",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "Started an Auction");
         this.players = d.players;
         this.auctionCards = d.auctionCards;
@@ -461,7 +469,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsAuctionSentToHand",
-      function(d) {
+      function (d) {
         this.players = d.players;
         this.auctionCards = d.auctionCards;
         this.upForAuction = d.upForAuction;
@@ -473,7 +481,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsPlacedBid",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "Placed a bid");
         this.players = d.players;
         this.highestBid = d.bid;
@@ -482,7 +490,7 @@ export default {
     );
     this.$store.state.socket.on(
       "collectorsPassedBid",
-      function(d) {
+      function (d) {
         console.log(d.playerId, "Passed a bid");
         this.players = d.players;
         this.upForAuction = d.upForAuction;
@@ -490,13 +498,13 @@ export default {
     );
   },
   methods: {
-    selectAll: function(n) {
+    selectAll: function (n) {
       n.target.select();
     },
-    resetGame: function() {
+    resetGame: function () {
       this.gameFinished = false;
     },
-    selectAction: function(card) {
+    selectAction: function (card) {
       this.currentAction == "itemType" ? this.buyCard(card) : null;
       this.currentAction == "skillType" ? this.buySkillCard(card) : null;
       this.currentAction == "auctionType" ? this.buyAuctionCard(card) : null; //Funktionen existerar inte än
@@ -504,14 +512,13 @@ export default {
       this.currentAction == "workType" ? this.getCardToIncome(card) : null;
     },
 
-    workAction: function(p){
+    workAction: function (p) {
       this.$store.state.socket.emit("workAction", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
-        placement: p
+        placement: p,
       });
     },
-
 
     manageMarketAction: function (card) {
       this.selectedCards.push(card);
@@ -526,7 +533,7 @@ export default {
         this.selectedCards.splice(0, 2);
       }
     },
-    placeBottle: function(type, action, p) {
+    placeBottle: function (type, action, p) {
       this.currentAction = type;
       p.chooseTwoCards
         ? (this.allCardsChosen = false)
@@ -540,7 +547,7 @@ export default {
         id: p.id,
       });
     },
-    drawCard: function() {
+    drawCard: function () {
       this.$store.state.socket.emit("collectorsDrawCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -584,7 +591,7 @@ export default {
       }
     },
 
-    buyCard: function(card) {
+    buyCard: function (card) {
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -592,7 +599,7 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
-    buySkillCard: function(card) {
+    buySkillCard: function (card) {
       this.$store.state.socket.emit("collectorsBuySkillCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -600,26 +607,26 @@ export default {
         cost: this.chosenPlacementCost,
       });
     },
-    startNextRound: function() {
+    startNextRound: function () {
       this.$store.state.socket.emit("startNextRound", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
       });
     },
-    getBottleIncome: function(bottleIncome) {
+    getBottleIncome: function (bottleIncome) {
       this.$store.state.socket.emit("getBottleIncome", {
         playerId: this.playerId,
         roomId: this.$route.params.id,
         bottleIncome,
       });
     },
-    countPoints: function() {
+    countPoints: function () {
       this.$store.state.socket.emit("countPoints", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
       });
     },
-    setSecret: function(card) {
+    setSecret: function (card) {
       this.$store.state.socket.emit("collectorsSetSecret", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -628,7 +635,7 @@ export default {
     },
 
     //Här kommer auction
-    buyAuctionCard: function(card) {
+    buyAuctionCard: function (card) {
       this.$store.state.socket.emit("collectorsBuyAuctionCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -636,7 +643,7 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
-    auctionToHand: function(d) {
+    auctionToHand: function (d) {
       this.$store.state.socket.emit("collectorsAuctionToHand", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -645,7 +652,7 @@ export default {
         destination: d,
       });
     },
-    placeBid: function(bid) {
+    placeBid: function (bid) {
       console.log("collectors.vue " + bid);
       if (bid > this.highestBid) {
         this.$store.state.socket.emit("collectorsPlaceBid", {
@@ -657,7 +664,7 @@ export default {
         this.highestBiddingPlayer = this.playerId;
       }
     },
-    passed: function() {
+    passed: function () {
       this.$store.state.socket.emit("collectorsPassed", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -716,7 +723,6 @@ main {
   background: lavender;
   padding: 10px;
   border-radius: 5px;
-
 }
 #game-info h1 {
   font-size: 80%;
@@ -907,11 +913,11 @@ p {
   color: darkgray;
 }
 
-.smallDevMenu{
+.smallDevMenu {
   visibility: hidden;
 }
 
-#roundInfo {
+.roundInfo {
   display: inline-block;
   padding: 10px 15px;
   border: 1px solid rgb(43, 42, 42);
@@ -923,6 +929,9 @@ p {
   box-shadow: 1px 1px rgba(0, 0, 0, 0.4);
 }
 
+#roundInfoSmall {
+  visibility: hidden;
+}
 .playerTurn {
   background: blue;
   font-size: 10px;
@@ -938,7 +947,6 @@ p {
   padding: 3px;
   border-radius: 5px;
 }
-
 
 @media screen and (max-width: 825px) {
   .layout_wrapper {
@@ -974,5 +982,35 @@ p {
     display: none;
   }
 
+  /* menyknappfix */
+  .upperSmallDev {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 70% 15% 15%;
+    grid-template-rows: 100%;
+  }
+
+  .smallDevMenu {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  #roundInfoSmall {
+    visibility: visible;
+    grid-column: 2;
+    grid-row: 1;
+    text-align: center;
+    margin: 5px;
+  }
+
+  #roundInfoBig {
+    display: none;
+  }
+
+  #AllOtherPlayerboards {
+    max-width: 100%;
+    grid-column: 1;
+    grid-row: 1;
+  }
 }
 </style>
