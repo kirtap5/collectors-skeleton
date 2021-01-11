@@ -1,22 +1,23 @@
 <template>
   <div class="secretSection">
-    <!-- <h2>Choose your secret card</h2>-->
-   
-    <div class = "designWrapper">
+    <div class="designWrapper">
       <div id="buttonArea">
-        <InfoButtons :modalProps="secretProps" :labels="labels"/>
+        <InfoButtons :modalProps="secretProps" :labels="labels" />
       </div>
       <div id="textArea">
         <h1>{{ labels.secret3 }}</h1>
       </div>
-    <!--CHOSE YOUR SECRET CARD-->
-      <div class = "card">
-        <div class="cardslots" v-for="(card, index) in player.hand" :key="index">
-            <CollectorsCard
-              :card="card"
-              :key="index"
-              @doAction="selectAction(card)"
-            />
+      <div class="card">
+        <div
+          class="cardslots"
+          v-for="(card, index) in player.hand"
+          :key="index"
+        >
+          <CollectorsCard
+            :card="card"
+            :key="index"
+            @doAction="selectAction(card)"
+          />
         </div>
       </div>
     </div>
@@ -40,21 +41,20 @@ export default {
     labels: Object,
   },
 
-computed: {
+  computed: {
     secretProps: function () {
       return {
         value: "i",
         text: this.labels.secret1,
         title: this.labels.secret2,
         classes: `${this.player.color} smallButton`,
-      }
-    }
+      };
+    },
   },
 
   methods: {
-    
     selectAction: function (card) {
-        this.$emit("selectAction", card);
+      this.$emit("selectAction", card);
     },
   },
 };
@@ -71,12 +71,9 @@ computed: {
   bottom: 0;
   z-index: 98;
   background-color: rgba(0, 0, 0, 0.9);
-  /*display: grid;
-  grid-template-columns: repeat(auto-fill, 170px);
-  grid-template-rows: repeat(auto-fill, 224px);*/
 }
 
-.designWrapper{
+.designWrapper {
   align-content: center;
   margin-left: 15vw;
   margin-top: 5vw;
@@ -87,8 +84,8 @@ computed: {
   grid-column: 2/3;
   display: grid;
   grid-template-columns: repeat(3, 170px);
-  /*grid-template-rows: repeat(3, 224px);*/
 }
+
 .cardslots {
   margin: auto;
   display: grid;
@@ -98,7 +95,6 @@ computed: {
   animation: jiggle 1s ease-in-out;
   animation-iteration-count: infinite;
   box-shadow: 0 0 10px yellow;
-
 }
 
 @keyframes jiggle {
@@ -116,18 +112,16 @@ computed: {
 #buttonArea {
   grid-column: 1/2;
   margin: auto;
-  }
+}
 
 #textArea {
   grid-column: 2/3;
   display: inline;
   margin: none;
-
 }
 @media only screen and (max-width: 1050px) {
-  .designWrapper{
-      margin-left: 5vw;
+  .designWrapper {
+    margin-left: 5vw;
   }
-
 }
 </style>
