@@ -92,7 +92,7 @@ export default {
       if (card.available) {
         this.$emit("selectAction", card);
         this.allCardsChosen
-          ? this.highlightAvailableCards()
+          ? null
           : this.$set(card, "available", false);
       }
     },

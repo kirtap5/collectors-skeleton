@@ -512,7 +512,6 @@ export default {
       });
     },
 
-
     manageMarketAction: function (card) {
       this.selectedCards.push(card);
 
@@ -645,8 +644,7 @@ export default {
         destination: d,
       });
     },
-    placeBid: function(bid) {
-      console.log("collectors.vue " + bid);
+    placeBid: function (bid) {
       if (bid > this.highestBid) {
         this.$store.state.socket.emit("collectorsPlaceBid", {
           roomId: this.$route.params.id,
