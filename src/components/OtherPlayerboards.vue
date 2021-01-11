@@ -8,7 +8,7 @@
               <FirstPlayerToken/>
             </div>
             <h2> {{ labels.player }} {{index}} </h2>
-            <PlayerBoard :class="['playerBoard', {'showPlayerBoard': dispPlayerboard===index}]" :player="player" />
+            <PlayerBoard :class="['playerBoard', {'showPlayerBoard': dispPlayerboard===index}]"  :player="player" :labels="labels" />
             <!--<PlayerBoard v-if="dispPlayerboard === index" :player="player" class="showPlayerBoard" />-->
           </div>
           <!--</transition>-->
