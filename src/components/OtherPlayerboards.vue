@@ -56,7 +56,12 @@ export default {
 };
 </script>
 <style scoped>
-
+    /*#AllOtherPlayerboards
+ 
+      display:flex;
+      justify-content: flex-end;
+      flex-direction: row;
+    }*/
 
     .otherPlayerBoard {
     margin: 5px;

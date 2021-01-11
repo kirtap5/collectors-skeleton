@@ -102,6 +102,7 @@
 
         <div class="third-column">
           <div id="game-info">
+<<<<<<< HEAD
             <div id="roundInfo">{{ labels.round }} {{ round }}</div>
 
             <!-- PÅBÖRJAT -->
@@ -142,6 +143,20 @@
             :playerId="playerId"
             :labels="labels"
           />
+=======
+            <h1>I am player {{ playerId }}</h1>
+            <h1>{{ labels.round }} {{ round }}</h1>
+            <div
+              v-for="(player, index) in players"
+              :key="index"
+              :player="player"
+            >
+              <h1 v-if="player.active">It's {{ index }}'s turn!</h1>
+            </div>
+          </div>
+
+          <OtherPlayerboards :Players="players" :playerId="playerId" />
+>>>>>>> developer
         </div>
 
         <div id="hand_playerboard">
@@ -160,6 +175,7 @@
           />
         </div>
       </div>
+<<<<<<< HEAD
       <Scoreboard
         v-if="gameFinished"
         :players="players"
@@ -167,12 +183,83 @@
         @resetGame="resetGame($event)"
       />
     </main>
+=======
+
+      <div class="buttons">
+        <button @click="drawCard">
+          {{ labels.draw }}
+        </button>
+      </div>
+      <div class="my-cards">
+        <CollectorsCard
+          v-for="(card, index) in myCards"
+          :card="card"
+          :key="index"
+        />
+      </div>
+
+      Skills
+      <div class="cardslots">
+        <CollectorsCard
+          v-for="(card, index) in skillsOnSale"
+          :card="card"
+          :key="index"
+        />
+      </div>
+      Auction
+      <div class="cardslots">
+        <CollectorsCard
+          v-for="(card, index) in auctionCards"
+          :card="card"
+          :key="index"
+        />
+      </div>
+
+      <div class="playerboard">
+        Items-on-hand
+        <div class="cardslots" v-if="players[playerId]">
+          <CollectorsCard
+            v-for="(card, index) in players[playerId].items"
+            :card="card"
+            :key="index"
+          />
+        </div>
+        <div>
+          Skills-on-hand
+          <div class="cardslots" v-if="players[playerId]">
+            <CollectorsCard
+              v-for="(card, index) in players[playerId].skills"
+              :card="card"
+              :key="index"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+    {{ players }}
+    <!-- <h1>MARKET VALUES: </h1>{{ marketValues }} -->
+    <button v-if="players[playerId]" @click="players[playerId].money += 1">
+      fake more money
+    </button>
+    <footer>
+      <p>
+        {{ labels.invite }}
+        <input
+          type="text"
+          :value="publicPath + $route.path"
+          @click="selectAll"
+          readonly="readonly"
+        />
+      </p>
+    </footer>
+>>>>>>> developer
   </div>
 </template>
 
 <script>
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
 
+import CollectorsCard from "@/components/CollectorsCard.vue";
 import OtherPlayerboards from "@/components/OtherPlayerboards.vue";
 import CollectorsBuySkill from "@/components/CollectorsBuySkill.vue";
 import WorkArea from "@/components/WorkArea.vue";
@@ -189,6 +276,7 @@ import MenuButton from "@/components/MenuButton.vue";
 export default {
   name: "Collectors",
   components: {
+    CollectorsCard,
     CollectorsBuySkill,
     WorkArea,
     ItemSection,
@@ -692,7 +780,6 @@ main {
   grid-template-columns: 60% 20% 20%;
   grid-template-rows: auto;
   overflow: hidden;
-  margin: 10px;
 }
 
 .first-column {

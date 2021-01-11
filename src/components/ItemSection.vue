@@ -169,7 +169,6 @@ export default {
   grid-template-columns: repeat(auto-fill, 85px);
   grid-template-rows: repeat(auto-fill, 117px);
 }
-
 .cardslots div {
   transform: scale(0.5) translate(-50%, -50%);
   transition: 0.2s;

@@ -131,6 +131,21 @@ export default {
   .designWrapper{
       margin-left: 5vw;
   }
-
 }
+
+/*.cardslots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 105px);
+  grid-template-rows: repeat(auto-fill, 145px);
+}
+.cardslots div {
+  transform: scale(0.5) translate(-50%, -50%);
+  transition: 0.2s;
+  transition-timing-function: ease-out;
+  z-index: 0;
+}
+.cardslots div:hover {
+  transform: scale(1) translate(-25%, 0);
+  z-index: 1;
+}*/
 </style>
