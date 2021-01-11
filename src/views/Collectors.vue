@@ -7,6 +7,7 @@
           :player="players[playerId]"
           :allCardsChosen="allCardsChosen"
           @selectAction="setSecret($event)"
+          :labels="labels"
         />
       </div>
 
@@ -94,44 +95,57 @@
 
         <div class="third-column">
           <div id="game-info">
-            <h1>{{ labels.myPlayer }} {{ playerId }}</h1>
-            <h1>{{ labels.round }} {{ round }}</h1>
+            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
 
-            <div
-              v-for="(player, index) in players"
-              :key="index"
-              :player="player"
-            >
-              <h1 v-if="player.active">
-                {{ labels.turn1 }}{{ index }}{{ labels.turn2 }}
-              </h1>
+            <!-- PÅBÖRJAT -->
+            <div id="player-info">
+              <div class="playerSection">
+                <div>{{ labels.players }}</div>
+                <div
+                  v-for="(player, index) in players"
+                  :key="index"
+                  :player="player"
+                >
+                  {{ index }}
+
+                  <span v-if="player.active" class="playerTurn">{{
+                    labels.turn
+                  }}</span>
+
+                  <span v-if="index == playerId" class="me">{{
+                    labels.me
+                  }}</span>
+                </div>
+              </div>
             </div>
 
-            {{ labels.invite }}
-            <input
-              type="text"
-              :value="publicPath + $route.path"
-              @click="selectAll"
-              readonly="readonly"
-            />
-
-            <MenuButton />
+            <MenuButton :labels="labels" :path="publicPath + $route.path" />
 
             <!-- DRAW CARD -->
             <!-- <button @click="drawCard"> {{labels.draw}} </button> -->
           </div>
 
-          <OtherPlayerboards :Players="players" :playerId="playerId" />
+          <div class="smallDevMenu">
+            <MenuButton :labels="labels" :path="publicPath + $route.path" />
+            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
+          </div>
+
+          <OtherPlayerboards
+            :Players="players"
+            :playerId="playerId"
+            :labels="labels"
+          />
         </div>
 
         <div id="hand_playerboard">
-          <PlayerBoard v-if="players[playerId]" :player="players[playerId]" />
+          <PlayerBoard v-if="players[playerId]" :player="players[playerId]" :labels="labels" />
 
           <Hand
             v-if="players[playerId]"
             :player="players[playerId]"
             :allCardsChosen="allCardsChosen"
             @selectAction="selectAction($event)"
+            :labels="labels"
           />
         </div>
       </div>
@@ -698,7 +712,11 @@ main {
 
 #game-info {
   grid-row: 1;
-  margin-left: 1vw;
+  margin: 5px;
+  background: lavender;
+  padding: 10px;
+  border-radius: 5px;
+
 }
 #game-info h1 {
   font-size: 80%;
@@ -879,6 +897,49 @@ p {
   transform: translateY(-50%) translateX(100vw);
 }
 
+/* Här kommer Rebeccas CSS */
+
+#player-info {
+  padding: 3px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 2px dashed white;
+  color: darkgray;
+}
+
+.smallDevMenu{
+  visibility: hidden;
+}
+
+#roundInfo {
+  display: inline-block;
+  padding: 10px 15px;
+  border: 1px solid rgb(43, 42, 42);
+  background: whitesmoke;
+  background-image: linear-gradient(to right, white, whitesmoke);
+  border-radius: 8px;
+  color: rgb(43, 42, 42);
+  font-weight: 700;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.playerTurn {
+  background: blue;
+  font-size: 10px;
+  margin: 2px;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.me {
+  background: red;
+  font-size: 10px;
+  margin: 2px;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+
 @media screen and (max-width: 825px) {
   .layout_wrapper {
     display: grid;
@@ -903,5 +964,15 @@ p {
   #hand_playerboard {
     grid-column: 1/3;
   }
+
+  /* Rebeccas media queries */
+  .smallDevMenu {
+    visibility: visible;
+  }
+
+  #game-info {
+    display: none;
+  }
+
 }
 </style>

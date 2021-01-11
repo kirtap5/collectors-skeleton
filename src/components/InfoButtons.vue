@@ -12,7 +12,9 @@
         <div class="modal" v-if="showModal">
           <h1>{{ modalProps.title }}</h1>
           <p>{{ modalProps.text }}</p>
-          <button class="button red" @click="toggleModal">Close</button>
+          <button class="button red" @click="toggleModal">
+            {{ labels.close }}
+          </button>
         </div>
       </transition>
     </div>
@@ -22,7 +24,8 @@
 <script>
 export default {
   name: "InfoButtons",
-  props: { modalProps: Object },
+  props: { modalProps: Object,
+  labels: Object, },
 
   data: function () {
     return {
