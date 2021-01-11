@@ -1,4 +1,6 @@
 {
+	"close": "stäng",
+
 	"draw": "Dra kort",
 	"invite": "Bjud in andra spelare med den här länken:",
 	"endTurn": "Avsluta runda",
@@ -7,20 +9,92 @@
 	"incomeGain1" : "Du kommer att få ",
 	"incomeGain2" : "$ från dina inkomstkort!",
 	"remainingPlacements": "Antal placeringar kvar att välja: ",
+	
+	
 	"round": "Runda: ",
 	"turn1": "Det är ",
 	"turn2": "s runda!",
 	"myPlayer": "Jag är: ",
+	"players": "Aktiva spelare: ",
+	"player": "Spelare",
+	"turn": "Spela!",
+	"me": "Jag",
+	
 	"skill": "Öka färdigheter",
 	"skillText": "Ta ett kort från sektionen 'Öka färdigheter' eller från din hand. Kortet kommer ge dig den färdigheten som symbolen visar under hela spelet. För info om färdigheten kan du trycka på 'i':et under symbolen för samma färdighet på din spelplan.",
-	"item": "Köp objekt",
-	"itemText": "Välj ett av korten från Föremål eller från din hand. Kategorin (röda symbolen) av det valda kortet kommer att öka på din spelplan om du köper det. Utöver kostnaden betalar du även €1 för varje siffra det står under denna symbol under Öka värde. Du kan äga hur många föremål som helst.",
-	"raiseval": "Öka värde",
-	"raisevalText": "",
-	"auction": "Auktion",
-	"auctionText": "",
-	"work": "Arbeta",
-	"workText": ""
-														
 	
+	"item": "Köp objekt",
+	"itemText": "Välj ett av korten från Föremål eller från din hand. Kategorin (röda symbolen) av det valda kortet kommer att öka på din spelplan om du köper det. Utöver kostnaden betalar du även $1 för varje siffra det står under denna symbol under Öka värde. Du kan äga hur många föremål som helst.",
+	
+	"raiseval": "Öka värde",
+	"raisevalText": "När du placerar en flaska här får du välja ett eller två kort från handen eller det sista färdighetskoret och kortet/kortens markerade blåa kategorier kommer att öka i marknadsvärldesräknaren på spelplanen. Priset för valda kategorier kommer öka med $1. Alltså köper du ett objekt måste du betala priset för kortet samt marknadsvärldet.",
+	
+	"auction": "Auktion",
+	"auctionText": "När du placerar en flaska här får du välja ett av de fyra korten i auktionsområdet eller ett kort från din hand och alla spelarna får då vara med och buda på kortet. Vinnaren väljer om kortet ska användas som objekt, öka värde eller färdighet. Spelaren måste lägga ett högre bud än personen innan i turordningen eller trycka på passa.",
+	"auction1": "Högsta bud: ",
+	"auction2": "lagt av: ",
+	"auction3": "Skicka till: ",
+	"auction4": "Ditt bud: ",
+	"auction5": "Placera",
+	"auction6": "Passa",
+	"auction7": "Objekt",
+	"auction8": "Färdigheter",
+	"auction9": "Öka värde",
+
+	"work": "Arbeta",
+	"workText": "I denna del kan du utgöra handlingar för att öka din inkomst, återvinna flaskor, dra upp kort till hander samt blir 1st player. Den översta kvartilen ändras efter varje runda.",
+	"work1": "Dra upp ett kort samt placera ett av dina kort under spelplanen för att öka din inkomst. Kostnad $0",
+	"work2": "Dra upp ett kort samt bli 1st player - du börjar spela varje runda tills någon tar symbolen ifrån dig. Kostnad $0",
+	"work3": "Dra upp två kort, kostnad $1",
+	"work4": "Återvinn en flaska och få $1",
+	"work5": "Återvinn en flaska och få $3",
+	"work6": "Placera två av dina kort på handen upp och ned och öka din inkomst med $1 per kort, få $2 för handligen",
+	"work7": "Placera två av dina kort på handen upp och ned och öka din inkomst med $1 per kort, få $1 för handligen",
+	"work8": "Placera två av dina kort på handen upp och ned och öka din inkomst med $1 per kort, få $0 för handligen",
+	
+	
+	"secret1": "Varje spelare väljer ett hemligt kort som inte syns för de andra spelarna",
+	"secret2": "Hemligt kort",
+	"secret3": "Välj ditt hemliga kort",
+
+	"menu": "Meny",	
+	"menu2": "Kopiera länken till detta spel",
+	"menu3": "klar",
+	"menu4": "Avsluta spel",
+	"menu5": "Ny spelare i nytt fönster",
+
+	"playerBoard1": "Mina objekt",
+	"playerBoard2": "Text mina objekt...",
+	"playerBoard3": "Mina färdigheter",
+	"playerBoard4": "Text mina skills...",
+	"playerBoard5": "Inkomst",
+	"playerBoard6": "Text min inkomst...",
+	"playerBoard7": "Pengar",
+	"playerBoard8": "Text pengar...",
+	"playerBoard9": "Hand",
+	"playerBoard10": "Text hand",
+	"playerBoard11": "Mitt hemligta kort",
+	"playerBoard12": "text hemligt kort",
+
+	"playerBoard13": "Objekt av kategorin FASTIVAL",
+	"playerBoard14": "Objekt av kategorin MOVIE",					
+	"playerBoard15": "Objekt av kategorin TECHNOLOGY",
+	"playerBoard16": "Objekt av kategorin FIGURES",
+	"playerBoard17": "Objekt av kategorin MUSIC",
+
+	"playerBoard18": "",
+	"playerBoard19": "",
+	"playerBoard20": "",
+	"playerBoard21": "",
+	"playerBoard22": "",
+	"playerBoard23": "",
+	"playerBoard24": "",
+	"playerBoard25": "",
+	"playerBoard26": "",
+	"playerBoard27": "",
+
+	"playerBoard28": "Flaskor: ",
+	"playerBoard29": "Tillgängliga flaskor: "
+
+
 }

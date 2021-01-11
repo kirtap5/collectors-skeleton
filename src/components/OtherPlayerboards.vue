@@ -4,7 +4,7 @@
         <div v-if="player!= Players[playerId]">
           <!--<transition name="slide">-->
           <div v-on:click="playerboardClicked(index)" :style="{backgroundColor: player.color}" class="otherPlayerBoard"> 
-            <h2> Player {{index}} </h2>
+            <h2> {{ labels.player }} {{index}} </h2>
             <PlayerBoard :class="['playerBoard', {'showPlayerBoard': dispPlayerboard===index}]" :player="player" />
             <!--<PlayerBoard v-if="dispPlayerboard === index" :player="player" class="showPlayerBoard" />-->
           </div>
@@ -26,7 +26,8 @@ export default {
     },
     props:{
       Players: Object,
-      playerId: String
+      playerId: String,
+      labels: Object,
     },
     data: function () {
     return {

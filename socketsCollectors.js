@@ -12,7 +12,10 @@ function sockets(io, socket, data) {
         marketValues: data.getMarketValues(d.roomId),
         skillsOnSale: data.getSkillsOnSale(d.roomId),
         auctionCards: data.getAuctionCards(d.roomId),
-        placements: data.getPlacements(d.roomId)
+        placements: data.getPlacements(d.roomId),
+        /*actingPlayer: data.getActingPlayer(d.roomId) *//*LAGT IN, kanske begöver playORder och round*/ 
+        /*playOrder: data.getPlayOrder(d.roomId),
+            round: data.getRound(d.roomId)*/ 
       });
     }
   });
@@ -56,6 +59,15 @@ function sockets(io, socket, data) {
     });
   });
 
+  
+  socket.on('getCardToIncome', function (d) {
+    data.cardsForIncome(d.roomId, d.playerId, d.cards, d.cost)
+    io.to(d.roomId).emit('cardsForIncome', {
+      playerId: d.playerId,
+      players: data.getPlayers(d.roomId),
+    });
+  });
+
   socket.on('collectorsBuySkillCard', function (d) {
     data.buySkillCard(d.roomId, d.playerId, d.card, d.cost)
     io.to(d.roomId).emit('collectorsSkillCardBought', {
@@ -66,8 +78,30 @@ function sockets(io, socket, data) {
   });
 
   socket.on('collectorsPlaceBottle', function (d) {
-    data.placeBottle(d.roomId, d.playerId, d.action, d.cost, d.id);
-    io.to(d.roomId).emit('collectorsBottlePlaced', data.getPlacements(d.roomId));
+    console.log(d.id);
+    data.placeBottle(d.roomId, d.playerId, d.action, d.cost, d.id); 
+    io.to(d.roomId).emit('collectorsBottlePlaced', 
+   { players: data.getPlayers(d.roomId),
+      placements: data.getPlacements(d.roomId), }
+    );
+  });
+
+  
+  /*socket.on('collectorsPlaceBottle', function(d) {
+    data.placeBottle(d.roomId, d.playerId, d.action, d.id);
+    io.to(d.roomId).emit('collectorsBottlePlaced', {
+      players: data.getPlayers(d.roomId),
+      placements: data.getPlacements(d.roomId),
+      /*playOrder: data.getPlayOrder(d.roomId),
+      actingPlayer: data.getActingPlayer(d.roomId)
+    }
+    );
+  });*/
+
+  socket.on('collectorsAddMoney', function(d) {
+    io.to(d.roomId).emit('collectorsUpdatePlayers', 
+      data.addMoney(d.roomId, d.playerId)
+    );
   });
 
   socket.on('getBottleIncome', function (d){

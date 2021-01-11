@@ -1,6 +1,8 @@
 <template>
   <div id="item-section" class="board-section">
-    <InfoButtons :modalProps="buyItemProps" />
+    <InfoButtons 
+    :modalProps="buyItemProps"
+    :labels="labels" />
     <div class="buy-cards">
       <div class="cardslots" v-for="(card, index) in itemsOnSale" :key="index">
         <CollectorsCard

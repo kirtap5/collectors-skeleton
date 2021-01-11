@@ -1,13 +1,11 @@
 <template>
   <div>
     <main>
-
-      <!-- SecretCard och BottlesPlayerboard är popup -->
-    
       <div v-if="players[playerId] && players[playerId].chooseSecret">
         <SecretCard
           v-if="players[playerId]"
           :player="players[playerId]"
+          :labels="labels"
           :allCardsChosen="allCardsChosen"
           @selectAction="setSecret($event)"
         />
@@ -21,7 +19,6 @@
           @getBottleIncome="getBottleIncome($event)"
         />
       </div>
-
 
       <div class="layout_wrapper">
         <div class="first-column">
@@ -78,11 +75,10 @@
             @auctionToHand="auctionToHand($event)"
             @placeBottle="placeBottle('auctionType', 'auction', $event)"
           />
-
         </div>
 
         <div class="second-column">
-          <WorkArea
+          <!-- <WorkArea
             v-if="players[playerId]"
             :color="players[playerId].color"
             :labels="labels"
@@ -90,52 +86,87 @@
             :placement="buyPlacement"
             @circleClicked="circleClicked($event)"
             id="work_area"
+          />-->
+          <WorkArea
+            v-if="players[playerId]"
+            :color="players[playerId].color"
+            :labels="labels"
+            :round="round"
+            :placement="workPlacement"
+            :player="players[playerId]"
+            :players="players"
+            @placeBottle="placeBottle('workType', 'work', $event)"
+            id="work_area"
           />
-
         </div>
 
-        <div class="third-column"> 
+        <div class="third-column">
           <div id="game-info">
-            <h1>{{ labels.myPlayer }} {{ playerId }}</h1>
-            <h1>{{ labels.round }} {{ round }}</h1>
-            
-            <div
-              v-for="(player, index) in players"
-              :key="index"
-              :player="player"
-            >
-              <h1 v-if="player.active">{{labels.turn1}}{{ index }}{{labels.turn2}}</h1>
-              
+            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
+
+            <!-- PÅBÖRJAT -->
+            <div id="player-info">
+              <div class="playerSection">
+                <div>{{ labels.players }}</div>
+                <div
+                  v-for="(player, index) in players"
+                  :key="index"
+                  :player="player"
+                >
+                  {{ index }}
+
+                  <span v-if="player.active" class="playerTurn">{{
+                    labels.turn
+                  }}</span>
+
+                  <span v-if="index == playerId" class="me">{{
+                    labels.me
+                  }}</span>
+                </div>
+              </div>
+            </div>
+
+            <MenuButton :labels="labels" :path="publicPath + $route.path" />
+
+            <!-- DRAW CARD -->
+            <!-- <button @click="drawCard"> {{labels.draw}} </button> -->
           </div>
 
-           {{labels.invite}}
-          <input
-            type="text"
-            :value="publicPath + $route.path"
-            @click="selectAll"
-            readonly="readonly"
+          <div class="smallDevMenu">
+            <MenuButton :labels="labels" :path="publicPath + $route.path" />
+            <div id="roundInfo">{{ labels.round }} {{ round }}</div>
+          </div>
+
+          <OtherPlayerboards
+            :Players="players"
+            :playerId="playerId"
+            :labels="labels"
           />
-         
-          <MenuButton />
-          <button @click="drawCard"> {{labels.draw}} </button>
-
-        </div>
-
-          <OtherPlayerboards :Players="players" :playerId="playerId" />
         </div>
 
         <div id="hand_playerboard">
-          <PlayerBoard v-if="players[playerId]" :player="players[playerId]" />
+          <PlayerBoard
+            v-if="players[playerId]"
+            :player="players[playerId]"
+            :labels="labels"
+          />
 
           <Hand
             v-if="players[playerId]"
             :player="players[playerId]"
             :allCardsChosen="allCardsChosen"
+            :labels="labels"
             @selectAction="selectAction($event)"
           />
         </div>
       </div>
-  </main>
+      <Scoreboard
+        v-if="gameFinished"
+        :players="players"
+        :currentPlayer="players[playerId]"
+        @resetGame="resetGame($event)"
+      />
+    </main>
   </div>
 </template>
 
@@ -152,6 +183,7 @@ import AuctionSection from "@/components/AuctionSection.vue";
 import BottlesPlayerboard from "@/components/BottlesPlayerboard.vue";
 import Hand from "@/components/Hand.vue";
 import SecretCard from "@/components/SecretCard.vue";
+import Scoreboard from "@/components/Scoreboard.vue";
 import MenuButton from "@/components/MenuButton.vue";
 
 export default {
@@ -167,6 +199,7 @@ export default {
     BottlesPlayerboard,
     Hand,
     SecretCard,
+    Scoreboard,
     MenuButton,
   },
   data: function () {
@@ -174,8 +207,9 @@ export default {
       publicPath: "localhost:8080/#", //"collectors-groupxx.herokuapp.com/#",
       touchScreen: false,
       nextRound: Boolean,
+      gameFinished: false,
       highestBid: 0,
-      highestBiddingPlayer: '',
+      highestBiddingPlayer: "",
       numberOfPasses: 0,
       round: 1,
       myCards: [],
@@ -201,6 +235,7 @@ export default {
       skillPlacement: [],
       auctionPlacement: [],
       marketPlacement: [],
+      workPlacement: [],
       chosenPlacementCost: null,
       currentAction: String,
       allCardsChosen: true,
@@ -264,7 +299,7 @@ export default {
     },
   },
   watch: {
-    players: function (newP, oldP) {
+    /* players: function (newP, oldP) {
       console.log(newP, oldP);
       for (let p in this.players) {
         for (let c = 0; c < this.players[p].hand.length; c += 1) {
@@ -281,13 +316,14 @@ export default {
             this.$set(this.auctionCards[c], "available", false);
         }
       }
-    },
+    },*/
     nextRound: function () {
       if (this.nextRound) {
         if (this.round < 4) {
           this.startNextRound();
         } else {
           this.countPoints();
+          this.gameFinished = true;
         }
       }
     },
@@ -318,16 +354,19 @@ export default {
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
+        this.workPlacement = d.placements.workPlacement;
       }.bind(this)
     );
 
     this.$store.state.socket.on(
       "collectorsBottlePlaced",
       function (d) {
-        this.buyPlacement = d.buyPlacement;
-        this.skillPlacement = d.skillPlacement;
-        this.marketPlacement = d.marketPlacement;
-        this.auctionPlacement = d.auctionPlacement;
+        this.buyPlacement = d.placements.buyPlacement;
+        this.skillPlacement = d.placements.skillPlacement;
+        this.marketPlacement = d.placements.marketPlacement;
+        this.auctionPlacement = d.placements.auctionPlacement;
+        this.workPlacement = d.placements.workPlacement;
+        /*this.players = d.players;*/
       }.bind(this)
     );
 
@@ -358,6 +397,7 @@ export default {
         this.skillPlacement = d.placement.skillPlacement;
         this.marketPlacement = d.placement.marketPlacement;
         this.auctionPlacement = d.placement.auctionPlacement;
+        this.workPlacement = d.placement.workPlacement;
         this.round = d.round;
       }.bind(this)
     );
@@ -405,9 +445,16 @@ export default {
       }.bind(this)
     );
 
+    this.$store.state.socket.on(
+      "cardsForIncome",
+      function (d) {
+        this.players = d.players;
+      }.bind(this)
+    );
+
     //Auction-grejer kommer här
 
-        this.$store.state.socket.on(
+    this.$store.state.socket.on(
       "collectorsAuctionCardBought",
       function (d) {
         console.log(d.playerId, "Started an Auction");
@@ -445,17 +492,20 @@ export default {
         this.upForAuction = d.upForAuction;
       }.bind(this)
     );
-
   },
   methods: {
     selectAll: function (n) {
       n.target.select();
+    },
+    resetGame: function () {
+      this.gameFinished = false;
     },
     selectAction: function (card) {
       this.currentAction == "itemType" ? this.buyCard(card) : null;
       this.currentAction == "skillType" ? this.buySkillCard(card) : null;
       this.currentAction == "auctionType" ? this.buyAuctionCard(card) : null; //Funktionen existerar inte än
       this.currentAction == "marketType" ? this.manageMarketAction(card) : null;
+      this.currentAction == "workType" ? this.getCardToIncome(card) : null;
     },
     manageMarketAction: function (card) {
       this.selectedCards.push(card);
@@ -468,8 +518,6 @@ export default {
 
         this.buyRaiseValue();
         this.selectedCards.splice(0, 2);
-      } else {
-        console.log("Please choose another card: ");
       }
     },
     placeBottle: function (type, action, p) {
@@ -477,7 +525,8 @@ export default {
       p.chooseTwoCards
         ? (this.allCardsChosen = false)
         : (this.allCardsChosen = true);
-
+      console.log("p.id i placeBottle" + p.id);
+      console.log(p);
       this.chosenPlacementCost = p.cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -503,6 +552,37 @@ export default {
         cards: this.selectedCards,
         cost: this.chosenPlacementCost,
       });
+    },
+
+    getCardToIncome: function (card) {
+      console.log("Detta skickas alltså till server: ");
+      console.log(this.selectedCards);
+
+      this.selectedCards.push(card);
+
+      if (this.allCardsChosen) {
+        this.$store.state.socket.emit("getCardToIncome", {
+          roomId: this.$route.params.id,
+          playerId: this.playerId,
+          cards: this.selectedCards,
+          cost: this.chosenPlacementCost,
+        });
+
+        this.selectedCards.splice(0, 1);
+      } else if (this.selectedCards.length == 2) {
+        this.allCardsChosen = true;
+
+        this.$store.state.socket.emit("getCardToIncome", {
+          roomId: this.$route.params.id,
+          playerId: this.playerId,
+          cards: this.selectedCards,
+          cost: this.chosenPlacementCost,
+        });
+
+        this.selectedCards.splice(0, 2);
+      } else {
+        console.log("Please choose another card: ");
+      }
     },
 
     buyCard: function (card) {
@@ -540,11 +620,11 @@ export default {
       });
     },
     setSecret: function (card) {
-        this.$store.state.socket.emit("collectorsSetSecret", {
-          roomId: this.$route.params.id,
-          playerId: this.playerId,
-          secret: card,
-        });
+      this.$store.state.socket.emit("collectorsSetSecret", {
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        secret: card,
+      });
     },
 
     //Här kommer auction
@@ -562,19 +642,19 @@ export default {
         playerId: this.playerId,
         card: this.upForAuction[0],
         cost: this.highestBid,
-        destination: d
+        destination: d,
       });
     },
     placeBid: function (bid) {
-      console.log('collectors.vue ' + bid)
-      if(bid > this.highestBid){
-      this.$store.state.socket.emit("collectorsPlaceBid", {
-        roomId: this.$route.params.id,
-        playerId: this.playerId,
-        bid: bid,
-      });
-      this.highestBid = bid;
-      this.highestBiddingPlayer = this.playerId;
+      console.log("collectors.vue " + bid);
+      if (bid > this.highestBid) {
+        this.$store.state.socket.emit("collectorsPlaceBid", {
+          roomId: this.$route.params.id,
+          playerId: this.playerId,
+          bid: bid,
+        });
+        this.highestBid = bid;
+        this.highestBiddingPlayer = this.playerId;
       }
     },
     passed: function () {
@@ -583,7 +663,6 @@ export default {
         playerId: this.playerId,
       });
     },
-
   },
 };
 </script>
@@ -610,7 +689,7 @@ main {
 
 .layout_wrapper {
   display: grid;
-  grid-template-columns: 60% 25% 15%;
+  grid-template-columns: 60% 20% 20%;
   grid-template-rows: auto;
   overflow: hidden;
   margin: 10px;
@@ -626,17 +705,45 @@ main {
   grid-row: 1/2;
 }
 
-.third-column{
+.third-column {
   grid-column: 3/4;
   grid-row: 1/3;
 }
 
 #game-info {
   grid-row: 1;
-  margin-left: 1vw;
+  /* margin-left: 1vw; */
+  margin: 5px;
+  background: lavender;
+  padding: 10px;
+  border-radius: 5px;
+  grid-template-columns: 100%;
+ 
 }
-#game-info h1{
+
+#game-info h1 {
   font-size: 80%;
+}
+
+#player-info {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 3px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 2px dashed white;
+  color: darkgray;
+}
+
+#roundInfo {
+  display: inline-block;
+  padding: 10px 15px;
+  border: 1px solid rgb(43, 42, 42);
+  background: whitesmoke;
+  background-image: linear-gradient(to right, white, whitesmoke);
+  border-radius: 8px;
+  color: rgb(43, 42, 42);
+  font-weight: 700;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.4);
 }
 
 /*#work_area {
@@ -651,7 +758,26 @@ main {
   grid-column: 1/4;
   margin-top: 10px;
   border-bottom: 2px solid black;
+}
 
+.smallDevMenu {
+  visibility: hidden;
+}
+
+.playerTurn {
+  background: blue;
+  font-size: 10px;
+  margin: 2px;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.me {
+  background: red;
+  font-size: 10px;
+  margin: 2px;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 /*SECRET SECTION - TA BORT?
@@ -819,7 +945,7 @@ p {
   .layout_wrapper {
     display: grid;
     grid-template-columns: 70% 30%;
-    grid-template-rows: 1fr auto ;
+    grid-template-rows: 1fr auto;
     margin: 10px;
   }
 
@@ -837,7 +963,19 @@ p {
     grid-column: 1/3;
   }
   #hand_playerboard {
-  grid-column: 1/3;
+    grid-column: 1/3;
   }
+
+  .smallDevMenu {
+    visibility: visible;
+  }
+
+#game-info  {
+  display: none;
+
+}
+  
+
+  /* Display: none;  */
 }
 </style>

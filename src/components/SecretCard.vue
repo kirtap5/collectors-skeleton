@@ -4,10 +4,12 @@
    
     <div class = "designWrapper">
       <div id="buttonArea">
-        <InfoButtons :modalProps="secretProps" />
+        <InfoButtons 
+        :modalProps="secretProps"
+        :labels="labels" />
       </div>
       <div id="textArea">
-        <h1>Choose your secret card</h1>
+        <h1>{{ labels.secret3 }} </h1>
       </div>
     <!--CHOSE YOUR SECRET CARD-->
       <div class = "card">
@@ -37,18 +39,21 @@ export default {
     player: Object,
     allCardsChosen: Boolean,
     players: Object,
+    labels: Object,
   },
 
-  data: function () {
-    return {
-      secretProps: {
+  computed: {
+    secretProps: function () {
+      return {
         value: "i",
-        text: "Each player picks one card and places it face down, tucked under their player board at the position marked with a treasure chest. This card is a secret item you own from the beginning. ",
-        title: "Secret card",
+        text: this.labels.secret1,
+        title: this.labels.secret2,
         classes: `${this.player.color} smallButton`,
-      },
-    };
+      }
+    }
   },
+
+
   methods: {
     
     selectAction: function (card) {

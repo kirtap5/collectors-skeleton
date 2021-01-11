@@ -1,6 +1,8 @@
 <template>
   <div id="RaiseValueSection" class="board-section">
-    <InfoButtons :modalProps="raiseValueProps" />
+    <InfoButtons 
+    :modalProps="raiseValueProps"
+    :labels="labels" />
     <div class="raise-value-slot-container">
       <div class="raise-value-slot" id="rvFastaval"></div>
       <div class="raise-value-slot" id="rvMovie"></div>

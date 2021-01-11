@@ -1,71 +1,96 @@
 <template>
   <div id="auction-section" class="board-section">
-    <InfoButtons
-      :modalProps='auctionProps'
-    /> 
-    <div class='upForAuctionWrap'>
-        <div class="buy-cards">
-          <div
-            class="cardslots"
-            v-for="(card, index) in upForAuction"
-            :key="index"
-          >
-            <CollectorsCard
-              :card="card"
-              :availableAction="card.available"
-              @doAction="placeBid()"
-            />
-          </div>
-        </div>
-        <div class="placeBid-section">
-          <button v-on:click="currentBid++" class='auctionBtns'>Your bid: {{ currentBid }}</button>
-          <button v-on:click="placeBid()" class='auctionBtns'>Place bid</button>
-          <button v-on:click="passed()" class='auctionBtns'>Pass</button>
-        </div>
-        <div>
-        Current highest bid:
-        {{ highestBid }}
-        placed by: 
-        {{ highestBiddingPlayer }}
-        </div>
-        <div>
-          <div>Send to</div>
-          <input type="button" class='sendToBtn' id='toItems' value="Items" @click="auctionToHand('items')" />
-          <input type="button" class='sendToBtn' id='toSkills' value="Skills" @click="auctionToHand('skills')" />
-          <input type="button" class='sendToBtn' id='toRaiseval' value="Raise value" @click="auctionToHand('raiseval')" />
-        </div>
-      </div>
-    <div class="buy-cards">
+    <InfoButtons 
+    :modalProps="auctionProps" 
+    :labels="labels"/>
+    <div class="upForAuctionWrap">
+      <div class="buy-cards">
         <div
           class="cardslots"
-          v-for="(card, index) in auctionCards"
+          v-for="(card, index) in upForAuction"
           :key="index"
         >
           <CollectorsCard
             :card="card"
             :availableAction="card.available"
-            @doAction="selectAction(card)"
+            @doAction="placeBid()"
           />
         </div>
       </div>
-      <div class="button-section">
-        <div class="buttons" v-for="(p, index) in placement" :key="index">
-          <button
-            v-if="p.playerId === null"
-            :disabled="buttonDisabled(p.cost)"
-            @click="placeBottle(p)"
-          >
-            ${{ p.cost }}
-          </button>
-        <div class="clickedButton" v-if="p.playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[p.playerId].color}">
-          
-            {{ p.playerId }}          
+      <div class="placeBid-section">
+        <button v-on:click="currentBid++" class="auctionBtns">
+          {{ labels.auction4 }} {{ currentBid }}
+        </button>
+        <button v-on:click="placeBid()" class="auctionBtns">
+          {{ labels.auction5 }}
+        </button>
+        <button v-on:click="passed()" class="auctionBtns">
+          {{ labels.auction5 }}
+        </button>
+      </div>
+      <div>
+        <div>
+          {{ labels.auction1 }}
+          {{ highestBid }}
         </div>
+        <div>
+          {{ labels.auction2 }}
+          {{ highestBiddingPlayer }}
+        </div>
+      </div>
+      <div>
+        <div>{{ labels.auction3 }}</div>
+        <input
+          type="button"
+          class="sendToBtn"
+          id="toItems"
+          value= "Items"
+          @click="auctionToHand('items')"
+        />
+        <input
+          type="button"
+          class="sendToBtn"
+          id="toSkills"
+          value="Skills"
+          @click="auctionToHand('skills')"
+        />
+        <input
+          type="button"
+          class="sendToBtn"
+          id="toRaiseval"
+          value="Raise value"
+          @click="auctionToHand('raiseval')"
+        />
+      </div>
+    </div>
+    <div class="buy-cards">
+      <div class="cardslots" v-for="(card, index) in auctionCards" :key="index">
+        <CollectorsCard
+          :card="card"
+          :availableAction="card.available"
+          @doAction="selectAction(card)"
+        />
+      </div>
+    </div>
+    <div class="button-section">
+      <div class="buttons" v-for="(p, index) in placement" :key="index">
+        <button
+          v-if="p.playerId === null"
+          :disabled="buttonDisabled(p.cost)"
+          @click="placeBottle(p)"
+        >
+          ${{ p.cost }}
+        </button>
+        <div
+          class="clickedButton"
+          v-if="p.playerId !== null && typeof players !== 'undefined'"
+          :style="{ backgroundColor: players[p.playerId].color }"
+        >
+          {{ p.playerId }}
         </div>
       </div>
     </div>
-
-
+  </div>
 </template>
 
 <script>
@@ -76,7 +101,7 @@ export default {
   name: "AuctionSection",
   components: {
     CollectorsCard,
-    InfoButtons
+    InfoButtons,
   },
   props: {
     labels: Object,
@@ -87,21 +112,27 @@ export default {
     placement: Array,
     highestBid: Number,
     highestBiddingPlayer: String,
+    players: Object,
   },
   data: function () {
     return {
       currentBid: 0,
-      auctionProps: {
-        value: "Auction",
-        text:
-          "Här kommer text om auction",
-        title: "Auction",
-        classes: "button",
-      },
     };
   },
+
+  computed: {
+    auctionProps: function () {
+      return {
+        value: this.labels.auction,
+        text: this.labels.auctionText,
+        title: this.labels.auction,
+        classes: "button",
+      };
+    },
+  },
+
   methods: {
-      buttonDisabled: function (cost) {
+    buttonDisabled: function (cost) {
       if (
         this.cannotAfford(cost) ||
         !this.player.active ||
@@ -122,7 +153,7 @@ export default {
       return this.marketValues[card.market];
     },
     placeBottle: function (p) {
-      this.$emit("placeBottle", p.cost);
+      this.$emit("placeBottle", p);
       this.highlightAvailableCards(p.cost);
     },
     highlightAvailableCards: function (cost = 100) {
@@ -156,15 +187,15 @@ export default {
         this.highlightAvailableCards();
       }
     },
-    auctionToHand: function (d){
-      if (d == 'items'){
-        this.$emit("auctionToHand", 'items')
+    auctionToHand: function (d) {
+      if (d == "items") {
+        this.$emit("auctionToHand", "items");
       }
-      if (d == 'skills'){
-        this.$emit("auctionToHand", 'skills')
+      if (d == "skills") {
+        this.$emit("auctionToHand", "skills");
       }
-      if (d == 'raiseval'){
-        this.$emit("auctionToHand", 'raiseval')
+      if (d == "raiseval") {
+        this.$emit("auctionToHand", "raiseval");
       }
       this.highlightAvailableCards();
     },
@@ -183,8 +214,8 @@ export default {
 <style scoped>
 .upForAuctionWrap {
   width: 50%;
-display: grid;
-grid-template-columns: 70% 30%;
+  display: grid;
+  grid-template-columns: 70% 30%;
 }
 
 .buy-cards {
@@ -208,25 +239,25 @@ grid-template-columns: 70% 30%;
   color: black;
 }
 
-#toItems{
-  background-color: #ea9999ff;  
+#toItems {
+  background-color: #ea9999ff;
 }
 
-#toSkills{
+#toSkills {
   background-color: #93c47dff;
 }
 
-#toRaiseval{
+#toRaiseval {
   background-color: #b4a7d6ff;
 }
-.sendToBtn{
+.sendToBtn {
   width: 100%;
-  display:block;
+  display: block;
 }
 
-.auctionBtns{
+.auctionBtns {
   width: 100%;
-  display:block;  
+  display: block;
 }
 
 .board-section {
@@ -261,59 +292,74 @@ grid-template-columns: 70% 30%;
 }
 
 .button:hover {
-    box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
-    } 
-  .green {
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(50,172,109,1) 0%, rgba(209,251,155,1) 100.2% );
-  }
-  .blue {
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(147,230,241,1) 0%, rgba(145,192,241,1) 45.5% );
-  }
-  .red {
-    background-image: linear-gradient( 143.3deg,  rgba(216,27,96,1) 33.1%, rgba(237,107,154,1) 74.9% );
-  }
-  .yellow {
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,252,200,1) 0%, rgba(255,247,94,1) 90% );
-  }
-    
-    .modal-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 98;
-      background-color: rgba(0, 0, 0, 0.9);
-    }
-    
-    
-   .modal {
-     position: fixed;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     z-index: 99;
-     
-     width: 100%;
-     max-width: 400px;
-     background-color: #FFF;
-     padding: 25px;
-     border-radius: 8px;
-   }
-   
- h1{
-       color: #222;
-       font-size: 32px;
-       font-weight: 900;
-       margin-bottom: 15px;
-     }
-     
-  p {
-    color: #666;
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 15px;
-  }
+  box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
+}
+.green {
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(50, 172, 109, 1) 0%,
+    rgba(209, 251, 155, 1) 100.2%
+  );
+}
+.blue {
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(147, 230, 241, 1) 0%,
+    rgba(145, 192, 241, 1) 45.5%
+  );
+}
+.red {
+  background-image: linear-gradient(
+    143.3deg,
+    rgba(216, 27, 96, 1) 33.1%,
+    rgba(237, 107, 154, 1) 74.9%
+  );
+}
+.yellow {
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(255, 252, 200, 1) 0%,
+    rgba(255, 247, 94, 1) 90%
+  );
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 98;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+}
+
+h1 {
+  color: #222;
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+
+p {
+  color: #666;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
 
 .fade-enter-active,
 .fade-leave.active {
@@ -326,7 +372,6 @@ grid-template-columns: 70% 30%;
   opacity: 0;
 }
 
-
 .slide-enter-active,
 .slide-leave.active {
   transition: transform 0.5s;
@@ -334,12 +379,11 @@ grid-template-columns: 70% 30%;
 
 .slide-enter,
 .slide-leave-to {
- transform: translateY(-50%) translateX(100vw); 
+  transform: translateY(-50%) translateX(100vw);
 }
 
-
 @media only screen and (max-width: 1050px) {
-    /* phones */
+  /* phones */
   .buy-cards {
     width: 80%;
     display: grid;
@@ -353,7 +397,6 @@ grid-template-columns: 70% 30%;
     transform: scale(0.75) translate(-25%, -25%);
     transition: 0.2s;
     transition-timing-function: ease-out;
-
   }
 
   .cardslots div {
@@ -371,10 +414,8 @@ grid-template-columns: 70% 30%;
     grid-template-columns: repeat(auto-fill, 30px);
     margin-right: 10px;
   }
-  .buttons p{
-     font-size: 50%;
-   }
+  .buttons p {
+    font-size: 50%;
+  }
 }
-
-
 </style>

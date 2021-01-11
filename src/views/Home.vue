@@ -27,7 +27,10 @@
       </ul> -->
       <div class="watchDemo">
         <h2>New to collectors? Watch a demo before playing</h2>
-        <DemoButton />
+        <DemoButton 
+        :styling="true"
+        :labels="labels"
+        />
       </div>
 
       <h2>Do you know how to play? Start a game</h2>

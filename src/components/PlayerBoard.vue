@@ -2,34 +2,46 @@
   <div id="PlayerBoard">
     <div id="mainBoard" :style="{ backgroundColor: player.color }">  
        <div class="button firstCoulum">
-          <InfoButtons :modalProps="myItemsProps" />
+          <InfoButtons 
+          :modalProps="myItemsProps"
+          :labels="labels" />
         </div>
       <div id="itemSection">
         <div id="itemGrid">
           <!--countItems = [fastaval, movie, technology, figures, music]-->
           <div class="dot fastaval">
               <div class="smallButton">
-              <InfoButtons :modalProps="item1Props" />
+              <InfoButtons 
+              :modalProps="item1Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot movie">
               <div class="smallButton">
-              <InfoButtons :modalProps="item2Props" />
+              <InfoButtons 
+              :modalProps="item2Props" 
+              :labels="labels"/>
             </div>
           </div>
           <div class="dot technology">
               <div class="smallButton">
-              <InfoButtons :modalProps="item3Props" />
+              <InfoButtons 
+              :modalProps="item3Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot figures">
               <div class="smallButton">
-              <InfoButtons :modalProps="item4Props" />
+              <InfoButtons 
+              :modalProps="item4Props" 
+              :labels="labels"/>
             </div>
           </div>
           <div class="dot music">
               <div class="smallButton">
-              <InfoButtons :modalProps="item5Props" />
+              <InfoButtons 
+              :modalProps="item5Props" 
+              :labels="labels"/>
             </div>
           </div>
           <p>{{ countItems[0] }}</p>
@@ -39,8 +51,17 @@
           <p>{{ countItems[4] }}</p>
         </div>
       </div>
-        <div class="button firstColumn">
-          <InfoButtons :modalProps="mySkillsProps" />
+        <div class="skillsBottlesSection">
+          <div class="button">
+        <!--<div class="button firstColumn">-->
+          <InfoButtons 
+          :modalProps="mySkillsProps"
+          :labels="labels" />
+        </div>
+        <div class="bottles">
+          <p>{{ labels.playerBoard28 }} {{player.bottles}}</p>
+          <p>{{ labels.playerBoard29 }}  {{player.availableBottles}}</p>
+          </div>
         </div>
       <div id="skillSection">
         <div id="skillGrid">
@@ -48,52 +69,72 @@
                 VP-fastaval, VP-movie, VP-technology, VP-figures, VP-music]-->
           <div class="dot bottleSkill">
             <div class="smallButton">
-              <InfoButtons :modalProps="skill1Props" />
+              <InfoButtons 
+              :modalProps="skill1Props" 
+              :labels="labels"/>
             </div>
           </div>
           <div class="dot workerIncomeSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill2Props" />
+              <InfoButtons 
+              :modalProps="skill2Props" 
+              :labels="labels"/>
             </div>
           </div>
           <div class="dot workerCardSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill3Props" />
+              <InfoButtons 
+              :modalProps="skill3Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot auctionIncomeSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill4Props" />
+              <InfoButtons 
+              :modalProps="skill4Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot VP-allSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill5Props" />
+              <InfoButtons 
+              :modalProps="skill5Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot VP-fastavalSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill6Props" />
+              <InfoButtons 
+              :modalProps="skill6Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot VP-movieSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill7Props" />
+              <InfoButtons 
+              :modalProps="skill7Props" 
+              :labels="labels"/>
             </div>
           </div>
           <div class="dot VP-technologySkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill8Props" />
+              <InfoButtons 
+              :modalProps="skill8Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot VP-figuresSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill9Props" />
+              <InfoButtons 
+              :modalProps="skill9Props"
+              :labels="labels" />
             </div>
           </div>
           <div class="dot VP-musicSkill">
               <div class="smallButton">
-              <InfoButtons :modalProps="skill10Props" />
+              <InfoButtons 
+              :modalProps="skill10Props"
+              :labels="labels" />
             </div>
           </div>
           <p>{{ countSkills[0] }}</p>
@@ -110,7 +151,9 @@
       </div>
         <div id="incomeSection">
           <div class="button">
-            <InfoButtons :modalProps="myIncomeProps" />
+            <InfoButtons 
+            :modalProps="myIncomeProps"
+            :labels="labels" />
           </div>
 
           <div class="income dot">
@@ -120,7 +163,9 @@
 
         <div id="moneySection">
           <div class="button">
-            <InfoButtons :modalProps="myMoneyProps" />
+            <InfoButtons 
+            :modalProps="myMoneyProps"
+            :labels="labels" />
           </div>
           <div class="money dot">
             <p>&#36;{{ player.money }}</p>
@@ -136,163 +181,12 @@ export default {
   name: "PlayerBoard",
   props: {
     player: Object,
+    labels: Object,
   },
   components: {
     InfoButtons,
   },
-  data: function () {
-    return {
-      myItemsProps: {
-        value: "Items",
-        text:
-          "These are your items that you own, the number below the symbol is the number of ites of that category the icon represents that you have in your possession. To calculate the value of your collection you multiply the market value (as seen in the Raise Value section) of an item with the amount of items you have. There is no upper limit in the number of items you may own. There is no upper limit in the number of items you may own.",
-        title: "My Items",
-        classes: `${this.player.color} button`,
-      },
 
-      mySkillsProps: {
-        value: "Skills",
-        text: "",
-        title: "My Skills",
-        classes: `${this.player.color} button`,
-      },
-
-      myBottlesProps: {
-        value: "Bottles",
-        text: "",
-        title: "Bottles",
-        classes: `${this.player.color} button`,
-      },
-
-      myIncomeProps: {
-        value: "Income",
-        text: "This is the income you earn every round. You can raise the income by (1) remove excess bottles that block your income or (2) place a card on the workarea on your playerboard.",
-        title: "Income",
-        classes: `${this.player.color} button`,
-      },
-
-      myMoneyProps: {
-        value: "Money",
-        text: "You can use your money to purchase items, skills, raise value or work when it's required of you to pay an extra fee when placing a bottle.",
-        title: "Money",
-        classes: `${this.player.color} button`,
-      },
-
-      mySecretCardProps: {
-        value: "Secret Card",
-        text: "The secret card is ",
-        title: "Secret Card",
-        classes: `${this.player.color} button`,
-      },
-
-      skill1Props: {
-        value: "i",
-        text: "Immediately gain a new bottle. You may use it this quarter",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill2Props: {
-        value: "i",
-        text: "Gain $2 whenever you place a worker in the work area",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill3Props: {
-        value: "i",
-        text: "Draw a card whenever you place a worker in the work area.",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill4Props: {
-        value: "i",
-        text: "Gain $1 whenever an auction is started by any player.",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill5Props: {
-        value: "i",
-        text: "Get 5 extra points in the end of the game if you own at least one item of each category in the end of the game. ",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill6Props: {
-        value: "i",
-        text: "Get 1 extra point in the end of the game for each item you own in the category FASTIVAL",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill7Props: {
-        value: "i",
-        text: "Get 1 extra point in the end of the game for each item you own in the category MOVIE",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill8Props: {
-        value: "i",
-        text: "Get 1 extra point in the end of the game for each item you own in the category TECHNOLOGY",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill9Props: {
-        value: "i",
-        text: "Get 1 extra point in the end of the game for each item you own in the category FIGURES",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      skill10Props: {
-        value: "i",
-        text: "Get 1 extra point in the end of the game for each item you own in the category MUSIC",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      item1Props: {
-        value: "i",
-        text: "Items of category FASTIVAL",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      item2Props: {
-        value: "i",
-        text: "Items of category MOVIE",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      item3Props: {
-        value: "i",
-        text: "Items of category TECHNOLOGY",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      item4Props: {
-        value: "i",
-        text: "Items of category FIGURES",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-      item5Props: {
-        value: "i",
-        text: "Items of category MUSIC",
-        title: "",
-        classes: `${this.player.color} smallButton`,
-      },
-
-
-    };
-  },
   computed: {
     countItems: function () {
       //count = [fastaval, movie, technology, figures, music]
@@ -343,6 +237,177 @@ export default {
     },
     countIncome: function () {
       return this.player.income.length;
+    },
+
+    myItemsProps: function () {
+      return {
+        value: this.labels.playerBoard1,
+        text: this.labels.playerBoard2,
+        title: this.labels.playerBoard1,
+        classes: `${this.player.color} button`,
+      }
+    },
+
+    mySkillsProps: function () {
+      return {
+        value: this.labels.playerBoard3,
+        text: this.labels.playerBoard4,
+        title: this.labels.playerBoard3,
+        classes: `${this.player.color} button`,
+      }
+    },
+
+    myIncomeProps: function () {
+      return {
+        value: this.labels.playerBoard5,
+        text: this.labels.playerBoard6,
+        title: this.labels.playerBoard5,
+        classes: `${this.player.color} button`,
+      }
+    },
+
+     myMoneyProps: function () {
+      return {
+        value: this.labels.playerBoard7,
+        text: this.labels.playerBoard8,
+        title: this.labels.playerBoard7,
+        classes: `${this.player.color} button`,
+      }
+    },
+
+    item1Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard13,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    item2Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard14,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    item3Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard15,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    item4Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard16,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    item5Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard17,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill1Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard18,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill2Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard19,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill3Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard20,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill4Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard21,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill5Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard22,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill6Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard23,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill7Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard24,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill8Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard25,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill9Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard26,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
+    },
+
+    skill10Props: function () {
+      return {
+        value: "i",
+        text: this.labels.playerBoard27,
+        title: "",
+        classes: `${this.player.color} smallButton`,
+      }
     },
   },
 };
@@ -409,9 +474,19 @@ export default {
   grid-column: 3/4;
 
 }
-.firstColumn{
+
+.bottles {
+  font-size: 80%;
+}
+
+.skillsBottlesSection {
   grid-column: 1/2;
 }
+
+/*.firstColumn{
+  grid-column: 1/2;
+}*/
+
 .dot {
   width: 3vw;
   height: 3vw;
@@ -497,4 +572,11 @@ export default {
   margin-top: 100%;
   margin-left: 100%;
 }
+
+@media only screen and (max-width: 1050px) {
+  #mainBoard p {
+  font-size: 70%;
+}
+}
+
 </style>

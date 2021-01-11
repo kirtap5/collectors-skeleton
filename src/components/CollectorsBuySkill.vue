@@ -1,7 +1,9 @@
 <template>
   <div>
     <div id="skill-section" class="board-section">
-      <InfoButtons :modalProps="gainSkillProps" />
+      <InfoButtons 
+      :modalProps="gainSkillProps"
+      :labels="labels" />
       <div class="buy-cards">
         <div
           class="cardslots"

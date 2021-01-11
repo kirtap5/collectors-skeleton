@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="button" @click="showModal = true">MENU</button>
+    <button class="button" @click="showModal = true">{{ labels.menu }}</button>
     <transition name="fade" appear>
       <div
         class="modal-overlay"
@@ -11,13 +11,28 @@
 
     <transition name="slide" appear>
       <div class="modal" v-if="showModal">
-        <h1>Menu</h1>
+        <h1> {{ labels.menu }} </h1>
        
         <div class="buttonContainer">
-          <button class="mbutton">Invite a friend to this game</button>
-          <button class="mbutton">Demo</button>
-          <DemoButton/>
-          <button class="mbutton" @click="showModal = false">Close</button>
+          <DemoButton
+          :labels="labels"
+          :styling="false"
+          />
+
+          <button  @click="copyLink=true"> {{ labels.menu2 }}</button>
+
+            <input
+              type="text"
+              :value= "path"
+              @click="selectAll"
+              readonly="readonly"
+              v-if="copyLink==true"
+            />
+          
+          <p v-if="copyLink==true" @click="copyLink=false" class="closeButton" >{{ labels.menu3 }}</p>
+          <button onclick="window.location.href='http://localhost:8080/#/'">{{ labels.menu4 }}</button>
+          <button @click="openNew" >{{ labels.menu5 }}</button>
+          <button @click="showModal = false">{{ labels.close }}</button>
         </div>
       </div>
     </transition>
@@ -33,11 +48,25 @@ export default {
   components: {
       DemoButton,
   },
+
+  props: {
+    labels: Object,
+    path: String,
+  },
   data: function () {
     return {
       showModal: false,
+      copyLink: false,
     };
   },
+
+  methods: {
+    openNew: function() {
+      window.open(this.path)
+  }
+  }
+  
+  
 };
 </script>
 
@@ -56,12 +85,33 @@ body {
 #app {
   position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
 }
+
+.buttonContainer {
+  display: grid;
+  justify-content: left;
+}
+
+/* .row1 {
+  grid-row: 1;
+}
+
+.row2 {
+   grid-row: 2;
+}
+
+.row3 {
+   grid-row: 3;
+}
+
+.row4 {
+   grid-row: 4;
+} */
 
 .button {
   appearance: none;
@@ -83,7 +133,7 @@ body {
   box-shadow: 6px 6px rgba(0, 0, 0, 0.6);
 }
 
-.mbutton {
+.buttonContainer button, .buttonContainer >>> .demoButton {
   appearance: none;
   outline: none;
   border: none;
@@ -97,9 +147,23 @@ body {
   transition: 0.1s ease-out;
 }
 
-.mbutton:hover {
+
+.buttonContainer button:hover, .buttonContainer >>> .demoButton:hover {
   background-image: linear-gradient(to right, rgb(206, 204, 204), rgb(177, 173, 173));
   color: #fff;
+}
+
+
+
+.closeButton {
+  color: red;
+  padding: 5px 10px;
+  width: 60px;
+  justify-content: center;
+}
+
+.closeButton:hover{
+  background-image: linear-gradient(to right,red, pink);
 }
 
 .modal-overlay {
@@ -135,9 +199,16 @@ h1 {
 
 p {
   color: #666;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 400;
   margin-bottom: 15px;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 400;
+  font-family: "monserrat", sans-serif;
+  font-size: 13px;
 }
 
 .fade-enter-active,
