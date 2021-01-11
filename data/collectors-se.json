@@ -61,7 +61,7 @@
 
 	"menu": "Meny",	
 	"menu2": "Kopiera länken till detta spel",
-	"menu3": "klar",
+	"menu3": "Klar",
 	"menu4": "Avsluta spel",
 	"menu5": "Ny spelare i nytt fönster",
 
@@ -84,16 +84,16 @@
 	"playerBoard16": "Objekt av kategorin FIGURES",
 	"playerBoard17": "Objekt av kategorin MUSIC",
 
-	"playerBoard18": "",
-	"playerBoard19": "",
-	"playerBoard20": "",
-	"playerBoard21": "",
-	"playerBoard22": "",
-	"playerBoard23": "",
-	"playerBoard24": "",
-	"playerBoard25": "",
-	"playerBoard26": "",
-	"playerBoard27": "",
+	"playerBoard18": "Få en flska på en gång! Du kan använda flaskan denna runda",
+	"playerBoard19": "Få $2 varje gång du placerar en flaska under arbeta",
+	"playerBoard20": "Dra ett kort varje gång du placerar en flaska under arbeta",
+	"playerBoard21": "Få $1 varje gång en auktion startar",
+	"playerBoard22": "Få 5 poäng i slutet av spelet om du äger minst ett objekt från varje kategori",
+	"playerBoard23": "Få 1 poäng i slutet av spelet för varje objekt av FASTIVAL du äger",
+	"playerBoard24": "Få 1 poäng i slutet av spelet för varje objekt av MOVIE du äger",
+	"playerBoard25": "Få 1 poäng i slutet av spelet för varje objekt av TECHNOLOGY du äger",
+	"playerBoard26": "Få 1 poäng i slutet av spelet för varje objekt av FIGURES du äger",
+	"playerBoard27": "Få 1 poäng i slutet av spelet för varje objekt av MUSIC du äger",
 
 	"playerBoard28": "Flaskor: ",
 	"playerBoard29": "Tillgängliga flaskor: "

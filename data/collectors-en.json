@@ -60,7 +60,7 @@
 	
 	"menu": "Meny",
 	"menu2": "Copy the link to this game",
-	"menu3": "done",
+	"menu3": "Done",
 	"menu4": "Quit game",
 	"menu5": "Other player in new window",
 
@@ -76,7 +76,7 @@
 	"playerBoard10": "You can use your card(s) for different things. In Buy Item you can pick one card from the item pool or from your hand. In Get Skill you can take one of the cards from the skill pool or from your hand. This card will grant you skills for the rest of the game. When executing Raise Value, you must pick cards in the market pool equal to the number of seals on your action space (one or two cards). You may place cards from your hand, from the card in the lowest position in the skill pool, or from the lowest card in the auction pool.",
 	"playerBoard11": "My secret card",
 	"playerBoard111": "Your secret card is",
-	"playerBoard12": "",
+	"playerBoard12": "You can use your card(s) for different things. In Buy Item you can pick one card from the item pool or from your hand. In Get Skill you can take one of the cards from the skill pool or from your hand. This card will grant you skills for the rest of the game. When executing Raise Value, you must pick cards in the market pool equal to the number of seals on your action space (one or two cards). You may place cards from your hand, from the card in the lowest position in the skill pool, or from the lowest card in the auction pool.",
 
 	"playerBoard13": "Items of category FASTIVAL",
 	"playerBoard14": "Items of category MOVIE",					
