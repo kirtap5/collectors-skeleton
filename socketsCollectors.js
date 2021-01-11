@@ -13,9 +13,6 @@ function sockets(io, socket, data) {
         skillsOnSale: data.getSkillsOnSale(d.roomId),
         auctionCards: data.getAuctionCards(d.roomId),
         placements: data.getPlacements(d.roomId),
-        /*actingPlayer: data.getActingPlayer(d.roomId) *//*LAGT IN, kanske begöver playORder och round*/ 
-        /*playOrder: data.getPlayOrder(d.roomId),
-            round: data.getRound(d.roomId)*/ 
       });
     }
   });
@@ -78,7 +75,6 @@ function sockets(io, socket, data) {
   });
 
   socket.on('collectorsPlaceBottle', function (d) {
-    console.log(d.id);
     data.placeBottle(d.roomId, d.playerId, d.action, d.cost, d.id); 
     io.to(d.roomId).emit('collectorsBottlePlaced', 
    {  players: data.getPlayers(d.roomId),

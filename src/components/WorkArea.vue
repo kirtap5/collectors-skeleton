@@ -2,152 +2,173 @@
   <div>
     <div id="workArea">
       <div class="info">
-        <InfoButtons :modalProps="workProps" :labels="labels"/>
+        <InfoButtons :modalProps="workProps" :labels="labels" />
       </div>
       <div v-if="round == 1" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work8Props" :labels="labels"/>
+          <InfoButtons :modalProps="work8Props" :labels="labels" />
         </div>
-        <!--<button class="buttonTest" @click="circleClicked" />-->
         <button
-          class = "button"
+          class="button"
           :disabled="player.hand.length < 2 || buttonDisabled(placement[0])"
           v-if="round == 1 && placement[0].playerId === null"
           @click="placeBottle(placement[0])"
         >
           $0
         </button>
-        <div class="clickedButton" v-if="placement[0].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[0].playerId].color}">
-          
-            <p>{{ placement[0].playerId }}</p>
-          
+        <div
+          class="clickedButton"
+          v-if="
+            placement[0].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[0].playerId].color }"
+        >
+          <p>{{ placement[0].playerId }}</p>
         </div>
-        <!--Får 0dollar-->
         <div class="first" id="upsideDown"></div>
         <div class="second" id="upsideDown"></div>
-        <!--<p>ROUND 1</p>-->
       </div>
       <div v-if="round == 2" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work7Props" :labels="labels"/>
+          <InfoButtons :modalProps="work7Props" :labels="labels" />
         </div>
         <button
-          class = "button"
+          class="button"
           :disabled="player.hand.length < 2 || buttonDisabled(placement[1])"
           v-if="round == 2 && placement[1].playerId === null"
           @click="placeBottle(placement[1])"
         >
           $-1
         </button>
-        <div class="clickedButton" v-if="placement[1].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[1].playerId].color}">
-          
-            <p>{{ placement[1].playerId }}</p>
-          
+        <div
+          class="clickedButton"
+          v-if="
+            placement[1].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[1].playerId].color }"
+        >
+          <p>{{ placement[1].playerId }}</p>
         </div>
-        <!--Får 1 dollar-->
         <div class="first" id="upsideDown"></div>
         <div class="second" id="upsideDown"></div>
-        <!--<p>ROUND 2</p>-->
       </div>
       <div v-if="round == 3" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work6Props" :labels="labels"/>
+          <InfoButtons :modalProps="work6Props" :labels="labels" />
         </div>
-        <button 
-        class = "button"
-        :disabled="player.hand.length <2 || buttonDisabled(placement[2])" 
-        v-if="round==3 && placement[2].playerId===null" @click="placeBottle(placement[2])">
-        $-2
-      </button>
-      <div class="clickedButton" v-if="placement[2].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[2].playerId].color}">
-          
-            <p>{{ placement[2].playerId }}</p>
-          
+        <button
+          class="button"
+          :disabled="player.hand.length < 2 || buttonDisabled(placement[2])"
+          v-if="round == 3 && placement[2].playerId === null"
+          @click="placeBottle(placement[2])"
+        >
+          $-2
+        </button>
+        <div
+          class="clickedButton"
+          v-if="
+            placement[2].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[2].playerId].color }"
+        >
+          <p>{{ placement[2].playerId }}</p>
         </div>
-        <!--Får 2 dollar-->
         <div class="first" id="upsideDown"></div>
         <div class="second" id="upsideDown"></div>
-        <!--<p>ROUND 3</p>-->
       </div>
       <div v-if="round == 4" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work5Props" :labels="labels"/>
+          <InfoButtons :modalProps="work5Props" :labels="labels" />
         </div>
-        <button 
-        class = "button"
-        :disabled="player.hand.length <2 || buttonDisabled(placement[3])" 
-        v-if="round==4 && placement[3].playerId===null" 
-        @click="placeBottle(placement[3])">
-        -$3
-      </button>
-      <div class="clickedButton" v-if="placement[3].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[3].playerId].color}">
-          
-            <p>{{ placement[3].playerId }}</p>
-          
+        <button
+          class="button"
+          :disabled="player.hand.length < 2 || buttonDisabled(placement[3])"
+          v-if="round == 4 && placement[3].playerId === null"
+          @click="placeBottle(placement[3])"
+        >
+          -$3
+        </button>
+        <div
+          class="clickedButton"
+          v-if="
+            placement[3].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[3].playerId].color }"
+        >
+          <p>{{ placement[3].playerId }}</p>
         </div>
-        <!--FÅR 3dollar-->
         <div class="first" id="recycledCard"></div>
-        <!--<p>ROUND 4</p>-->
       </div>
       <div class="rectangular secondArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work4Props" :labels="labels"/>
+          <InfoButtons :modalProps="work4Props" :labels="labels" />
         </div>
         <button
-        class = "button" 
-        v-if="placement[4] && placement[4].playerId === null"
-        @click="placeBottle(placement[4])"
-        :disabled="buttonDisabled(placement[4])"
+          class="button"
+          v-if="placement[4] && placement[4].playerId === null"
+          @click="placeBottle(placement[4])"
+          :disabled="buttonDisabled(placement[4])"
         >
-        $-1</button>
-        <!--Trash one bottle-->
-        <div class="clickedButton" v-if="placement[4].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[4].playerId].color}">
-          
-            <p>{{ placement[4].playerId }}</p>
-          
+          $-1
+        </button>
+        <div
+          class="clickedButton"
+          v-if="
+            placement[4].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[4].playerId].color }"
+        >
+          <p>{{ placement[4].playerId }}</p>
         </div>
         <div class="first" id="recycledCard"></div>
       </div>
       <div class="rectangular thirdArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work3Props" :labels="labels"/>
+          <InfoButtons :modalProps="work3Props" :labels="labels" />
         </div>
         <button
-        class = "button"
+          class="button"
           v-if="placement[5] && placement[5].playerId === null"
           @click="placeBottle(placement[5])"
           :disabled="cannotAfford(1) || buttonDisabled(placement[5])"
         >
-          $1</button
-          
-        ><!--Draw two cards-->
+          $1
+        </button>
 
-        <div class="clickedButton" v-if="placement[5].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[5].playerId].color}">
-          
-            <p>{{ placement[5].playerId }}</p>
-          
+        <div
+          class="clickedButton"
+          v-if="
+            placement[5].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[5].playerId].color }"
+        >
+          <p>{{ placement[5].playerId }}</p>
         </div>
         <div class="first" id="getCard"></div>
         <div class="second" id="getCard"></div>
       </div>
       <div class="rectangular fourthArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work2Props" :labels="labels"/>
+          <InfoButtons :modalProps="work2Props" :labels="labels" />
         </div>
         <button
-        class = "button"
+          class="button"
           v-if="placement[6] && placement[6].playerId === null"
           :disabled="buttonDisabled(placement[6])"
           @click="placeBottle(placement[6])"
         >
-          $0</button
+          $0
+        </button>
+        <div
+          class="clickedButton"
+          v-if="
+            placement[6].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[6].playerId].color }"
         >
-        <div class="clickedButton" v-if="placement[6].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[6].playerId].color}">
-          
-            <p>{{ placement[6].playerId }}</p>
-          
+          <p>{{ placement[6].playerId }}</p>
         </div>
-        <!--Draw one card and become first player for next round-->
+
         <div class="first" id="getCard"></div>
         <div class="workArea_token">
           <FirstPlayerToken />
@@ -155,22 +176,26 @@
       </div>
       <div class="rectangular fifthArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work1Props" :labels="labels"/>
+          <InfoButtons :modalProps="work1Props" :labels="labels" />
         </div>
         <button
-        class = "button"
+          class="button"
           v-if="placement[7] && placement[7].playerId === null"
-          :disabled="buttonDisabled(placement[7]) || player.hand.length <1"
+          :disabled="buttonDisabled(placement[7]) || player.hand.length < 1"
           @click="placeBottle(placement[7])"
         >
-          $0</button
+          $0
+        </button>
+        <div
+          class="clickedButton"
+          v-if="
+            placement[7].playerId !== null && typeof players !== 'undefined'
+          "
+          :style="{ backgroundColor: players[placement[7].playerId].color }"
         >
-        <div class="clickedButton" v-if="placement[7].playerId !== null && typeof players !== 'undefined'" :style="{backgroundColor: players[placement[7].playerId].color}">
-          
-            <p>{{ placement[7].playerId }}</p>
-          
+          <p>{{ placement[7].playerId }}</p>
         </div>
-        <!--Draw one card and put one card from hand as future income-->
+
         <div class="first" id="getCard"></div>
         <div class="second" id="upsideDown"></div>
       </div>
@@ -186,13 +211,12 @@ export default {
   name: "WorkArea",
 
   components: {
-    /*CircleComponent,*/
     FirstPlayerToken,
     InfoButtons,
   },
 
   props: {
-    color: String /*KOMMER TAS BORT efter circle clicked*/,
+    color: String,
     player: Object,
     placement: Array,
     round: Number,
@@ -200,7 +224,7 @@ export default {
     labels: Object,
   },
 
-computed: {
+  computed: {
     workProps: function () {
       return {
         value: this.labels.work,
@@ -263,7 +287,7 @@ computed: {
         classes: "smallButton yellow",
       };
     },
-        work7Props: function () {
+    work7Props: function () {
       return {
         value: "i",
         text: this.labels.work7,
@@ -271,15 +295,15 @@ computed: {
         classes: "smallButton yellow",
       };
     },
-        work8Props: function () {
+    work8Props: function () {
       return {
         value: "i",
         text: this.labels.work8,
         title: "",
         classes: "smallButton yellow",
       };
-    }
-},
+    },
+  },
   methods: {
     buttonDisabled: function (cost) {
       if (
@@ -290,17 +314,17 @@ computed: {
         return true;
       } else return false;
     },
-    /*stod id i placebottle istället för p*/ 
+
     placeBottle: function (p) {
       this.$emit("placeBottle", p);
-      if (p.id<3 || p.id === 7) {
+      if (p.id < 3 || p.id === 7) {
         this.highlightAvailableCards(p.cost);
-      }else{
+      } else {
         this.$emit("workAction", p);
       }
     },
-    
-    highlightAvailableCards: function(cost) {
+
+    highlightAvailableCards: function (cost) {
       for (let i = 0; i < this.player.hand.length; i += 1) {
         if (this.player.money - cost >= 0) {
           this.$set(this.player.hand[i], "available", true);
@@ -315,7 +339,6 @@ computed: {
     cannotAfford: function (cost) {
       return this.player.money < cost;
     },
-    
   },
 };
 </script>
@@ -324,6 +347,7 @@ computed: {
 p {
   margin: 0px;
 }
+
 #workArea {
   background-color: #f5f2cc;
   border: 1px solid #e9de4b;
@@ -354,11 +378,9 @@ p {
 .button {
   display: grid;
   grid-column: 2;
-  /*grid-template-columns: repeat(auto-fill, 20px);*/
   width: 50px;
   height: 20px;
   margin: 10px;
-  /*grid-template-columns: repeat(auto-fill, 40px);*/
   margin: auto;
 }
 
@@ -366,7 +388,6 @@ p {
   border: 1px solid rgb(118, 118, 118);
   border-radius: 2px;
   text-align: center;
-
   color: black;
   width: 50px;
   height: 20px;
@@ -379,12 +400,9 @@ p {
   margin-bottom: 50%;
 }
 
-
 .firstArea {
   border: 3px dotted grey;
 }
-
-
 
 .infoB {
   grid-column: 1;
@@ -432,18 +450,17 @@ p {
   .button {
     width: 30px;
   }
-  
-   .button p {
-     font-size: 70%;
-   }
 
-   .clickedButton {
+  .button p {
+    font-size: 70%;
+  }
+
+  .clickedButton {
     width: 30px;
   }
-  
-   .clickedButton p {
-     font-size: 70%;
-   }
-}
 
+  .clickedButton p {
+    font-size: 70%;
+  }
+}
 </style>

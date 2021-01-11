@@ -363,7 +363,6 @@ export default {
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
         this.workPlacement = d.placements.workPlacement;
-        /*this.players = d.players;*/
       }.bind(this)
     );
 
@@ -675,7 +674,6 @@ export default {
 
 <style scoped>
 .board-section {
-  /*width: 100%;*/
   padding: 5px;
   align-items: center;
   display: flex;
@@ -727,10 +725,6 @@ main {
   font-size: 80%;
 }
 
-/*#work_area {
-  grid-row: 2;
-}*/
-
 #hand_playerboard {
   width: 100%;
   height: 80%;
@@ -739,22 +733,6 @@ main {
   grid-column: 1/4;
   margin-top: 10px;
   border-bottom: 2px solid black;
-}
-
-/*SECRET SECTION - TA BORT?
-.secretSection {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.9);
-}*/
-
-/*TRANSITION - TA BORT???*/
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 footer {

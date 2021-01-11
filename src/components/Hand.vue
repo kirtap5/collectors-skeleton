@@ -24,17 +24,17 @@
                 :key="'secret' + index"
                 class="theSecretCard"
               />
-              <button class="buttonSecret red" @click="notShow()">{{ labels.close }}</button>
+              <button class="buttonSecret red" @click="notShow()">
+                {{ labels.close }}
+              </button>
             </div>
           </transition>
         </div>
       </button>
 
-      <div v-if="player.firstPlayer" >
+      <div v-if="player.firstPlayer">
         <FirstPlayerToken />
       </div>
-      <!--bygger en sträng, secret 1 secret 2. Tar bort multiple keys, varningen.-->
-      <!--TA IN SECRET CARD som :card=secret på något sätt från SecretCard component-->
     </div>
     <div class="scrollHand">
       <div class="handSlot" :style="{ backgroundColor: player.color }">
@@ -53,22 +53,21 @@
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
 import InfoButtons from "@/components/InfoButtons.vue";
-import FirstPlayerToken from '@/components/FirstPlayerToken.vue';
+import FirstPlayerToken from "@/components/FirstPlayerToken.vue";
 
 export default {
   name: "Hand",
   components: {
     CollectorsCard,
     InfoButtons,
-    FirstPlayerToken
+    FirstPlayerToken,
   },
+
   props: {
     player: Object,
     allCardsChosen: Boolean,
     labels: Object,
   },
-
-  /*Du kan använda kort(en) i handen till flera olika saker. I Buy Item kan du välja på antingen ett kort i item pool eller från handen. I Get Skill kan du använda ett av korten i handen eller ett från skill pool. Detta kort kommer att ge dig skills för resten av spelet. I Raise Value, välj kort i market pool som är lika med XX i ditt eget action space, antingen ett eller två kort. Du kan använda kort från din hand, från skill pool eller auction pool.*/ 
 
   data: function () {
     return {
@@ -83,17 +82,15 @@ export default {
         text: this.labels.playerBoard10,
         title: this.labels.playerBoard9,
         classes: `${this.player.color} button`,
-      }
-    } 
+      };
+    },
   },
 
   methods: {
     selectAction: function (card) {
       if (card.available) {
         this.$emit("selectAction", card);
-        this.allCardsChosen
-          ? null
-          : this.$set(card, "available", false);
+        this.allCardsChosen ? null : this.$set(card, "available", false);
       }
     },
 
@@ -110,7 +107,6 @@ export default {
         this.clicked = false;
       }
     },
-
   },
 };
 </script>
@@ -128,9 +124,8 @@ export default {
   border-bottom-right-radius: 10px;
 }
 
-.scrollHand{
+.scrollHand {
   overflow-x: scroll;
-  /*white-space: nowrap;*/
 }
 
 .handSlot {
@@ -142,6 +137,7 @@ export default {
   margin-left: 5px;
   margin-right: 5px;
 }
+
 .handSlot div {
   transform: scale(0.5) translate(-50%, -50%);
   transition: 0.2s;
@@ -154,7 +150,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   align-content: center;
-  }
+}
 
 #infoButton {
   grid-column: 1;
@@ -163,7 +159,6 @@ export default {
 .clickable {
   grid-column: 2;
   margin-right: 0.5vw;
-  /*width: 50%;*/
 }
 
 .buttonSecret:hover {
@@ -172,7 +167,7 @@ export default {
 
 #showSecretCard {
   position: absolute;
-  height: 6050px; /* ändra så att den bara är hela sidan!! */
+  height: 6050px;
   top: 0;
   left: 0;
   right: 0;
@@ -242,7 +237,6 @@ export default {
 .fade-enter-active,
 .fade-leave.active {
   transition: opacity 1.5s;
-  /* opacity: 0.9; */
 }
 
 .fade-enter,
@@ -293,14 +287,14 @@ export default {
 }
 
 @media only screen and (max-width: 1050px) {
-.buttonSecret{
-  padding: 5px 7px;
-  font-size: 80%;
-}
+  .buttonSecret {
+    padding: 5px 7px;
+    font-size: 80%;
+  }
 }
 
 @media only screen and (max-width: 850px) {
-  .buttonSecret{
+  .buttonSecret {
     font-size: 50%;
   }
 }
