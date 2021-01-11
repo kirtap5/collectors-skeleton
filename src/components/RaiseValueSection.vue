@@ -1,6 +1,6 @@
 <template>
   <div id="RaiseValueSection" class="board-section">
-    <InfoButtons :modalProps="raiseValueProps" />
+    <InfoButtons :modalProps="raiseValueProps" :labels="labels"/>
     <div class="raise-value-slot-container">
       <div class="raise-value-slot" id="rvFastaval"></div>
       <div class="raise-value-slot" id="rvMovie"></div>
@@ -21,7 +21,7 @@
           :disabled="buttonDisabled(p.cost)"
           @click="placeBottle(p)"
         >
-          <p>${{ p.cost }} <span v-if="p.chooseTwoCards"> (select two)</span> </p>
+          <p>${{ p.cost }} <span v-if="p.chooseTwoCards"> {{ labels.raiseval2 }}</span> </p>
         </button>
         <div
           class="clickedButton"

@@ -1,4 +1,6 @@
 {
+	"close": "close",
+	
 	"draw": "Draw card",
 	"invite": "Invite other players with this link:",
 	"endTurn": "End turn",
@@ -7,19 +9,95 @@
 	"incomeGain1": "You will gain ",
 	"incomeGain2": "$ from your income cards!",
 	"remainingPlacements": "Remaining placements to choose: ",
+	
+	
 	"round": "Round: ",
 	"turn1": "It's ",
 	"turn2": "'s turn!",
 	"myPlayer": "I am player: ",
+	"players": "Players this game: ",
+	"player": "Player",
+	"turn": "Play!",
+	"me": "Me",
+	
 	"skill": "Gain Skill",
 	"skillText": "Take one of the cards from the skill pool or from your hand. This card will grant you skills for the rest of the game as detailed if you press the 'i' under the same symbol on your playerboard.",
+	
 	"item": "Buy Item",
 	"itemText": "Pick one card from the item pool or from your hand. Tuck the chosen card under your player board from above to show that this card represents an item you have bought. In addition to the cost in the action space, you must pay $1 per card in the Market pool that has the same symbol as the item you just bought. There is no upper limit in the number of items you may own.",
+	
 	"raiseval": "Raise value",
 	"raisevalText": "When executing this action, you must place cards in the market pool equal to the number of seals on your action space (one or two cards). You may place cards from your hand, from the card in the lowest position in the skill pool, or from the lowest card in the auction pool. When you place a card in the market pool, you tuck the cards under the icon on the game board that matches the icon on the bottom left of the card",
+	"raiseval2": "(select two)",
+
 	"auction": "Auction",
 	"auctionText": "Choose one of the four cards in the Auction pool or one card from your hand and place it in the space reserved for auctioned items. If you placed a card from your hand, you may place it face down. The card remains face down and the auction is performed without any other players knowing what kind of card it is. The player who chose this action may bid any number of coins with a minimum of one. Now the player to their left must place a higher bid or pass. Continue in clockwise order until all players but one has passed. The player that won the auction must pay the bid amount to the supply. When paying for the auction you may use cards from your hands as coins. Cards can be worth $1 or $2 as depicted in the upper right corner of the cards. Note that cards can only be used as coins during an auction. If the card just won was placed face down, the winning player may look at the card without showing it to other players. The player that wins the auction may place the card wherever they want; as an item under their player board, as a market share in the market pool, or as a skill under their player board. If the newly won card was face down, the auction winner may place the card face down as a secret item (next to the one that was chosen during the setup).",
+	"auction1": "Current highest bid: ",
+	"auction2": "placed by: ",
+	"auction3": "Send to: ",
+	"auction4": "Your bid: ",
+	"auction5": "Place bid: ",
+	"auction6": "Pass",
+	"auction7": "Items",
+	"auction8": "Skills",
+	"auction9": "Raise val.",
+	"auction10": "Raise bid",
+	
 	"work": "Work",
-	"workText": "In the work area, you perform actions to increase your income, recycle bottles, draw cards and become the first player. If you place your bottle in the uppermost action space (on the quarter tile), you must place two cards upside down from your hand next to your player board on its right side. Note that this action space changes characteristics during the fourth quarter to resemble the action spot below it."
-						
+	"workText": "In the work area, you perform actions to increase your income, recycle bottles, draw cards and become the first player. If you place your bottle in the uppermost action space (on the quarter tile), you must place two cards upside down from your hand next to your player board on its right side. Note that this action space changes characteristics during the fourth quarter to resemble the action spot below it.",
+	"work1": "Draw a card and place one of the cards on your hand upside down to work (your income will then increase). Cost is $0.",
+	"work2": "Draw a card and get the 1st player token. This token means that you will be the first player every round until someone else gets the 1st player token. Cost is 0$.",
+	"work3": "Draw two cards. Cost is 1$.",
+	"work4": "Recycle one bottle and gain 1$.",
+	"work5": "Recycle one bottle and gain 3$.",
+	"work6": "Place two of the cards on your hand upside down to work (your income will then increase) and gain 2$.",
+	"work7": "Place two of the cards on your hand upside down to work (your income will then increase) and gain 1$.",
+	"work8": "Place two of the cards on your hand upside down to work (your income will then increase). Cost is 0$.",
+
+	"secret1": "Each player picks one card and places it face down, tucked under their player board at the position marked with a treasure chest. This card is a secret item you own from the beginning.",
+	"secret2": "Secret card",
+	"secret3": "Choose your secret card",
+	
+	"menu": "Meny",
+	"menu2": "Copy the link to this game",
+	"menu3": "done",
+	"menu4": "Quit game",
+	"menu5": "Other player in new window",
+
+	"playerBoard1": "My Items",
+	"playerBoard2": "These are your items that you own, the number below the symbol is the number of ites of that category the icon represents that you have in your possession. To calculate the value of your collection you multiply the market value (as seen in the Raise Value section) of an item with the amount of items you have. There is no upper limit in the number of items you may own. There is no upper limit in the number of items you may own.",
+	"playerBoard3": "My Skills",
+	"playerBoard4": "text",
+	"playerBoard5": "Income",
+	"playerBoard6": "This is the income you earn every round. You can raise the income by (1) remove excess bottles that block your income or (2) place a card on the workarea on your playerboard.",
+	"playerBoard7": "Money",
+	"playerBoard8": "You can use your money to purchase items, skills, raise value or work when it's required of you to pay an extra fee when placing a bottle.",
+	"playerBoard9": "Hand",
+	"playerBoard10": "You can use your card(s) for different things. In Buy Item you can pick one card from the item pool or from your hand. In Get Skill you can take one of the cards from the skill pool or from your hand. This card will grant you skills for the rest of the game. When executing Raise Value, you must pick cards in the market pool equal to the number of seals on your action space (one or two cards). You may place cards from your hand, from the card in the lowest position in the skill pool, or from the lowest card in the auction pool.",
+	"playerBoard11": "My secret card",
+	"playerBoard111": "Your secret card is",
+	"playerBoard12": "",
+
+	"playerBoard13": "Items of category FASTIVAL",
+	"playerBoard14": "Items of category MOVIE",					
+	"playerBoard15": "Items of category TECHNOLOGY",
+	"playerBoard16": "Items of category FIGURES",
+	"playerBoard17": "Items of category MUSIC",
+
+	"playerBoard18": "Immediately gain a new bottle. You may use it this quarter",
+	"playerBoard19": "Gain $2 whenever you place a worker in the work area",
+	"playerBoard20": "Draw a card whenever you place a worker in the work area.",
+	"playerBoard21": "Gain $1 whenever an auction is started by any player.",
+	"playerBoard22": "Get 5 extra points in the end of the game if you own at least one item of each category in the end of the game. ",
+	"playerBoard23": "Get 1 extra point in the end of the game for each item you own in the category FASTIVAL",
+	"playerBoard24": "Get 1 extra point in the end of the game for each item you own in the category MOVIE",
+	"playerBoard25": "Get 1 extra point in the end of the game for each item you own in the category TECHNOLOGY",
+	"playerBoard26": "Get 1 extra point in the end of the game for each item you own in the category FIGURES",
+	"playerBoard27": "Get 1 extra point in the end of the game for each item you own in the category MUSIC",
+
+	"playerBoard28": "Bottles ",
+	"playerBoard29": "Avaliable bottles "
+
+
+
 }

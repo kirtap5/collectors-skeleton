@@ -2,11 +2,11 @@
   <div>
     <div id="workArea">
       <div class="info">
-        <InfoButtons :modalProps="workProps" />
+        <InfoButtons :modalProps="workProps" :labels="labels"/>
       </div>
       <div v-if="round == 1" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work8Props" />
+          <InfoButtons :modalProps="work8Props" :labels="labels"/>
         </div>
         <!--<button class="buttonTest" @click="circleClicked" />-->
         <button
@@ -29,7 +29,7 @@
       </div>
       <div v-if="round == 2" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work7Props" />
+          <InfoButtons :modalProps="work7Props" :labels="labels"/>
         </div>
         <button
           class = "button"
@@ -51,7 +51,7 @@
       </div>
       <div v-if="round == 3" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work6Props" />
+          <InfoButtons :modalProps="work6Props" :labels="labels"/>
         </div>
         <button 
         class = "button"
@@ -71,7 +71,7 @@
       </div>
       <div v-if="round == 4" class="rectangular firstArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work5Props" />
+          <InfoButtons :modalProps="work5Props" :labels="labels"/>
         </div>
         <button 
         class = "button"
@@ -91,7 +91,7 @@
       </div>
       <div class="rectangular secondArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work4Props" />
+          <InfoButtons :modalProps="work4Props" :labels="labels"/>
         </div>
         <button
         class = "button" 
@@ -110,7 +110,7 @@
       </div>
       <div class="rectangular thirdArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work3Props" />
+          <InfoButtons :modalProps="work3Props" :labels="labels"/>
         </div>
         <button
         class = "button"
@@ -132,7 +132,7 @@
       </div>
       <div class="rectangular fourthArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work2Props" />
+          <InfoButtons :modalProps="work2Props" :labels="labels"/>
         </div>
         <button
         class = "button"
@@ -155,7 +155,7 @@
       </div>
       <div class="rectangular fifthArea">
         <div class="infoB">
-          <InfoButtons :modalProps="work1Props" />
+          <InfoButtons :modalProps="work1Props" :labels="labels"/>
         </div>
         <button
         class = "button"
@@ -197,74 +197,73 @@ export default {
     placement: Array,
     round: Number,
     players: Object,
+    labels: Object,
   },
 
-  data: function () {
-    return {
-      /*round: 2,*/ /*SKA TAS BORT*/
-      clicked: false /*SKA TAS BORT */,
-      workProps: {
-        value: "Work",
-        text:
-          "In the work area, you perform actions to increase your income, recycle bottles, draw cards and become the first player. If you place your bottle in the uppermost action space (on the quarter tile), you must place two cards upside down from your hand next to your player board on its right side. Note that this action space changes characteristics during the fourth quarter to resemble the action spot below it.",
-        title: "Work",
+computed: {
+    workProps: function () {
+      return {
+        value: this.labels.work,
+        text: this.labels.workText,
+        title: this.labels.work,
         classes: "button yellow",
-      },
-      work1Props: {
+      };
+    },
+
+    work1Props: function () {
+      return {
         value: "i",
-        text:
-          "Draw a card and place one of the cards on your hand upside down to work (your income will then increase). Cost is 0$.",
+        text: this.labels.work1,
         title: "",
-        classes: "yellow smallButton",
-      },
-      work2Props: {
+        classes: "smallButton yellow",
+      };
+    },
+
+    work2Props: function () {
+      return {
         value: "i",
-        text:
-          "Draw a card and get the 1st player token. This token means that you will be the first player every round until someone else gets the 1st player token. Cost is 0$.",
+        text: this.labels.work2,
         title: "",
-        classes: "yellow smallButton",
-      },
-      work3Props: {
+        classes: "smallButton yellow",
+      };
+    },
+
+    work3Props: function () {
+      return {
         value: "i",
-        text: "Draw two cards. Cost is 1$.",
+        text: this.labels.work3,
         title: "",
-        classes: "yellow smallButton",
-      },
-      work4Props: {
+        classes: "smallButton yellow",
+      };
+    },
+
+    work4Props: function () {
+      return {
         value: "i",
-        text: "Recycle one bottle and gain 1$.",
+        text: this.labels.work4,
         title: "",
-        classes: "yellow smallButton",
-      },
-      work5Props: {
+        classes: "smallButton yellow",
+      };
+    },
+
+    work5Props: function () {
+      return {
         value: "i",
-        text: "Recycle one bottle and gain 3$.",
+        text: this.labels.work5,
         title: "",
-        classes: "yellow smallButton",
-      },
-      work6Props: {
+        classes: "smallButton yellow",
+      };
+    },
+
+    work6Props: function () {
+      return {
         value: "i",
-        text:
-          "Place two of the cards on your hand upside down to work (your income will then increase) and gain 2$.",
+        text: this.labels.work6,
         title: "",
-        classes: "yellow smallButton",
-      },
-      work7Props: {
-        value: "i",
-        text:
-          "Place two of the cards on your hand upside down to work (your income will then increase) and gain 1$.",
-        title: "",
-        classes: "yellow smallButton",
-      },
-      work8Props: {
-        value: "i",
-        text:
-          "Place two of the cards on your hand upside down to work (your income will then increase). Cost is 0$.",
-        title: "",
-        classes: "yellow smallButton",
-      },
-    };
-  },
+        classes: "smallButton yellow",
+      };
+    }
+},
   methods: {
     buttonDisabled: function (cost) {
       if (
@@ -306,6 +305,9 @@ export default {
 </script>
     
 <style scoped>
+p {
+  margin: 0px;
+}
 #workArea {
   background-color: #f5f2cc;
   border: 1px solid #e9de4b;
