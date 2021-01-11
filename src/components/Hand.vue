@@ -2,7 +2,7 @@
   <div class="handPlayer" :style="{ backgroundColor: player.color }">
     <div class="buttonArea">
       <div id="infoButton">
-        <InfoButtons :modalProps="handProps" />
+        <InfoButtons :modalProps="handProps" :labels="labels" />
       </div>
 
       <button
@@ -11,12 +11,12 @@
         :class="player.color"
         @click="secretCard()"
       >
-        My secret card
+        {{ labels.playerBoard11 }}
         <div v-if="clicked" id="showSecretCard">
           <transition name="fade slide" appear>
             <div class="background">
-              <h1>Secret card</h1>
-              <p>Your secret card is</p>
+              <h1>{{ labels.secret2 }}</h1>
+              <p>{{ labels.playerBoard111 }}</p>
               <CollectorsCard
                 v-for="(card, index) in player.secret"
                 :card="card"
@@ -24,7 +24,7 @@
                 :key="'secret' + index"
                 class="theSecretCard"
               />
-              <button class="buttonSecret red" @click="notShow()">Close</button>
+              <button class="buttonSecret red" @click="notShow()">{{ labels.close }}</button>
             </div>
           </transition>
         </div>
@@ -65,6 +65,7 @@ export default {
   props: {
     player: Object,
     allCardsChosen: Boolean,
+    labels: Object,
   },
 
   /*Du kan använda kort(en) i handen till flera olika saker. I Buy Item kan du välja på antingen ett kort i item pool eller från handen. I Get Skill kan du använda ett av korten i handen eller ett från skill pool. Detta kort kommer att ge dig skills för resten av spelet. I Raise Value, välj kort i market pool som är lika med XX i ditt eget action space, antingen ett eller två kort. Du kan använda kort från din hand, från skill pool eller auction pool.*/ 
@@ -72,14 +73,20 @@ export default {
   data: function () {
     return {
       clicked: false,
-      handProps: {
-        value: "Hand",
-        text: "You can use your card(s) for different things. In Buy Item you can pick one card from the item pool or from your hand. In Get Skill you can take one of the cards from the skill pool or from your hand. This card will grant you skills for the rest of the game. When executing Raise Value, you must pick cards in the market pool equal to the number of seals on your action space (one or two cards). You may place cards from your hand, from the card in the lowest position in the skill pool, or from the lowest card in the auction pool.",
-        title: "Hand",
-        classes: `${this.player.color} button`,
-      } 
     };
   },
+
+  computed: {
+    handProps: function () {
+      return {
+        value: this.labels.playerBoard9,
+        text: this.labels.playerBoard10,
+        title: this.labels.playerBoard9,
+        classes: `${this.player.color} button`,
+      }
+    } 
+  },
+
   methods: {
     selectAction: function (card) {
       if (card.available) {

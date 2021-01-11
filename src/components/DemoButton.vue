@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="button" @click="showModal = true">Demo</button>
+    <button :class="['demoButton', {button:styling}]" @click="showModal = true">Demo</button> 
     <transition name="fade" appear>
       <div
         class="modal-overlay"
@@ -236,6 +236,11 @@
 export default {
   name: "DemoButton",
 
+  props: {
+    labels: Object,
+    styling: Boolean,
+
+  },
   data: function () {
     return {
       showModal: false,
@@ -246,7 +251,6 @@ export default {
   methods: {
     nextSlide: function () {
       if (this.slide < 6) {
-        console.log(this.side);
         this.slide += 1;
       }
     },

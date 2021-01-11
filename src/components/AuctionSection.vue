@@ -1,7 +1,7 @@
 <template>
   <div id="auction-section" class="board-section">
     <InfoButtons
-      :modalProps='auctionProps'
+      :modalProps='auctionProps' :labels="labels"
     /> 
     <div v-if="upForAuction.length != 0" class='upForAuctionWrap'>
           <transition name="fade slide" appear>
@@ -21,20 +21,20 @@
         </div>
         <div class='auctionBtnsSection'>
         <div class="placeBid-section">
-          <button v-on:click="currentBid++" :disabled="currentBid >= player.money" class='auctionBtns'>Raise bid</button>
-          <div id='currentBid'>Your current bid: {{ currentBid }}</div>
-          <button v-on:click="placeBid()" class='auctionBtns'>Place bid</button>
-          <button v-on:click="passed()" class='auctionBtns'>Pass</button>
+          <button v-on:click="currentBid++" :disabled="currentBid >= player.money" class='auctionBtns'>{{ labels.auction10 }}</button>
+          <div id='currentBid'>{{ labels.auction4 }} {{ currentBid }}</div>
+          <button v-on:click="placeBid()" class='auctionBtns'>{{ labels.auction5 }}</button>
+          <button v-on:click="passed()" class='auctionBtns'>{{ labels.auction6 }}</button>
         </div>
         </div>
         <div id='currentHighestBid'>
-        Current highest bid:
+        {{ labels.auction1 }}
         {{ highestBid }}
-        placed by: 
+        {{ labels.auction2 }}
         {{ highestBiddingPlayer }}
         </div>
         <div>
-          <div id="sendToSection">Send to</div>
+          <div id="sendToSection">{{ labels.auction3 }}</div>
           <input type="button" class='sendToBtn' id='toItems' value="Items" @click="auctionToHand('items')" />
           <input type="button" class='sendToBtn' id='toSkills' value="Skills" @click="auctionToHand('skills')" />
           <input type="button" class='sendToBtn' id='toRaiseval' value="Raise value" @click="auctionToHand('raiseval')" />
@@ -101,14 +101,18 @@ export default {
   data: function () {
     return {
       currentBid: 0,
-      auctionProps: {
-        value: "Auction",
-        text:
-          "Här kommer text om auction",
-        title: "Auction",
-        classes: "button",
-      },
     };
+  },
+
+  computed: {
+    auctionProps: function () {
+      return {
+        value: this.labels.auction,
+        text: this.labels.auctionText,
+        title: this.labels.auction,
+        classes: "button",
+      }
+    }
   },
   methods: {
       buttonDisabled: function (cost) {
