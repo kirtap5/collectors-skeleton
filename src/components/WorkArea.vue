@@ -293,14 +293,14 @@ computed: {
     /*stod id i placebottle istället för p*/ 
     placeBottle: function (p) {
       this.$emit("placeBottle", p);
-      if (p.id<3 || p.id===7) {
-        this.hightlightAvailableCards(p.cost);
+      if (p.id<3 || p.id === 7) {
+        this.highlightAvailableCards(p.cost);
       }else{
         this.$emit("workAction", p);
       }
-
     },
-    hightlightAvailableCards: function(cost) {
+    
+    highlightAvailableCards: function(cost) {
       for (let i = 0; i < this.player.hand.length; i += 1) {
         if (this.player.money - cost >= 0) {
           this.$set(this.player.hand[i], "available", true);

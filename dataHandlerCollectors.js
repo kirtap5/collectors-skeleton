@@ -736,10 +736,6 @@ Data.prototype.workAction = function (roomId, placement, playerId) {
         room.players[room.playerOrder[i]].firstPlayer = false;
       }
     }
-  } else if (placement.id === 7) {
-    let card = room.deck.pop();
-    player.hand.push(card);
-    // note: player should also discard a card to move to income
   }
 
   room.players[playerId].money -= placement.cost;
@@ -766,6 +762,10 @@ Data.prototype.cardsForIncome = function (roomId, playerId, cards, cost) {
           break;
         }
       }
+    }
+    if(cards.length === 1){
+      let card = room.deck.pop();
+      room.players[playerId].hand.push(card);
     }
     room.players[playerId].money -= cost;
     room.players[playerId].active = false;

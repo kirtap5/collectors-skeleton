@@ -653,7 +653,6 @@ export default {
       });
     },
     placeBid: function (bid) {
-      console.log("collectors.vue " + bid);
       if (bid > this.highestBid) {
         this.$store.state.socket.emit("collectorsPlaceBid", {
           roomId: this.$route.params.id,
